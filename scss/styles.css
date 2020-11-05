@@ -3,7 +3,7 @@
 
 Mise en page des "cases" produits affichées sur la page d'accueil */
 /* line 6, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-.card {
+.card, .cartitem {
   margin-bottom: 20px;
   padding: 20px;
   border: 2px solid black;
@@ -13,25 +13,27 @@ Mise en page des "cases" produits affichées sur la page d'accueil */
   justify-content: space-between;
   align-items: center; }
   /* line 15, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-  .card__button {
+  .card__button, .cartitem__button {
     height: 45px;
-    margin-left: 20px; }
-    /* line 18, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-    .card__button:hover {
+    margin-left: 20px;
+    font-size: 0.9em;
+    line-height: 15px; }
+    /* line 20, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__button:hover, .cartitem__button:hover {
       cursor: pointer; }
-  /* line 22, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-  .card__img {
+  /* line 24, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__img, .cartitem__img {
     max-width: 25%;
     max-height: 100%;
     align-self: stretch;
     object-fit: scale-down;
     /* A retravailler pour la proportion*/
     margin-right: 20px; }
-  /* line 29, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-  .card__details {
+  /* line 31, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__details, .cartitem__details {
     width: 50%; }
-  /* line 32, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
-  .card__description {
+  /* line 34, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__description, .cartitem__description {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; }
