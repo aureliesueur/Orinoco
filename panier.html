@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+    
+<head><!--INFOS SUR LA PAGE HTML-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
+    <title>Orinoco - Votre panier</title> 
+    <!--Link googlepolices--> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"><!-- Ajout du CDN Bootstrap-->
+    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <link rel='stylesheet' href="css/styles.css">
+</head>
+    
+    
+<body>
+    
+    <header class="bg-dark">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col navbar navbar-expand-lg bg-dark navbar-dark">
+                    <img src="images/logo.png" alt="Logo du site Orinoco" width="200" class="navbar-brand">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="#">Produits</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a></li>
+                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+     </header>
+    
+    <div class="container-fluid">
+        <div class="row" id="hero">
+            <div class="col-12 jumbotron text-center">
+                <h1>Récapitulatif de votre panier.</h1>
+                <div>
+                    <div>
+                        <img src="" alt="photo d'un meuble en chêne">
+                        <p>Nom du produit commandé</p>
+                        <p>Prix : X euros</p>
+                    </div>
+                    <div>
+                        <img src="" alt="photo d'un meuble en chêne">
+                        <p>Nom du produit commandé</p>
+                        <p>Prix : X euros</p>
+                    </div>
+                    <div>
+                        <img src="" alt="photo d'un meuble en chêne">
+                        <p>Nom du produit commandé</p>
+                        <p>Prix : X euros</p>
+                    </div>
+                </div>
+                <div>
+                    <p>Montant total : Y euros</p>
+                    <p><i class="fas fa-lock"></i> Transaction sécurisée</p>
+                </div>
+            </div>
+        </div>
+        
+        <form class="container">
+            <div class="row" id="hero">
+                <div class="col-12 jumbotron">
+                    <h2>Pour finaliser votre commander, merci de remplir ce formulaire.</h2>
+                    <div class="form-group">
+                        <label for="name">Nom :</label>
+                        <input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">Prénom :</label>
+                        <input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adress">Adresse :</label>
+                        <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Code postal :</label>
+                        <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Ville :</label>
+                        <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" required>
+                    </div>
+                    <div class="form-group form-check">
+                        <input class="form-check-input" type="checkbox" id="newsletter">
+                        <label class="form-check-label for="gridCheck>Recevoir notre newsletter</label>
+                    </div>
+                    <button type="submit" class="btn btn-success">Commander</button>
+                </div>
+            </div>
+        </form>
+        
+        <footer class="bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <ul class="list-inline col text-center">
+                        <li class="list-inline-item"><a href="#">A propos</a></li>
+                        <li class="list-inline-item"><a href="#">Copyright</a></li>
+                        <li class="list-inline-item"><a href="#">Vie privée</a></li> 
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Ajout des composants permettant l'utilisation de Bootstrap : jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

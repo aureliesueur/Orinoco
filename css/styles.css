@@ -1,0 +1,39 @@
+/* PAGE ACCUEIL
+
+Mise en page des "cases" produits affichées sur la page d'accueil */
+
+.card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius : 10px;
+    display: flex;
+    flex-direction : row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card__button {
+    height: 45px;
+    margin-left: 20px;
+}
+
+.card__img {
+    max-width:25%;
+    max-height: 100%;
+    align-self: stretch;
+    object-fit: scale-down;/* A retravailler pour la proportion*/
+    margin-right: 20px;
+}
+
+.card__details {
+    width: 50%;
+    
+}
+
+.card__description {
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+}
+
