@@ -10,32 +10,35 @@ const CART = { //Déclaration de la constante "panier"
             CART.contents = JSON.parse(storedContents);
         } else {
         // Fausses données juste pour vérifier que tout fonctionne
-            CART.contents = [{
-                id: 1,
-                title: "bracelet or",
+            CART.contents = [/*{
+                _id: "1ab",
+                name: "bracelet or",
                 quantity: 1,
-                price: 35,
+                price: 3500,
+                imageUrl: "http://localhost:3000/images/oak_4.jpg"
                 },{
-                id: 2,
-                title: "bague argent",
+                _id: "28r",
+                name: "bague argent",
                 quantity: 2,
-                price: 25
+                price: 2500,
+                imageUrl: "http://localhost:3000/images/oak_4.jpg"
                 },{
-                id: 3,
-                title: "boucles d'oreille rubis",
+                _id: "3b9",
+                name: "boucles d'oreille rubis",
                 quantity: 1,
-                price: 75   
-                }];
+                price: 7500 ,
+                imageUrl: "http://localhost:3000/images/oak_4.jpg"
+                }*/];
             CART.sync();//Synchronise le CART du localStorage à partir du panier du navigateur
         }
     },
-    async sync() {//Synchronise le CART du localStorage à partir du panier du navigateur
+     async sync() {//Synchronise le CART du localStorage à partir du panier du navigateur
         let storedCart = JSON.stringify(CART.contents);
-        await localStorage.setItem(CART.KEY, storedCart);
+         await localStorage.setItem(CART.KEY, storedCart);
     },
    find(id) {//Trouve un article dans le panier par son id
         let isFound = CART.contents.filter(item => {
-            if (item.id == id) {
+            if (item._id == id) {
                 return true;
             }
         });
@@ -48,21 +51,22 @@ const CART = { //Déclaration de la constante "panier"
         //Ajoute un nouveau produit dans le panier du navigateur
         //Vérifie si ce produit est déjà dans le panier
         if (CART.find(id)) {
-           CART.increase(id, 1); 
+           CART.increase(id, qty=1); 
         } else {
-            let filteredProducts = products.filter(product => {
-                if (product.id == id) {
+            let filterPds = PRODUCTS.filter(product => {
+                if (product._id == id) {
                     return true;
-                    //console.log (filteredProducts);Pour tester si ça fonctionne
             }
             });
-            if (filteredProducts && filteredProducts[0]) {
+            console.log (filterPds);//Pour tester si ça fonctionne
+            if (filterPds && filterPds[0]) {
                 let addItem = {
-                    id: filteredProducts[0].id,
-                    title: filteredProducts[0].name,
-                    price: filteredProducts[0].price,
-                    description: filteredProducts[0].description,
-                    image: filteredProducts[0].imageUrl
+                    _id: filterPds[0]._id,
+                    name: filterPds[0].name,
+                    price: filterPds[0].price,
+                    description: filterPds[0].description,
+                    imageUrl: filterPds[0].imageUrl,
+                    quantity: 1
                 };
                 //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(addItem);
@@ -73,27 +77,27 @@ const CART = { //Déclaration de la constante "panier"
                 console.log("Produit non valide ou inexistant");
             }    
         }
-    },/*
-    increase(id, qty=1) {//Augmente d'1 la quantité du produit visé par l'id
+    },
+    increase(id, qty = 1) {//Augmente d'1 la quantité du produit visé par l'id
         CART.contents = CART.contents.map(item => {
-            if (item.id == id) {
+            if (item._id == id) {
                 item.quantity = item.quantity + qty;
             }
             return item;
         });
         // Met à jour le panier dans le localStorage
         CART.sync();
-    },
+    },/*
     reduce(id, qty=1) {//Diminue d'1 la quantité du produit visé par l'id
         CART.contents = CART.contents.map(item => {
-            if (item.id == id) {
+            if (item._id === id && item.quantity >=1) {
                 item.quantity = item.quantity - qty;
-            }
+            } 
             return item;
         });
         // On supprime le produit si sa quantité est nulle
-        CART.content.forEach(async item => {//Pourquoi async ici ????
-            if (item.it === id && item.quantity ===0) {
+        CART.contents.forEach(async item => {//Pourquoi async ici ????
+            if (item._it === id && item.quantity <=0) {
                 CART.remove(id);
             }
         });
@@ -102,7 +106,7 @@ const CART = { //Déclaration de la constante "panier"
     },
     remove(id) {//Supprime totalement un produit du panier
        CART.contents = CART.contents.filter(item => {
-           if (item.id !== id) {
+           if (item._id !== id) {
                return true;
            }
         });
@@ -118,16 +122,17 @@ const CART = { //Déclaration de la constante "panier"
     }
 };
 
-let products = [];
+let PRODUCTS = [];
+let cartAmount = document.getElementById("cart-amount");
 
 // Lance la récupération et l'affichage des produits quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
-    //Dès que la page est chargée
     getProducts();//Récupère la liste des produits du serveur
     CART.init();//Charge les produits du panier
     CART.logContents();// Test pour être sûr que le lien avec localStorage fonctionne
     //CART.find(2); Test pour être sûr que le lien avec localStorage fonctionne
     showCart();
+    cartAmount.textContent = calculateCartAmount() + " EUR";
 });
 
 function showCart() {
@@ -140,18 +145,19 @@ function showCart() {
         //Génère l'image pour chaque case
         let cartImg = document.createElement("img");
         cartImg.className = "cartitem__img";
-        cartImg.alt = item.title;
-        cartImg.src = item.image;
+        cartImg.alt = item.name;
+        cartImg.src = item.imageUrl;
+        cartImg.style.width = "10%";
         cartItem.appendChild(cartImg);
         //Génère le nom de produit pour chaque case
         let cartTitle = document.createElement("h3");
-        cartTitle.textContent = item.title;
+        cartTitle.textContent = item.name;
         cartTitle.className = "cartitem__title";
         cartItem.appendChild(cartTitle);
         //Génère le prix total pour chaque case
         let cartPrice = document.createElement("p");
         cartPrice.className = "cartitem__price";
-        let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price * item.quantity);
+        let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
         cartPrice.textContent = totalPrice;
         cartItem.appendChild(cartPrice);
         //Génère la quantité de produits achetés pour chaque case
@@ -159,9 +165,27 @@ function showCart() {
         cartQty.textContent = item.quantity;
         cartQty.className = "cartitem__qty";
         cartItem.appendChild(cartQty);
+        // Ajoute le bouton 
+        /*let cartButton = document.createElement("button");
+        cartButton.className = "btn btn-secondary cartitem__button btn__remove";
+        cartButton.setAttribute("role", "button");
+        cartButton.textContent = "Supprimer du panier";
+        cartButton.setAttribute("data-id", item._id);
+        cartButton.addEventListener("click", suppressItem);
+        cartItem.appendChild(cartButton); */
+        // Ajoute la "case" produit du panier à la section id="cart-section"
         cartSection.appendChild(cartItem);
     })
 }
+
+ function calculateCartAmount() {
+    let totalPrice = 0;
+    CART.contents.forEach(item => {
+       totalPrice += (item.price/100 * item.quantity)
+    });
+    return totalPrice;
+  }
+
 
 function getProducts() { 
     // Création de la fonction pour récupérer la liste des produits depuis le serveur
@@ -211,26 +235,88 @@ function showProducts(products) {
         let cost = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(product.price / 100);
         price.textContent = cost;
         details.appendChild(price); 
-        // Ajoute le bouton 
-        let button = document.createElement("a");
-        button.className = "btn btn-secondary card__button btn__order";
-        button.setAttribute("href", "produit.html");
-        button.setAttribute("role", "button");
-        button.textContent = "Ajouter au panier";
-        button.setAttribute("data-id", product.id);// ou product.id ??? CART navigateur ou CART localStorage ??
-        button.addEventListener("click", addItem);
-        card.appendChild(button); 
+        // Crée le bouton pour ajouter au panier
+        let btnOrder = document.createElement("a");
+        btnOrder.className = "btn btn-secondary card__button btn__order";
+        btnOrder.setAttribute("role", "button");
+        btnOrder.textContent = "Ajouter au panier";
+        btnOrder.setAttribute("data-id", product._id);
+        btnOrder.setAttribute("href", "panier.html");
+        btnOrder.addEventListener("click", addItem);
+        card.appendChild(btnOrder); 
+        // Crée le bouton pour afficher détails du produit
+        let btnDetails = document.createElement("a");
+        btnDetails.className = "btn btn-secondary card__button";
+        btnDetails.setAttribute("role", "button");
+        btnDetails.textContent = "En savoir plus";
+        btnDetails.setAttribute("data-id", product._id);
+        btnDetails.setAttribute("href", "produit.html");
+        btnDetails.addEventListener("click", showItem);
+        card.appendChild(btnDetails); 
+        
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
 }
 
+function showItem(e) {
+    let id = e.target.getAttribute("data-id");
+    let filterPdts = products.filter(product => {
+                if (product._id === id) {
+                    return true;
+                }
+    });
+    let pdtCase = document.getElementById("product-case");
+    pdtCase.className = "pdtcase";
+    pdtCase.innerHTML = " ";    
+    //Génère l'image du produit
+    let pdttImg = document.createElement("img");
+    pdtImg.className = "pdtcase__img";
+    pdtImg.alt = product.name;
+    pdtImg.src = filterPdts[0].imageUrl;
+    pdtCase.appendChild(PdtImg);
+    //Génère le nom du produit 
+    let pdtTitle = document.createElement("h3");
+    pdtTitle.textContent = filterPdts[0].name;
+    pdtTitle.className = "pdtcase__title";
+    pdtCase.appendChild(pdtTitle);
+    //Génère la description du produit 
+    let pdtDescription = document.createElement("h3");
+    pdtDescription.textContent = filterPdts[0].description;
+    pdtDescription.className = "pdtcase__description";
+    pdtCase.appendChild(pdtDescription);
+    //Génère le prix unitaire du produit
+    let pdtPrice = document.createElement("p");
+    cartPrice.className = "pdtcase__price";
+    let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * filterPdts[0].quantity);
+    pdtPrice.textContent = totalPrice;
+    pdtCase.appendChild(pdtPrice);
+    // Ajoute le bouton 
+   /* let pdtButton = document.createElement("a");
+    pdtButton.className = "btn btn-secondary pdtCase__button";
+    pdtButton.setAttribute("role", "button");
+    pdtButton.textContent = "Ajouter au panier";
+    button.setAttribute("href", "produit.html");
+    pdtButton.setAttribute("data-id", filterPdt._id);
+    pdtButton.addEventListener("click", addItem);
+    cartItem.appendChild(pdtButton); */
+    // Ajoute la "case" produit du panier à la section id="cart-section"
+}
+
+
 
 function addItem(e) {
-    e.preventDefault();
-    let id = parseInt(e.target.getAttribute("data-id"));
-    console.log("Ajout au panier du produit : ", id);//Pour tester le bon fonctionnement
-    CART.add(id);//XXXX attention, lui marque CART.add(id,1);
+    // Plus tard : e.preventDefault; pour éviter qu'on charge la page du panier tout de suite
+    let id = e.target.getAttribute("data-id");
+    console.log("Votre produit a bien été ajouté");//Pour tester le bon fonctionnement
+    CART.add(id, 1);//XXXX attention, lui marque CART.add(id,1);
+    showCart(); 
+}
+
+function suppressItem(e) {
+    let id = e.target.getAttribute("data-id");
+    console.log("Votre produit a bien été supprimé");//Pour tester le bon fonctionnement
+    CART.reduce(id, 1);//XXXX attention, lui marque CART.add(id,1);
     showCart(); 
 }
 
@@ -241,9 +327,15 @@ function addItem(e) {
 Utiliser Babel pour le transformer en ES5 ??*/
 
 
+/*
+let buttonConfirm = document.getElementById("confirm");
+let formElt = document.getElementById("form-section");
+buttonConfirm.addEventListener("click", () => {
+    formElt.innerHTML = '<div class="row"><div class="col-12 jumbotron"><h2>Pour finaliser votre commander, merci de remplir ce formulaire.</h2><div class="form-group"><label for="name">Nom :</label><input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" required></div><div class="form-group"><label for="firstname">Prénom :</label><input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" required></div><div class="form-group"><label for="email">Email :</label><input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required></div><div class="form-group"><label for="adress">Adresse :</label><input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" required></div><div class="form-group"><label <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" required></div><div class="form-group"><label for="city">Ville :</label><input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" required></div><div class="form-group form-check"><input class="form-check-input" type="checkbox" id="newsletter"><label class="form-check-label for="gridCheck>Recevoir notre newsletter</label></div><button type="submit" class="btn btn-success">Commander</button></div></div>';
+});
 
-
-
+   */             
+         
 
 
 
