@@ -21,12 +21,19 @@ Mise en page des "cases" produits affichées sur la page d'accueil */
             cursor:pointer;
         }
     }
+    &__btns {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        }
     &__img {
     max-width:25%;
     max-height: 100%;
     align-self: stretch;
     object-fit: scale-down;/* A retravailler pour la proportion*/
     margin-right: 20px;
+    border-radius: 10px;
     }
     &__details {
     width: 50%;         
@@ -38,7 +45,59 @@ Mise en page des "cases" produits affichées sur la page d'accueil */
     }
 }
 
+.card
+}
+#price-section {
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    & p {
+        padding-top: 10px;
+        width: 60%;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+    & button {
+        width: 30%;
+    }
+}
 
 
+#cart-page h1 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.pdtcase {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius : 30px;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__img {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        margin-bottom: 30px; 
+    }
+    &__buttons {
+        display: flex;
+        flex-direction : row;
+        justify-content: space-between;
+    }
+    &__varnish {
+        margin-right: 15px;
+    }
+     &__order {
+        margin-left: 15px;
+    }
+}
 
 

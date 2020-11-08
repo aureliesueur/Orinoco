@@ -36,44 +36,31 @@
     
     <div class="container-fluid">    
            <div id="cart-page"> 
+               
                <h1>Récapitulatif de votre panier.</h1>
+               
+               
                 <section id="cart-section">
+                      <!--POUR CHAQUE PRODUIT COMMANDE, DIV CREEE PAR JS DANS FICHIER INDEX.JS
+                    <div class = "cartitem">
+                        <img src="" alt="" class= "cartitem__img">
+                        <h3 class= "cartitem__title">Nom du produit commandé</h3>
+                        <p class= "cartitem__price">Prix total par article</p>
+                        <span class="cartitem__quantity">Quantité commandée</span>
+                        <button class= "btn btn-secondary cartitem__button btn__remove" role="button" data-id= item._id">Supprimer du panier</button>
+                    </div>-->
                 </section>
                
                
-               <div>
-                <p> Le prix total du panier est : </p>
-               <span id="cart-amount"></span>
+                <div id="price-section">
+                    <p> Montant total de votre commande : <span id="cart-amount"></span></p>
+                    <button class="btn btn-danger card__button btn__order" role="button" id="confirm">Terminer votre commande</button>
                 </div>
-            
-        
-                <!--<div>
-                    <div>
-                        <img src="" alt="photo d'un meuble en chêne">
-                        <p>Nom du produit commandé</p>
-                        <p>Prix : X euros</p>
-                    </div>
-                    <div>
-                        <img src="" alt="photo d'un meuble en chêne">
-                        <p>Nom du produit commandé</p>
-                        <p>Prix : X euros</p>
-                    </div>
-                    <div>
-                        <img src="" alt="photo d'un meuble en chêne">
-                        <p>Nom du produit commandé</p>
-                        <p>Prix : X euros</p>
-                    </div>
-                </div>
-                <div>
-                    <p>Montant total : Y euros</p>
-                    <p><i class="fas fa-lock"></i> Transaction sécurisée</p>
-                </div>-->
-        
-                <button class="btn btn-secondary card__button btn__order" role="button" id="confirm">Commandez maintenant</button>
+               
             </div> 
             
             <form class="container" id="form-section">
-                <!--<div class="row">
+                <div class="row">
                     <div class="col-12 jumbotron">
                         <h2>Pour finaliser votre commande, merci de remplir ce formulaire.</h2>
                         <div class="form-group">
@@ -106,7 +93,7 @@
                         </div>
                         <button type="submit" class="btn btn-success">Commander</button>
                     </div>
-                </div>-->
+                </div>
             </form>
         </div>
         

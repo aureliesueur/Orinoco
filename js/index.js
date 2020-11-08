@@ -58,7 +58,6 @@ const CART = { //Déclaration de la constante "panier"
                     return true;
             }
             });
-            console.log (filterPds);//Pour tester si ça fonctionne
             if (filterPds && filterPds[0]) {
                 let addItem = {
                     _id: filterPds[0]._id,
@@ -135,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cartAmount.textContent = calculateCartAmount() + " EUR";
 });
 
-function showCart() {
+function showCart() {//Fonction qui affiche le panier à l'écran
     let cartSection = document.getElementById("cart-section");
     cartSection.innerHTML = " ";
     CART.contents.forEach(item => {
@@ -178,7 +177,7 @@ function showCart() {
     })
 }
 
- function calculateCartAmount() {
+ function calculateCartAmount() {//Fonction qui calcule le montant total du panier en Euros
     let totalPrice = 0;
     CART.contents.forEach(item => {
        totalPrice += (item.price/100 * item.quantity)
@@ -235,74 +234,97 @@ function showProducts(products) {
         let cost = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(product.price / 100);
         price.textContent = cost;
         details.appendChild(price); 
+        //Ajoute une div pour les deux boutons
+        let divBtns = document.createElement("div");
+         // Ajoute la div "divBtns" à la case produit
+        divBtns.className = "card__btns";
+        card.appendChild(divBtns);
         // Crée le bouton pour ajouter au panier
         let btnOrder = document.createElement("a");
         btnOrder.className = "btn btn-secondary card__button btn__order";
         btnOrder.setAttribute("role", "button");
         btnOrder.textContent = "Ajouter au panier";
         btnOrder.setAttribute("data-id", product._id);
-        btnOrder.setAttribute("href", "panier.html");
+        //btnOrder.setAttribute("href", "panier.html");
         btnOrder.addEventListener("click", addItem);
-        card.appendChild(btnOrder); 
+        divBtns.appendChild(btnOrder); 
         // Crée le bouton pour afficher détails du produit
         let btnDetails = document.createElement("a");
         btnDetails.className = "btn btn-secondary card__button";
         btnDetails.setAttribute("role", "button");
         btnDetails.textContent = "En savoir plus";
         btnDetails.setAttribute("data-id", product._id);
-        btnDetails.setAttribute("href", "produit.html");
-        btnDetails.addEventListener("click", showItem);
-        card.appendChild(btnDetails); 
-        
+        btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");//Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
+        divBtns.appendChild(btnDetails); 
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
 }
 
-function showItem(e) {
-    let id = e.target.getAttribute("data-id");
-    let filterPdts = products.filter(product => {
-                if (product._id === id) {
-                    return true;
-                }
-    });
+// Lance la récupération et l'affichage du produit sélectionné quand la page se charge
+document.addEventListener("DOMContentLoaded", () => {
+    getProduct();//Récupère le produit sélectionné par son id depuis le serveur
+});
+
+function getProduct(id) {   
+    //Récupère le id contenu dans les paramètres de la page url
+    let url = new URL(window.location.href);
+    id = url.searchParams.get("id");
+    console.log(id);
+    fetch('http://localhost:3000/api/furniture/' + id , {mode: "cors"})
+        .then(response => response.json())
+        .then(response => {
+            showItem(response);
+            console.log(response);//Pour tester que ça fonctionne
+        })
+        .catch(error => alert("Erreur : " + error));
+}
+    
+function showItem(item) { //Fonction pour afficher le produit sélectionner dans la page produit.html
     let pdtCase = document.getElementById("product-case");
     pdtCase.className = "pdtcase";
     pdtCase.innerHTML = " ";    
     //Génère l'image du produit
-    let pdttImg = document.createElement("img");
+    let pdtImg = document.createElement("img");
     pdtImg.className = "pdtcase__img";
-    pdtImg.alt = product.name;
-    pdtImg.src = filterPdts[0].imageUrl;
-    pdtCase.appendChild(PdtImg);
+    pdtImg.alt = item.name;
+    pdtImg.src = item.imageUrl;
+    pdtCase.appendChild(pdtImg);
     //Génère le nom du produit 
     let pdtTitle = document.createElement("h3");
-    pdtTitle.textContent = filterPdts[0].name;
+    pdtTitle.textContent = item.name;
     pdtTitle.className = "pdtcase__title";
     pdtCase.appendChild(pdtTitle);
     //Génère la description du produit 
-    let pdtDescription = document.createElement("h3");
-    pdtDescription.textContent = filterPdts[0].description;
+    let pdtDescription = document.createElement("p");
+    pdtDescription.textContent = item.description;
     pdtDescription.className = "pdtcase__description";
     pdtCase.appendChild(pdtDescription);
     //Génère le prix unitaire du produit
     let pdtPrice = document.createElement("p");
-    cartPrice.className = "pdtcase__price";
-    let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * filterPdts[0].quantity);
-    pdtPrice.textContent = totalPrice;
+    pdtPrice.className = "pdtcase__price";
+    let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100);
+    pdtPrice.textContent = "Prix unitaire : " + totalPrice;
     pdtCase.appendChild(pdtPrice);
+    //Génère une section pour les boutons d'ajout au panier et de personnalisation
+    let pdtButtons = document.createElement("div");
+    pdtButtons.className = "pdtcase__buttons";
+    pdtCase.appendChild(pdtButtons);
+    // Génère le menu déroulant de personnalisation du vernis 
+    let pdtVarnish = document.createElement("div");
+    pdtVarnish.className = "dropdown pdtcase__varnish";
+    pdtVarnish.textContent = "Personnalisez votre finition !";
+    pdtButtons.appendChild(pdtVarnish);
+    pdtVarnish.innerHTML = '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choisissez votre vernis</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Dark oak</a><a class="dropdown-item" href="#">Light oak</a><a class="dropdown-item" href="#">Mahogany</a></div></div>';
     // Ajoute le bouton 
-   /* let pdtButton = document.createElement("a");
-    pdtButton.className = "btn btn-secondary pdtCase__button";
+    let pdtButton = document.createElement("button");
+    pdtButton.className = "btn btn-secondary pdtcase__order";
     pdtButton.setAttribute("role", "button");
     pdtButton.textContent = "Ajouter au panier";
-    button.setAttribute("href", "produit.html");
-    pdtButton.setAttribute("data-id", filterPdt._id);
+    pdtButton.setAttribute("data-id", item._id);
     pdtButton.addEventListener("click", addItem);
-    cartItem.appendChild(pdtButton); */
-    // Ajoute la "case" produit du panier à la section id="cart-section"
+    pdtButtons.appendChild(pdtButton); 
 }
-
 
 
 function addItem(e) {
