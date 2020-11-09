@@ -153,25 +153,25 @@ function showCart() {//Fonction qui affiche le panier à l'écran
         cartTitle.textContent = item.name;
         cartTitle.className = "cartitem__title";
         cartItem.appendChild(cartTitle);
+        //Génère la quantité de produits achetés pour chaque case
+        let cartQty = document.createElement("span");
+        cartQty.textContent = item.quantity;
+        cartQty.className = "cartitem__qty";
+        cartItem.appendChild(cartQty);
         //Génère le prix total pour chaque case
         let cartPrice = document.createElement("p");
         cartPrice.className = "cartitem__price";
         let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
         cartPrice.textContent = totalPrice;
         cartItem.appendChild(cartPrice);
-        //Génère la quantité de produits achetés pour chaque case
-        let cartQty = document.createElement("span");
-        cartQty.textContent = item.quantity;
-        cartQty.className = "cartitem__qty";
-        cartItem.appendChild(cartQty);
         // Ajoute le bouton 
-        /*let cartButton = document.createElement("button");
+        let cartButton = document.createElement("button");
         cartButton.className = "btn btn-secondary cartitem__button btn__remove";
         cartButton.setAttribute("role", "button");
         cartButton.textContent = "Supprimer du panier";
         cartButton.setAttribute("data-id", item._id);
         cartButton.addEventListener("click", suppressItem);
-        cartItem.appendChild(cartButton); */
+        cartItem.appendChild(cartButton); 
         // Ajoute la "case" produit du panier à la section id="cart-section"
         cartSection.appendChild(cartItem);
     })
@@ -207,19 +207,25 @@ function showProducts(products) {
         // Crée la "case" pour chaque produit
         let card = document.createElement("div");
         card.className = "card";
+        // Crée une div pour les éléments, photo et détails
+        let cardElements = document.createElement("div");
+        cardElements.className = "card__elements element";
+        // Ajoute la div "éléments" à la case produit
+        card.appendChild(cardElements);
         // Ajoute l'image au produit
         let img = document.createElement("img");
         img.alt = product.name;
         img.src = product.imageUrl;
-        img.className = "card__img";
-        card.appendChild(img);
+        img.className = "element__img";
+        img.style.width = "200px";
+        cardElements.appendChild(img);
         // Crée une div pour les détails
         let details = document.createElement("div");
-        details.className = "card__details";
+        details.className = "element__details";
          // Ajoute la div "details" à la case produit
-        card.appendChild(details);
+        cardElements.appendChild(details);
         // Ajoute le nom du produit
-        let name = document.createElement("h2");
+        let name = document.createElement("h3");
         name.className = "card__name";
         name.textContent = product.name;
         details.appendChild(name);
@@ -235,27 +241,26 @@ function showProducts(products) {
         price.textContent = cost;
         details.appendChild(price); 
         //Ajoute une div pour les deux boutons
-        let divBtns = document.createElement("div");
+        let cardBtns = document.createElement("div");
          // Ajoute la div "divBtns" à la case produit
-        divBtns.className = "card__btns";
-        card.appendChild(divBtns);
+        cardBtns.className = "card__btns";
+        card.appendChild(cardBtns);
         // Crée le bouton pour ajouter au panier
         let btnOrder = document.createElement("a");
         btnOrder.className = "btn btn-secondary card__button btn__order";
         btnOrder.setAttribute("role", "button");
-        btnOrder.textContent = "Ajouter au panier";
+        btnOrder.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
         btnOrder.setAttribute("data-id", product._id);
-        //btnOrder.setAttribute("href", "panier.html");
         btnOrder.addEventListener("click", addItem);
-        divBtns.appendChild(btnOrder); 
+        cardBtns.appendChild(btnOrder); 
         // Crée le bouton pour afficher détails du produit
         let btnDetails = document.createElement("a");
-        btnDetails.className = "btn btn-secondary card__button";
+        btnDetails.className = "btn btn-secondary card__button btn__details";
         btnDetails.setAttribute("role", "button");
-        btnDetails.textContent = "En savoir plus";
+        btnDetails.innerHTML = '<i class="fas fa-info-circle"></i> En savoir plus';
         btnDetails.setAttribute("data-id", product._id);
         btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");//Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
-        divBtns.appendChild(btnDetails); 
+        cardBtns.appendChild(btnDetails); 
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
@@ -291,7 +296,7 @@ function showItem(item) { //Fonction pour afficher le produit sélectionner dans
     pdtImg.src = item.imageUrl;
     pdtCase.appendChild(pdtImg);
     //Génère le nom du produit 
-    let pdtTitle = document.createElement("h3");
+    let pdtTitle = document.createElement("h2");
     pdtTitle.textContent = item.name;
     pdtTitle.className = "pdtcase__title";
     pdtCase.appendChild(pdtTitle);
