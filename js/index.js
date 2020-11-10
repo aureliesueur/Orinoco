@@ -29,14 +29,14 @@ const CART = { //Déclaration de la constante "panier"
                 price: 7500 ,
                 imageUrl: "http://localhost:3000/images/oak_4.jpg"
                 }*/];
-            CART.sync();//Synchronise le CART du localStorage à partir du panier du navigateur
         }
+        CART.sync();//Synchronise le CART du localStorage à partir du panier du navigateur
     },
-     async sync() {//Synchronise le CART du localStorage à partir du panier du navigateur
+    async sync() {//Synchronise le CART du localStorage à partir du panier du navigateur
         let storedCart = JSON.stringify(CART.contents);
          await localStorage.setItem(CART.KEY, storedCart);
     },
-   find(id) {//Trouve un article dans le panier par son id
+    find(id) {//Trouve un article dans le panier par son id
         let isFound = CART.contents.filter(item => {
             if (item._id == id) {
                 return true;
@@ -86,22 +86,6 @@ const CART = { //Déclaration de la constante "panier"
         });
         // Met à jour le panier dans le localStorage
         CART.sync();
-    },/*
-    reduce(id, qty=1) {//Diminue d'1 la quantité du produit visé par l'id
-        CART.contents = CART.contents.map(item => {
-            if (item._id === id && item.quantity >=1) {
-                item.quantity = item.quantity - qty;
-            } 
-            return item;
-        });
-        // On supprime le produit si sa quantité est nulle
-        CART.contents.forEach(async item => {//Pourquoi async ici ????
-            if (item._it === id && item.quantity <=0) {
-                CART.remove(id);
-            }
-        });
-        // Met à jour le panier dans le localStorage
-        CART.sync();
     },
     remove(id) {//Supprime totalement un produit du panier
        CART.contents = CART.contents.filter(item => {
@@ -111,13 +95,10 @@ const CART = { //Déclaration de la constante "panier"
         });
         // Met à jour le panier dans le localStorage
         CART.sync();
+        cartAmount.textContent = calculateCartAmount() + " EUR"; 
     },
-    empty() {//Vide le panier sur le navigateur puis synchronise avec le CART du localStorage
-        CART.contents = [];
-        CART.sync();    
-    },*/
     logContents() {
-        console.log(CART.contents);
+        console.log(CART.contents);//Pour tester que la synchro du panier fonctionne
     }
 };
 
@@ -136,45 +117,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function showCart() {//Fonction qui affiche le panier à l'écran
     let cartSection = document.getElementById("cart-section");
-    cartSection.innerHTML = " ";
-    CART.contents.forEach(item => {
-        //Crée la "case" pour chaque produit du panier
-        let cartItem = document.createElement("div");
-        cartItem.className = "cartitem";
-        //Génère l'image pour chaque case
-        let cartImg = document.createElement("img");
-        cartImg.className = "cartitem__img";
-        cartImg.alt = item.name;
-        cartImg.src = item.imageUrl;
-        cartImg.style.width = "10%";
-        cartItem.appendChild(cartImg);
-        //Génère le nom de produit pour chaque case
-        let cartTitle = document.createElement("h3");
-        cartTitle.textContent = item.name;
-        cartTitle.className = "cartitem__title";
-        cartItem.appendChild(cartTitle);
-        //Génère la quantité de produits achetés pour chaque case
-        let cartQty = document.createElement("span");
-        cartQty.textContent = item.quantity;
-        cartQty.className = "cartitem__qty";
-        cartItem.appendChild(cartQty);
-        //Génère le prix total pour chaque case
-        let cartPrice = document.createElement("p");
-        cartPrice.className = "cartitem__price";
-        let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
-        cartPrice.textContent = totalPrice;
-        cartItem.appendChild(cartPrice);
-        // Ajoute le bouton 
-        let cartButton = document.createElement("button");
-        cartButton.className = "btn btn-secondary cartitem__button btn__remove";
-        cartButton.setAttribute("role", "button");
-        cartButton.textContent = "Supprimer du panier";
-        cartButton.setAttribute("data-id", item._id);
-        cartButton.addEventListener("click", suppressItem);
-        cartItem.appendChild(cartButton); 
-        // Ajoute la "case" produit du panier à la section id="cart-section"
-        cartSection.appendChild(cartItem);
-    })
+    cartSection.innerHTML = "";
+    if (CART.contents.length != 0) {
+        CART.contents.forEach(item => {
+            //Crée la "case" pour chaque produit du panier
+            let cartItem = document.createElement("div");
+            cartItem.className = "cartitem";
+            //Génère l'image pour chaque case
+            let cartImg = document.createElement("img");
+            cartImg.className = "cartitem__img";
+            cartImg.alt = item.name;
+            cartImg.src = item.imageUrl;
+            cartImg.style.width = "10%";
+            cartItem.appendChild(cartImg);
+            //Génère le nom de produit pour chaque case
+            let cartTitle = document.createElement("h3");
+            cartTitle.textContent = item.name;
+            cartTitle.className = "cartitem__title";
+            cartItem.appendChild(cartTitle);
+            //Génère la quantité de produits achetés pour chaque case
+            let cartQty = document.createElement("span");
+            cartQty.textContent = item.quantity;
+            cartQty.className = "cartitem__qty";
+            cartItem.appendChild(cartQty);
+            //Génère le prix total pour chaque case
+            let cartPrice = document.createElement("p");
+            cartPrice.className = "cartitem__price";
+            let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
+            cartPrice.textContent = totalPrice;
+            cartItem.appendChild(cartPrice);
+            // Ajoute le bouton 
+            let cartButton = document.createElement("button");
+            cartButton.className = "btn btn-secondary cartitem__button btn__remove";
+            cartButton.setAttribute("role", "button");
+            cartButton.textContent = "Supprimer du panier";
+            cartButton.setAttribute("data-id", item._id);
+            cartButton.addEventListener("click", suppressItem);
+            cartItem.appendChild(cartButton); 
+            // Ajoute la "case" produit du panier à la section id="cart-section"
+            cartSection.appendChild(cartItem);
+        });
+    } else {
+        cartSection.innerHTML = '<h2 id="emptycart">Votre panier est vide.</h2>';
+    } 
 }
 
  function calculateCartAmount() {//Fonction qui calcule le montant total du panier en Euros
@@ -245,22 +230,34 @@ function showProducts(products) {
          // Ajoute la div "divBtns" à la case produit
         cardBtns.className = "card__btns";
         card.appendChild(cardBtns);
-        // Crée le bouton pour ajouter au panier
-        let btnOrder = document.createElement("a");
-        btnOrder.className = "btn btn-secondary card__button btn__order";
-        btnOrder.setAttribute("role", "button");
-        btnOrder.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
-        btnOrder.setAttribute("data-id", product._id);
-        btnOrder.addEventListener("click", addItem);
-        cardBtns.appendChild(btnOrder); 
         // Crée le bouton pour afficher détails du produit
         let btnDetails = document.createElement("a");
-        btnDetails.className = "btn btn-secondary card__button btn__details";
+        btnDetails.className = "btn btn-secondary card__btnDetails btn__details";
         btnDetails.setAttribute("role", "button");
         btnDetails.innerHTML = '<i class="fas fa-info-circle"></i> En savoir plus';
         btnDetails.setAttribute("data-id", product._id);
         btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");//Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
         cardBtns.appendChild(btnDetails); 
+        // Crée le bouton pour ajouter au panier
+        let btnOrder = document.createElement("button");
+        btnOrder.className = "btn btn-secondary card__btnOrder btn__order";
+        btnOrder.setAttribute("role", "button");
+        btnOrder.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
+        btnOrder.setAttribute("data-id", product._id);
+        btnOrder.addEventListener("click", function() {
+            addItem;
+            messageAddElt.style.opacity= "1";
+            setTimeout(function() {
+                messageAddElt.style.opacity= "0";
+            }, 1000);
+        });
+        cardBtns.appendChild(btnOrder); 
+        // Crée une div pour le message animé "ajouté !"
+        let messageAddElt = document.createElement("div");
+        messageAddElt.className = "message-addelt";
+        messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
+        // Ajoute la div "éléments" à la case cardBtns
+        cardBtns.appendChild(messageAddElt);
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
@@ -295,6 +292,11 @@ function showItem(item) { //Fonction pour afficher le produit sélectionner dans
     pdtImg.alt = item.name;
     pdtImg.src = item.imageUrl;
     pdtCase.appendChild(pdtImg);
+    //Génère la pastille "en stock"
+    let pdtStock = document.createElement("p");
+    pdtStock.className = "pdtcase__stock";
+    pdtStock.textContent = "En stock";
+    pdtCase.appendChild(pdtStock);
     //Génère le nom du produit 
     let pdtTitle = document.createElement("h2");
     pdtTitle.textContent = item.name;
@@ -323,27 +325,41 @@ function showItem(item) { //Fonction pour afficher le produit sélectionner dans
     pdtVarnish.innerHTML = '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choisissez votre vernis</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Dark oak</a><a class="dropdown-item" href="#">Light oak</a><a class="dropdown-item" href="#">Mahogany</a></div></div>';
     // Ajoute le bouton 
     let pdtButton = document.createElement("button");
-    pdtButton.className = "btn btn-secondary pdtcase__order";
+    pdtButton.className = "btn btn-secondary btn__order pdtcase__order";
     pdtButton.setAttribute("role", "button");
-    pdtButton.textContent = "Ajouter au panier";
+    pdtButton.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
     pdtButton.setAttribute("data-id", item._id);
     pdtButton.addEventListener("click", addItem);
     pdtButtons.appendChild(pdtButton); 
+    // Crée une div pour le message animé "ajouté !"
+    let messageAddElt = document.createElement("div");
+    messageAddElt.className = "message-addelt";
+    messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
+    // Ajoute la div "éléments" à la case cardBtns
+    pdtButtons.appendChild(messageAddElt);
 }
+
+/*pdtButton.addEventListener("click", function() { MARCHE PAS, DESACTIVE LE ADD ITEM
+    addItem;
+    messageAddElt.style.opacity= "1";
+    setTimeout(function() {
+        messageAddElt.style.opacity= "0";
+    }, 1000);
+});*/
 
 
 function addItem(e) {
     // Plus tard : e.preventDefault; pour éviter qu'on charge la page du panier tout de suite
     let id = e.target.getAttribute("data-id");
     console.log("Votre produit a bien été ajouté");//Pour tester le bon fonctionnement
-    CART.add(id, 1);//XXXX attention, lui marque CART.add(id,1);
+    CART.add(id, 1);
     showCart(); 
 }
 
 function suppressItem(e) {
     let id = e.target.getAttribute("data-id");
+    CART.remove(id);
     console.log("Votre produit a bien été supprimé");//Pour tester le bon fonctionnement
-    CART.reduce(id, 1);//XXXX attention, lui marque CART.add(id,1);
     showCart(); 
 }
 
