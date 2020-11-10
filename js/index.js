@@ -364,8 +364,7 @@ function suppressItem(e) {
 }
 
 
-//Jouer avec les async et les await : on ne veut pas faire des mauvaises manip avant d'avoir synchronisé les paniers navigateur et localStorage !!
-// Reste les évènements à créer
+
 /*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
 Utiliser Babel pour le transformer en ES5 ??*/
 
@@ -376,10 +375,66 @@ let formElt = document.getElementById("form-section");
 buttonConfirm.addEventListener("click", () => {
     formElt.innerHTML = '<div class="row"><div class="col-12 jumbotron"><h2>Pour finaliser votre commander, merci de remplir ce formulaire.</h2><div class="form-group"><label for="name">Nom :</label><input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" required></div><div class="form-group"><label for="firstname">Prénom :</label><input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" required></div><div class="form-group"><label for="email">Email :</label><input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required></div><div class="form-group"><label for="adress">Adresse :</label><input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" required></div><div class="form-group"><label <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" required></div><div class="form-group"><label for="city">Ville :</label><input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" required></div><div class="form-group form-check"><input class="form-check-input" type="checkbox" id="newsletter"><label class="form-check-label for="gridCheck>Recevoir notre newsletter</label></div><button type="submit" class="btn btn-success">Commander</button></div></div>';
 });
-
-   */             
+ */             
          
 
+/*VALIDATION DES DONNEES DU FORMULAIRE*/
+
+let name = document.getElementById("name");
+let firstName = document.getElementById("firstname");
+let email = document.getElementById("email");
+let address = document.getElementById("address");
+let postCode = document.getElementById("postcode");
+let city = document.getElementById("city");
+
+
+name.addEventListener("keyup", function (event) {
+  if(name.validity.patternMismatch) {
+    name.setCustomValidity("Ceci ne ressemble pas à un nom de famille...");
+  } else {
+    name.setCustomValidity("");
+  }
+});
+
+firstname.addEventListener("keyup", function (event) {
+  if(firstname.validity.patternMismatch) {
+    firstname.setCustomValidity("Ceci ne ressemble pas à un prénom...");
+  } else {
+    firstname.setCustomValidity("");
+  }
+});
+
+email.addEventListener("keyup", function (event) {
+  if(email.validity.typeMismatch) {
+    email.setCustomValidity("Merci d'entrer une adresse email valide utilisant le symbole @");
+  } else {
+    email.setCustomValidity("");
+  }
+});
+
+address.addEventListener("keyup", function (event) {
+  if(address.validity.patternMismatch) {
+    address.setCustomValidity("Merci d'entrer un numéro et le nom de la rue ou avenue");
+  } else {
+    address.setCustomValidity("");
+  }
+});
+
+postCode.addEventListener("keyup", function (event) {
+  if(postCode.validity.patternMismatch) {
+    postCode.setCustomValidity("Dans un code postal, il n'y a que des chiffres !");
+  } else {
+    postCode.setCustomValidity(""); // Celui du postcode a l'air de ne pas marcher !!
+  }
+});
+
+city.addEventListener("keyup", function (event) {
+  if(city.validity.patternMismatch) {
+    city.setCustomValidity("Ceci ne ressemble pas à un nom de ville...");
+  } else {
+    city.setCustomValidity("");
+  }
+});
 
 
 

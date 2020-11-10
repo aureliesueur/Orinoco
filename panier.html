@@ -52,7 +52,7 @@
                </div>
 
                 <div class="col-11 col-md-3" class="price">
-                    <p class="price__amount"> Montant total de votre commande: <span id="cart-amount"></span></p>
+                    <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande: <span id="cart-amount"></span></p>
                     <button class="btn btn-danger card__button btn__order price__btn" role="button" id="confirm">TERMINER VOTRE COMMANDE</button>
                 </div>
             </div>
@@ -66,27 +66,27 @@
                 <h2>Pour finaliser votre commande, merci de remplir ce formulaire.</h2>
                 <div class="form-group">
                     <label for="name">Nom :</label>
-                    <input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" required>
+                    <input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
                 </div>
                 <div class="form-group">
                     <label for="firstname">Prénom :</label>
-                    <input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" required>
+                    <input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email :</label>
                     <input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="adress">Adresse :</label>
-                    <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" required>
+                    <label for="address">Adresse :</label>
+                    <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required>
                 </div>
                 <div class="form-group">
                     <label for="postcode">Code postal :</label>
-                    <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" required>
+                    <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" pattern="[0-9]{5}+" required>
                 </div>
                 <div class="form-group">
                     <label for="city">Ville :</label>
-                    <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" required>
+                    <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
                 </div>
                 <div class="form-group form-check">
                     <input class="form-check-input" type="checkbox" id="newsletter">
