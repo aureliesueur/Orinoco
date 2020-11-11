@@ -369,22 +369,24 @@ function suppressItem(e) {
 Utiliser Babel pour le transformer en ES5 ??*/
 
 
-/*
+/*Animation pour faire apparaître le formulaire quand on clique sur "termminer la commande"
 let buttonConfirm = document.getElementById("confirm");
-let formElt = document.getElementById("form-section");
+let formSection = document.getElementById("form-section");
 buttonConfirm.addEventListener("click", () => {
-    formElt.innerHTML = '<div class="row"><div class="col-12 jumbotron"><h2>Pour finaliser votre commander, merci de remplir ce formulaire.</h2><div class="form-group"><label for="name">Nom :</label><input type="text" name="name" class="form-control" placeholder="Par ex. Delavigne" id="name" required></div><div class="form-group"><label for="firstname">Prénom :</label><input type="text" name="firstname" class="form-control" placeholder="Par ex. Martin" id="firstname" required></div><div class="form-group"><label for="email">Email :</label><input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required></div><div class="form-group"><label for="adress">Adresse :</label><input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" required></div><div class="form-group"><label <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" required></div><div class="form-group"><label for="city">Ville :</label><input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" required></div><div class="form-group form-check"><input class="form-check-input" type="checkbox" id="newsletter"><label class="form-check-label for="gridCheck>Recevoir notre newsletter</label></div><button type="submit" class="btn btn-success">Commander</button></div></div>';
+    formSection.innerHTML = '<div class="row"><div class="col-12 jumbotron"><h2>Pour finaliser votre commande, merci de remplir ce formulaire.</h2 class="form__title"><form id="formtosubmit" method="post"><div class="form-group"><label for="firstName">Prénom :</label><input type="text" name="firstName" class="form-control" placeholder="Par ex. Martin" id="firstName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="lastName">Nom :</label><input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="address">Adresse :</label><input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required></div><div class="form-group"><label for="city">Ville :</label><input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="email">Email :</label><input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required></div><input type="submit" class="btn btn__order form__btn" value="Valider votre commande"></form></div>';
 });
- */             
+ */            
          
 
-/*VALIDATION DES DONNEES DU FORMULAIRE*/
+/*FORMULAIRE */
 
-let name = document.getElementById("name");
-let firstName = document.getElementById("firstname");
+/*VALIDATION DES DONNEES DU FORMULAIRE EN UTILISANT L'API DE CONTRAINTES DE VALIDATION HTML 5*/
+
+let name = document.getElementById("lastName");// on a besoin d'attendre que le formulaire soit chargé avant de faire ce code ?
+let firstname = document.getElementById("firstName");
 let email = document.getElementById("email");
 let address = document.getElementById("address");
-let postCode = document.getElementById("postcode");
+//let postCode = document.getElementById("postcode");
 let city = document.getElementById("city");
 
 
@@ -420,13 +422,13 @@ address.addEventListener("keyup", function (event) {
   }
 });
 
-postCode.addEventListener("keyup", function (event) {
+/*postCode.addEventListener("keyup", function (event) {
   if(postCode.validity.patternMismatch) {
     postCode.setCustomValidity("Dans un code postal, il n'y a que des chiffres !");
   } else {
     postCode.setCustomValidity(""); // Celui du postcode a l'air de ne pas marcher !!
   }
-});
+});*/
 
 city.addEventListener("keyup", function (event) {
   if(city.validity.patternMismatch) {
@@ -436,13 +438,95 @@ city.addEventListener("keyup", function (event) {
   }
 });
 
+/* ENVOI DES DONNEES DU FORMULAIRE AVEC UNE REQUETE XMLHTTPREQUEST POST*/
+
+let formElt = document.getElementById("formtosubmit");
+
+formElt.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let contact = new FormData(formElt);
+    console.log(contact);// pour tester : pour l'instant renvoie un object vide
+    fetch("http://localhost:3000/api/furniture/order", {
+        method: "POST",
+        body: contact
+    })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => alert("Erreur : " + error));
+});
 
 
 
+/* EXTRAIT BACKEND
+exports.orderFurniture = (req, res, next) => {
+  if (!req.body.contact ||
+    !req.body.contact.firstName ||
+    !req.body.contact.lastName ||
+    !req.body.contact.address ||
+    !req.body.contact.city ||
+    !req.body.contact.email ||
+    !req.body.products) {
+    return res.status(400).send(new Error('Bad request!'));
+  }*/
+   
+/* EN UTILISANT UNE XMLHTTPREQUEST
 
+formElt.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let formResults = new FormData(formElt);
+    let XHR = new XMLHttpRequest();
+    XHR.addEventListener("load", function(e) {
+            console.log(e.target.responseText);
+            console.log("Bravo, tout s'est bien passé");
+    });
+    XHR.addEventListener("error", function(e) {
+            console.log("Oups ! Il y a eu un problème !");
+    });
+    XHR.open("POST", 'http://localhost:3000/api/furniture/order=1');
+    //XHR.setRequestHeader("Content-Type", "application/json");
+    XHR.send(formResults);//JSON.stringify(formResults));
+});
+*/
 
+//Ajouter ensuite les autres données à envoyer au serveur : détails de la commande.
 
-
+/*exports.orderFurniture = (req, res, next) => {
+  if (!req.body.contact ||
+    !req.body.contact.firstName ||
+    !req.body.contact.lastName ||
+    !req.body.contact.address ||
+    !req.body.contact.city ||
+    !req.body.contact.email ||
+    !req.body.products) {
+    return res.status(400).send(new Error('Bad request!'));
+  }
+  let queries = [];
+  for (let productId of req.body.products) {
+    const queryPromise = new Promise((resolve, reject) => {
+      Furniture.findById(productId).then(
+        (furniture) => {
+          if (!furniture) {
+            reject('Camera not found: ' + productId);
+          }
+          furniture.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + furniture.imageUrl;
+          resolve(furniture);
+        }
+      ).catch(
+        () => {
+          reject('Database error!');
+        }
+      )
+    });
+    queries.push(queryPromise);
+  }
+  Promise.all(queries).then(
+    (furniture) => {
+      const orderId = uuid();
+      return res.status(201).json({
+        contact: req.body.contact,
+        products: furniture,
+        orderId: orderId
+ */
 
 
 
