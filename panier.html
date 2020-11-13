@@ -54,47 +54,6 @@
                 <div class="col-11 col-md-3" class="price">
                     <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande: <span id="cart-amount"></span></p>
                     <button class="btn btn-danger card__button btn__order price__btn" role="button" id="confirm">Terminer votre commande <i class="fas fa-angle-double-right"></i></button>
-                    <!-- Pour l'anim CSS je place le form juste après le bouton
-                    <section class="container form" id="form-section">
-                        <div class="row">
-                            <div class="col-12 jumbotron">
-                                <h2 class="form__title">Pour finaliser votre commande, merci de remplir ce formulaire.</h2>
-                                <form id="formtosubmit">
-
-                                    <div class="form-group">
-                                        <label for="firstName">Prénom :</label>
-                                        <input type="text" name="firstName" class="form-control" placeholder="Par ex. Martin" id="firstName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
-                                    </div>
-                                     <div class="form-group">
-                                        <label for="lastName">Nom :</label>
-                                        <input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="address">Adresse :</label>
-                                        <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required>
-                                    </div>
-                                    <!--<div class="form-group">
-                                        <label for="postcode">Code postal :</label>
-                                        <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" pattern="[0-9]{5}+" required>
-                                    </div>-->
-                                    <!--<div class="form-group">
-                                        <label for="city">Ville :</label>
-                                        <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email :</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required>
-                                    </div>
-                                    <!--<div class="form-group form-check">
-                                        <input class="form-check-input" type="checkbox" id="newsletter">
-                                        <label class="form-check-label for="gridCheck>Recevoir notre newsletter</label>
-                                    </div>-->
-                                    <!--<input type="submit" class="btn btn__order form__btn" value="Valider votre commande">
-                                </form>
-                            </div>
-                        </div>
-                    </section>-->
                 </div>
             </div>
         </section>
@@ -136,7 +95,7 @@
                             <input class="form-check-input" type="checkbox" id="newsletter">
                             <label class="form-check-label for="gridCheck>Recevoir notre newsletter</label>
                         </div>-->
-                      <input type="submit" class="btn btn__order form__btn" value="Valider votre commande">
+                       <button type="submit" class="btn btn__order form__btn"><a id="confirm-link">Valider votre commande</a></button
                     </form>
                 </div>
             </div>

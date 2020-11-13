@@ -76,7 +76,12 @@ function showCart() {
     return totalPrice;
   }
 
+//Au click d'envoi du formulaire, envoi du montant total du panier en paramètre de l'URL de la page de confirmation
+let btnConfirm = document.getElementById("confirm-link");
 
+btnConfirm.addEventListener("click", function() {
+  btnConfirm.setAttribute("href", "confirmation.html?price=" + cartAmount.textContent + "");  
+});
 
 
 /*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
@@ -87,7 +92,7 @@ Utiliser Babel pour le transformer en ES5 ??*/
 let buttonConfirm = document.getElementById("confirm");
 let formSection = document.getElementById("form-section");
 buttonConfirm.addEventListener("click", () => {
-    formSection.innerHTML = '<div class="row"><div class="col-12 jumbotron"><h2>Pour finaliser votre commande, merci de remplir ce formulaire.</h2 class="form__title"><form id="formtosubmit" method="post"><div class="form-group"><label for="firstName">Prénom :</label><input type="text" name="firstName" class="form-control" placeholder="Par ex. Martin" id="firstName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="lastName">Nom :</label><input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="address">Adresse :</label><input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required></div><div class="form-group"><label for="city">Ville :</label><input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required></div><div class="form-group"><label for="email">Email :</label><input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required></div><input type="submit" class="btn btn__order form__btn" value="Valider votre commande"></form></div>';
+   
 });
  */            
          
@@ -158,8 +163,11 @@ city.addEventListener("keyup", function (event) {
 
 let formElt = document.getElementById("formtosubmit");
 
-formElt.addEventListener("submit", function(e) { //Envoi des données quand on clique sur le bouton "submit"
+//Evenement envoi des données déclenché quand on clique sur le bouton "submit"
+formElt.addEventListener("submit", function(e) { 
+    // Pour empêcher le formulaire d'envoyer les données par défaut sans validation préalable
     e.preventDefault();
+    //Récupération des valeurs entrées par l'utilisateur
     let contact = { 
         firstName: formElt.firstName.value,
         lastName: formElt.lastName.value,
@@ -167,18 +175,23 @@ formElt.addEventListener("submit", function(e) { //Envoi des données quand on c
         city: formElt.city.value,
         email: formElt.email.value
     };
+    //Récupération des données du panier - id des produits commandés - sous forme de tableau de strings
+    let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
+    let data = [contact, products];
+    console.log(data);
+    let dataToSend = JSON.stringify(data);
+    //Pour tester si ça fonctionne
+    console.log(dataToSend);
+    //Envoi des données
+    sendFormData(data);
+}); 
     
-   let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
-    console.log(contact)//Pour tester si ça fonctionne
-    products.unshift(contact);
-    let dataToSend = JSON.stringify(products);
-    console.log(dataToSend)//Pour tester si ça fonctionne : donne bien un ajout de l'objet au début du tableau
-    sendFormData(dataToSend);
-}); // MAIS NOUS ON VEUT UN OBJET ET UN TABLEAU DANS LE MÊME BODY DE REQUETE !!
-    
+/**
+*Fonction pour enovyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
+@param {string} data - données à envoyer en format json
+*/
 function sendFormData(data) {   
-    //Envoie les données du formulaire ainsi que la liste des id des produits commandés
-    fetch("http://localhost:3000/api/furniture/order", {
+   /* fetch("http://localhost:3000/api/furniture/order", {
         method: "POST",
         headers: {
         "Content-Type": "application/json"
@@ -187,38 +200,20 @@ function sendFormData(data) {
         })
         .then(response => response.json())
         .then(response => console.log(response))
-        .catch(error => alert("Erreur : " + error));
+        .catch(error => alert("Erreur : " + error));*/
+        let XHR = new XMLHttpRequest();
+        XHR.addEventListener("load", function(e) {
+                console.log(e.target.responseText);
+                console.log("Bravo, tout s'est bien passé");
+        });
+        XHR.addEventListener("error", function(e) {
+                console.log("Oups ! Il y a eu un problème !");
+        });
+        XHR.open("POST", 'http://localhost:3000/api/furniture/order');
+        //XHR.setRequestHeader("Content-Type", "application/json");
+        XHR.send(data);
 }
-    /* let contactToSend = { // Pareil en séparant en deux données JSON différentes
-        firstName: formElt.firstName.value,
-        lastName: formElt.lastName.value,
-        address: formElt.address.value,
-        city: formElt.city.value,
-        email: formElt.email.value
-    };
-    
-   let productsToSend = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
-    console.log(contactToSend)//Pour tester si ça fonctionne
-    let contact = JSON.stringify(contactToSend);
-    let products = JSON.stringify(productsToSend);
-    console.log(contact)//Pour tester si ça fonctionne
-    console.log(products);//Pour tester
-    sendFormData(contact, products);
-});
-    
-function sendFormData(data1, data2) {   
-    //Envoie les données du formulaire ainsi que la liste des id des produits commandés
-    fetch("http://localhost:3000/api/furniture/order", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
-        },
-        body: data1 + data2
-        })
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(error => alert("Erreur : " + error));
-}*/
+
 /**
  *
  * Expects request to contain:
