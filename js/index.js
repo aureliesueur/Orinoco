@@ -1,29 +1,36 @@
-
-
-
 // Lance la récupération et l'affichage des produits quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
-    //localStorage.clear(); Pour vider localStorage après bugs et tout remettre à zéro
+    //Pour vider localStorage après bugs et tout remettre à zéro
+    //localStorage.clear(); 
+    //Récupère la liste des produits du serveur
     getProducts();
-    CART.init();//Récupère la liste des produits du serveur
+    //Met à jour le panier
+    CART.init();
 });
 
-
+/**
+*Fonction pour récupérer la liste des produits depuis le serveur
+*/
 function getProducts() { 
-    // Création de la fonction pour récupérer la liste des produits depuis le serveur
+    //Récupération des données via une API fetch 
     fetch("http://localhost:3000/api/furniture", {mode: "cors"})
         .then(response => response.json())
         .then(response => {
+            //Affiche la liste des produits une fois que les données sont chargées
             showProducts(response);
-            //console.log(response);//Pour tester que ça fonctionne
+            //Test de vérification de bon fonctionnement
+            //console.log(response);
             CART.init();
         })
+        //Affiche l'erreur si requête ne fonctionne pas
         .catch(error => alert("Erreur : " + error));
 }
     
-
+/**
+*Fonction pour afficher les produits dans la section id="products"
+*/
 function showProducts(products) {
-    // Utilise les data récupérées par le fetch pour afficher les produits dans la section id="products"
+    //Capture l'élément du DOM "products" qui va afficher toutes les informations
     let productSection = document.getElementById("products");
     PRODUCTS = products;
     productSection.innerHTML = "";
@@ -64,12 +71,11 @@ function showProducts(products) {
         let cost = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(product.price / 100);
         price.textContent = cost;
         details.appendChild(price); 
-        //Ajoute une div pour les deux boutons
+        //Crée et ajoute une div pour les deux boutons
         let cardBtns = document.createElement("div");
-         // Ajoute la div "divBtns" à la case produit
         cardBtns.className = "card__btns";
         card.appendChild(cardBtns);
-        // Crée le bouton pour afficher détails du produit
+        // Crée et ajoute le bouton pour afficher détails du produit
         let btnDetails = document.createElement("a");
         btnDetails.className = "btn btn-secondary card__btnDetails btn__details";
         btnDetails.setAttribute("role", "button");
@@ -77,7 +83,7 @@ function showProducts(products) {
         btnDetails.setAttribute("data-id", product._id);
         btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");//Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
         cardBtns.appendChild(btnDetails); 
-        // Crée le bouton pour ajouter au panier
+        // Crée et ajoute le bouton pour ajouter au panier
         let btnOrder = document.createElement("button");
         btnOrder.className = "btn btn-secondary card__btnOrder btn__order";
         btnOrder.setAttribute("role", "button");
@@ -91,13 +97,21 @@ function showProducts(products) {
             }, 1000);
         })*/;
         cardBtns.appendChild(btnOrder); 
-        // Crée une div pour le message animé "ajouté !"
+        // Crée et ajoute une div pour le message animé "ajouté !"
         let messageAddElt = document.createElement("div");
         messageAddElt.className = "message-addelt";
         messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
-        // Ajoute la div "éléments" à la case cardBtns
         cardBtns.appendChild(messageAddElt);
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
 }
+
+
+/*pdtButton.addEventListener("click", function() { MARCHE PAS, DESACTIVE LE ADD ITEM
+    addItem;
+    messageAddElt.style.opacity= "1";
+    setTimeout(function() {
+        messageAddElt.style.opacity= "0";
+    }, 1000);
+});*/

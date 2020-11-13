@@ -72,6 +72,28 @@ h3 {
             color: #000;
         }
     }
+    &__buy {
+        background: $color-white;
+        border: 2px solid $color-secondary;
+        color: #000;
+        &:hover {
+            background: $color-white;
+            border: 3px solid $color-secondary;
+            color: $color-secondary;
+            font-weight: bold;
+        }
+    }
+    &__cart {
+        background: $color-white;
+        border: 2px solid $color-tertiary;
+        color: #000;
+        &:hover {
+            background: $color-white;
+            border: 3px solid $color-tertiary;
+            color: $color-tertiary;
+            font-weight: bold;
+        }
+    }
 }
 
 /*Header*/
@@ -586,12 +608,27 @@ header {
     }  
 }
 
-
 .dropdown {
         background: $color-tertiary!important;
     }
 
-
+.modal {
+    &__title {
+        font-weight: bold;
+        font-size: 1.3em;
+        color: $color-secondary;
+    }
+    &__message {
+        text-align: center;
+    }
+    &__link {
+        color: #000;
+        &:hover {
+            color: #000;
+            text-decoration: none; 
+        }
+    }
+}
 
 /* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN TABLETTE*/
 /*
@@ -606,14 +643,6 @@ header {
 
 /*FORMULAIRE-----------------------------------------------------------------------*/
 
-/*joli mais ne donne pas d'indication
-input:invalid {
-  border: 2px solid $color-secondary;
-}
-
-input:valid {
-    border: 2px solid $color-tertiary;
-}*/
 
 
 

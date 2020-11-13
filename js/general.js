@@ -2,8 +2,10 @@ let PRODUCTS = [];
 
 /*Création du panier*/
 
-const CART = { //Déclaration de la constante "panier"
-    KEY : "orinocofrontendaureliesueur", // Création d'une Key unique 
+//Déclaration de l'objet "panier"
+const CART = { 
+    //Création d'une Key unique 
+    KEY : "orinocofrontendaureliesueur", 
     contents : [],
     init() {
         //Vérification du LocalStorage pour voir s'il y a déjà des éléments dans le CART
@@ -11,6 +13,7 @@ const CART = { //Déclaration de la constante "panier"
         if (storedContents) {
             CART.contents = JSON.parse(storedContents);
         } else {
+            //Données factices pour tester le bon fonctionnement
             CART.contents = [{
                 _id: "1ab",
                 name: "Etagère vintage",
@@ -31,13 +34,16 @@ const CART = { //Déclaration de la constante "panier"
                 imageUrl: "http://localhost:3000/images/oak_4.jpg"
                 }];
         }
-        CART.sync();//Synchronise le CART du localStorage à partir du panier du navigateur
+        //Synchronise le CART 
+        CART.sync();
     },
-    async sync() {//Synchronise le CART du localStorage à partir du panier du navigateur
+    //Méthode pour synchroniser le CART du localStorage à partir du panier du navigateur
+    async sync() {
         let storedCart = JSON.stringify(CART.contents);
          await localStorage.setItem(CART.KEY, storedCart);
     },
-    find(id) {//Trouve un article dans le panier par son id
+    //Méthode pour trouver un article dans le panier par son id
+    find(id) {
         let isFound = CART.contents.filter(item => {
             if (item._id == id) {
                 return true;
@@ -48,8 +54,8 @@ const CART = { //Déclaration de la constante "panier"
             return isFound[0];
         }
     },
-    add(id) { // FONCTION D'AJOUT AU PANIER A PARTIR DE LA LISTE DES PRODUITS
-        //Ajoute un nouveau produit dans le panier du navigateur
+    //Méthode pour ajouter un nouveau produit dans le panier du navigateur, avec accès à la liste des produits
+    add(id) {  
         //Vérifie si ce produit est déjà dans le panier
         if (CART.find(id)) {
            CART.increase(id, qty=1); 
@@ -70,7 +76,7 @@ const CART = { //Déclaration de la constante "panier"
                 };
                 //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(addItem);
-                // Met à jour le panier dans le localStorage
+                //Met à jour le panier dans le localStorage
                 CART.sync();
             } else {
                 //Message d'erreur si l'id ne correspond à aucun produit 
@@ -78,48 +84,40 @@ const CART = { //Déclaration de la constante "panier"
             }    
         }
     },
-    addProductOnly(id, qty=1) { // FONCTION D'AJOUT AU PANIER A PARTIR DU SEUL PRODUIT AFFICHE ET CHARGE
-       //Ajoute le produit affiché pans page "produit" dans le panier du navigateur
+    //Méthode pour ajouter le produit affiché pans page "produit", avec accès au produit seul
+    addProductOnly(id, qty=1) { 
         //Vérifie si ce produit est déjà dans le panier
         console.log(CART.contents);//Test
         if (CART.find(id)) {
            CART.increase(id, qty=1); 
-            console.log("Produit déjà dans le panier");// Pour tester si ça fonctionne
-        } else { // Si le produit n'est pas déjà dans le panier, on le récupère avec son id pour l'ajouter
-               fetch('http://localhost:3000/api/furniture/' + id , {mode: "cors"})
-                    .then(response => response.json())
-                    .then(response => {
-                    console.log(response);//Pour tester que ça fonctionne
-                    let addProd = {
-                        _id: response._id,
-                        name: response.name,
-                        price: response.price,
-                        description: response.description,
-                        imageUrl: response.imageUrl,
-                        quantity: 1
-                    };
-                   if (addProd) {
-                        console.log(addProd);//Pour tester que ça fonctionne
-                    } else {
-                        //Message d'erreur si ça ne fonctionne pas 
-                        console.log("Produit non valide ou inexistant");
-                    }
-                    //Ajoute le produit au panier dans le navigateur
-                    CART.contents.push(addProd);
-                    // Met à jour le panier dans le localStorage
-                    CART.sync();
-                    })
-                    .catch(error => alert("Erreur : " + error));
+            //Test de vérification de bon fonctionnement
+            console.log("Produit déjà dans le panier");
+        } else { 
+            //Si le produit n'est pas déjà dans le panier, on le récupère grâce au localStorage
+            let pdtInStorage = localStorage.getItem(PDTSELECTED.KEY);
+            PDTSELECTED.contents = JSON.parse(pdtInStorage);
+            //Test de vérification de bon fonctionnement
+            console.log(PDTSELECTED.contents);
+           if (PDTSELECTED) {
+               //Ajoute le produit au panier dans le navigateur
+                CART.contents.push(PDTSELECTED.contents);
+                //Met à jour le panier dans le localStorage
+                CART.sync();
+            } else {
+                //Message d'erreur si ça ne fonctionne pas 
+                console.log("Produit non valide ou inexistant");
+            }
         }
     },
-    increase(id, qty = 1) {//Augmente d'1 la quantité du produit visé par l'id
+    //Méthode pour augmenter d'1 la quantité du produit visé par l'id
+    increase(id, qty = 1) {
         CART.contents = CART.contents.map(item => {
             if (item._id == id) {
                 item.quantity = item.quantity + qty;
             }
             return item;
         });
-        // Met à jour le panier dans le localStorage
+        //Met à jour le panier dans le localStorage
         CART.sync();
     },
     remove(id) {//Supprime totalement un produit du panier
@@ -132,31 +130,40 @@ const CART = { //Déclaration de la constante "panier"
         CART.sync();
         cartAmount.textContent = calculateCartAmount() + " EUR"; 
     },
+    //Méthode pour afficher le contenu du panier
     logContents() {
-        console.log(CART.contents);//Pour tester que la synchro du panier fonctionne
+        console.log(CART.contents);//Test de vérification de bon fonctionnement
     }
 };
 
-
-function addItem(e) { // Fonction pour ajouter un produit au panier depuis la liste
-    // Plus tard : e.preventDefault; pour éviter qu'on charge la page du panier tout de suite
+/**
+*Fonction pour ajouter un produit au panier depuis la liste des produits
+*/
+function addItem(e) {  
     let id = e.target.getAttribute("data-id");
-    console.log("Votre produit a bien été ajouté");//Pour tester le bon fonctionnement
+    //Test de vérification de bon fonctionnement
+    console.log("Votre produit a bien été ajouté");
     CART.add(id, 1);
 }
 
-function addItemOnly(e) { // Fonction pour ajouter le produit unique depuis la page produit
-    // Plus tard : e.preventDefault; pour éviter qu'on charge la page du panier tout de suite
+/**
+*Fonction pour ajouter le produit unique au panier depuis la page produit
+*/
+function addItemOnly(e) { // 
     let id = e.target.getAttribute("data-id");
-    console.log("Votre produit a bien été ajouté");//Pour tester le bon fonctionnement
+    //Test de vérification de bon fonctionnement
+    console.log("Votre produit a bien été ajouté");
     CART.addProductOnly(id, 1);
 }
 
-
-function suppressItem(e) {// Fonction pour supprimer un produit du panier
+/**
+*Fonction pour supprimer un produit du panier
+*/
+function suppressItem(e) {
     let id = e.target.getAttribute("data-id");
     CART.remove(id);
-    console.log("Votre produit a bien été supprimé");//Pour tester le bon fonctionnement
+    //Test de vérification de bon fonctionnement
+    console.log("Votre produit a bien été supprimé");
     showCart(); 
 }
 

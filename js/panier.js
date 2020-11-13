@@ -1,48 +1,56 @@
-
-//let PRODUCTS = [];
 let cartAmount = document.getElementById("cart-amount");
 
-// Lance la récupération et l'affichage des produits quand la page se charge
+//Lance la mise à jour avec le localStorage et l'affichage du panier, ainsi que le calcul du prix total
 document.addEventListener("DOMContentLoaded", () => {
-    CART.init();//Charge les produits du panier
-    CART.logContents();// Test pour être sûr que le lien avec localStorage fonctionne
-    //CART.find(2); Test pour être sûr que le lien avec localStorage fonctionne
+    //Charge les produits du panier
+    CART.init();
+    //Test de vérification de bon fonctionnement
+    CART.logContents();
+    //Affiche le panier
     showCart();
+    //Calcule le montant total du panier
     cartAmount.textContent = calculateCartAmount() + " EUR";
 });
 
-function showCart() {//Fonction qui affiche le panier à l'écran
+/**
+*Fonction pour afficher le panier dans la page panier.html
+*/
+function showCart() {
+    //Capture l'élément du DOM "cart-section" qui va afficher toutes les informations
     let cartSection = document.getElementById("cart-section");
     cartSection.innerHTML = "";
     if (CART.contents.length != 0) {
+        //Boucle qui affiche les informations chacun des éléments du tableau CART
         CART.contents.forEach(item => {
-            //Crée la "case" pour chaque produit du panier
+            //Crée et ajoute la "case" pour chaque produit du panier
             let cartItem = document.createElement("div");
             cartItem.className = "cartitem";
-            //Génère l'image pour chaque case
+            cartSection.appendChild(cartItem);
+            //Génère et ajoute l'image pour chaque case
             let cartImg = document.createElement("img");
             cartImg.className = "cartitem__img";
             cartImg.alt = item.name;
             cartImg.src = item.imageUrl;
             cartImg.style.width = "10%";
             cartItem.appendChild(cartImg);
-            //Génère le nom de produit pour chaque case
+            //Génère et ajoute le nom de produit pour chaque case
             let cartTitle = document.createElement("h3");
             cartTitle.textContent = item.name;
             cartTitle.className = "cartitem__title";
             cartItem.appendChild(cartTitle);
-            //Génère la quantité de produits achetés pour chaque case
+            //Génère et ajoute la quantité de produits achetés pour chaque case
             let cartQty = document.createElement("span");
             cartQty.textContent = item.quantity;
             cartQty.className = "cartitem__qty";
             cartItem.appendChild(cartQty);
-            //Génère le prix total pour chaque case
+            //Génère et ajoute le prix total pour chaque case
             let cartPrice = document.createElement("p");
             cartPrice.className = "cartitem__price";
+            //Formatage du prix en devise et division pour le transformer en euros 
             let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
             cartPrice.textContent = totalPrice;
             cartItem.appendChild(cartPrice);
-            // Ajoute le bouton 
+            // Généère et ajoute le bouton supprimer
             let cartButton = document.createElement("button");
             cartButton.className = "btn btn-secondary cartitem__button btn__remove";
             cartButton.setAttribute("role", "button");
@@ -50,15 +58,17 @@ function showCart() {//Fonction qui affiche le panier à l'écran
             cartButton.setAttribute("data-id", item._id);
             cartButton.addEventListener("click", suppressItem);
             cartItem.appendChild(cartButton); 
-            // Ajoute la "case" produit du panier à la section id="cart-section"
-            cartSection.appendChild(cartItem);
         });
     } else {
+        //Affiche message si le panier est vide
         cartSection.innerHTML = '<h2 id="emptycart">Votre panier est vide.</h2>';
     } 
 }
 
- function calculateCartAmount() {//Fonction qui calcule le montant total du panier en Euros
+/**
+*Fonction pour calculer le montant total du panier en Euros
+*/
+ function calculateCartAmount() {
     let totalPrice = 0;
     CART.contents.forEach(item => {
        totalPrice += (item.price/100 * item.quantity)
@@ -66,14 +76,7 @@ function showCart() {//Fonction qui affiche le panier à l'écran
     return totalPrice;
   }
 
-/*
-function suppressItem(e) {
-    let id = e.target.getAttribute("data-id");
-    CART.remove(id);
-    console.log("Votre produit a bien été supprimé");//Pour tester le bon fonctionnement
-    showCart(); 
-}
-*/
+
 
 
 /*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
@@ -93,14 +96,14 @@ buttonConfirm.addEventListener("click", () => {
 
 /*VALIDATION DES DONNEES DU FORMULAIRE EN UTILISANT L'API DE CONTRAINTES DE VALIDATION HTML 5*/
 
-/*let name = document.getElementById("lastName");// on a besoin d'attendre que le formulaire soit chargé avant de faire ce code ?
+/*let name = document.getElementById("lastName");
 let firstname = document.getElementById("firstName");
 let email = document.getElementById("email");
 let address = document.getElementById("address");
 //let postCode = document.getElementById("postcode");
-let city = document.getElementById("city");
+let city = document.getElementById("city");*/
 
-
+/*
 name.addEventListener("keyup", function (event) {
   if(name.validity.patternMismatch) {
     name.setCustomValidity("Ceci ne ressemble pas à un nom de famille...");
@@ -149,24 +152,86 @@ city.addEventListener("keyup", function (event) {
   }
 });*/
 
-/* ENVOI DES DONNEES DU FORMULAIRE AVEC UNE REQUETE XMLHTTPREQUEST POST*/
+
+/* ENVOI DES DONNEES DU FORMULAIRE AVEC UNE FETCH POST*/
+
 
 let formElt = document.getElementById("formtosubmit");
 
-formElt.addEventListener("submit", function(e) {
+formElt.addEventListener("submit", function(e) { //Envoi des données quand on clique sur le bouton "submit"
     e.preventDefault();
-    let contact = new FormData(formElt[0]);
-    console.log(contact);// pour tester : pour l'instant renvoie un object vide
+    let contact = { 
+        firstName: formElt.firstName.value,
+        lastName: formElt.lastName.value,
+        address: formElt.address.value,
+        city: formElt.city.value,
+        email: formElt.email.value
+    };
+    
+   let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
+    console.log(contact)//Pour tester si ça fonctionne
+    products.unshift(contact);
+    let dataToSend = JSON.stringify(products);
+    console.log(dataToSend)//Pour tester si ça fonctionne : donne bien un ajout de l'objet au début du tableau
+    sendFormData(dataToSend);
+}); // MAIS NOUS ON VEUT UN OBJET ET UN TABLEAU DANS LE MÊME BODY DE REQUETE !!
+    
+function sendFormData(data) {   
+    //Envoie les données du formulaire ainsi que la liste des id des produits commandés
     fetch("http://localhost:3000/api/furniture/order", {
         method: "POST",
-        body: contact
-    })
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: data
+        })
         .then(response => response.json())
         .then(response => console.log(response))
         .catch(error => alert("Erreur : " + error));
+}
+    /* let contactToSend = { // Pareil en séparant en deux données JSON différentes
+        firstName: formElt.firstName.value,
+        lastName: formElt.lastName.value,
+        address: formElt.address.value,
+        city: formElt.city.value,
+        email: formElt.email.value
+    };
+    
+   let productsToSend = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
+    console.log(contactToSend)//Pour tester si ça fonctionne
+    let contact = JSON.stringify(contactToSend);
+    let products = JSON.stringify(productsToSend);
+    console.log(contact)//Pour tester si ça fonctionne
+    console.log(products);//Pour tester
+    sendFormData(contact, products);
 });
-
-
+    
+function sendFormData(data1, data2) {   
+    //Envoie les données du formulaire ainsi que la liste des id des produits commandés
+    fetch("http://localhost:3000/api/furniture/order", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: data1 + data2
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(error => alert("Erreur : " + error));
+}*/
+/**
+ *
+ * Expects request to contain:
+ * contact: {
+ *   firstName: string,
+ *   lastName: string,
+ *   address: string,
+ *   city: string,
+ *   email: string
+ * }
+ * products: [string] <-- array of product _id
+ *
+ */
 
 /* EXTRAIT BACKEND
 exports.orderFurniture = (req, res, next) => {
@@ -199,7 +264,7 @@ formElt.addEventListener("submit", function(e) {
 });
 */
 
-//Ajouter ensuite les autres données à envoyer au serveur : détails de la commande.
+
 
 
 
