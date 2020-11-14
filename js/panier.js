@@ -76,13 +76,14 @@ function showCart() {
     return totalPrice;
   }
 
+/*
 //Au click d'envoi du formulaire, envoi du montant total du panier en paramètre de l'URL de la page de confirmation
 let btnConfirm = document.getElementById("confirm-link");
 
 btnConfirm.addEventListener("click", function() {
   btnConfirm.setAttribute("href", "confirmation.html?price=" + cartAmount.textContent + "");  
 });
-
+*/
 
 /*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
 Utiliser Babel pour le transformer en ES5 ??*/
@@ -177,21 +178,21 @@ formElt.addEventListener("submit", function(e) {
     };
     //Récupération des données du panier - id des produits commandés - sous forme de tableau de strings
     let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
-    let data = [contact, products];
+    let data = {contact, products};
     console.log(data);
     let dataToSend = JSON.stringify(data);
     //Pour tester si ça fonctionne
     console.log(dataToSend);
     //Envoi des données
-    sendFormData(data);
+    sendFormData(dataToSend);
 }); 
     
 /**
-*Fonction pour enovyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
+*Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
 @param {string} data - données à envoyer en format json
 */
 function sendFormData(data) {   
-   /* fetch("http://localhost:3000/api/furniture/order", {
+ fetch("http://localhost:3000/api/furniture/order", {
         method: "POST",
         headers: {
         "Content-Type": "application/json"
@@ -200,8 +201,8 @@ function sendFormData(data) {
         })
         .then(response => response.json())
         .then(response => console.log(response))
-        .catch(error => alert("Erreur : " + error));*/
-        let XHR = new XMLHttpRequest();
+        .catch(error => alert("Erreur : " + error));
+        /*let XHR = new XMLHttpRequest();
         XHR.addEventListener("load", function(e) {
                 console.log(e.target.responseText);
                 console.log("Bravo, tout s'est bien passé");
@@ -210,8 +211,8 @@ function sendFormData(data) {
                 console.log("Oups ! Il y a eu un problème !");
         });
         XHR.open("POST", 'http://localhost:3000/api/furniture/order');
-        //XHR.setRequestHeader("Content-Type", "application/json");
-        XHR.send(data);
+        XHR.setRequestHeader("Content-Type", "application/json");
+        XHR.send(data);*/
 }
 
 /**

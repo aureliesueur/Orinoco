@@ -90,10 +90,33 @@ function showItem(item) {
     // Génère et ajoute le menu déroulant de personnalisation du vernis 
     let pdtVarnish = document.createElement("div");
     pdtVarnish.className = "dropdown pdtcase__varnish";
-    pdtVarnish.textContent = "Personnalisez votre finition !";
     pdtButtons.appendChild(pdtVarnish);
-    pdtVarnish.innerHTML = '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choisissez votre vernis</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Dark oak</a><a class="dropdown-item" href="#">Light oak</a><a class="dropdown-item" href="#">Mahogany</a></div></div>';
-    // Génère et ajoute le bouton 
+    
+    let varnishBtn = document.createElement("button");
+    varnishBtn.className = "btn btn-secondary dropdown-toggle";
+    varnishBtn.setAttribute("type", "button");
+    varnishBtn.setAttribute("data-toggle", "dropdown");
+    varnishBtn.setAttribute("aria-haspopup", "true");
+    varnishBtn.setAttribute("aria-expanded", "false");
+    varnishBtn.setAttribute("id", "dropdownMenuButton");
+    varnishBtn.textContent = "Choisissez votre vernis";
+    pdtVarnish.appendChild(varnishBtn);
+    
+    let varnishChoice = document.createElement("div");
+    varnishChoice.className = "dropdown-menu";
+    varnishChoice.setAttribute("type", "button");
+    varnishChoice.setAttribute("aria-labelledby", "dropdownMenuButton");
+    pdtVarnish.appendChild(varnishChoice);
+    // Boucle pour créer une ligne du menu déroulant pour chaque vernis, différent selon les produits
+    let varnishList = item.varnish;
+    for (let i=0 ; i<varnishList.length ; i++) {
+        let varnish = document.createElement("a");
+        varnish.className = "dropdown-item";
+        varnish.setAttribute("href", "#");
+        varnish.textContent = varnishList[i];
+        varnishChoice.appendChild(varnish);
+    }
+    // Génère et ajoute le bouton d'ajout 
     let pdtButton = document.createElement("button");
     pdtButton.className = "btn btn-secondary btn__order pdtcase__order";
     pdtButton.setAttribute("role", "button");
@@ -106,4 +129,5 @@ function showItem(item) {
 }
 
 
-
+  
+   /* pdtVarnish.innerHTML = '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choisissez votre vernis</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Dark oak</a><a class="dropdown-item" href="#">Light oak</a><a class="dropdown-item" href="#">Mahogany</a></div></div>';*/
