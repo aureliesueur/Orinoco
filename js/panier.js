@@ -179,12 +179,9 @@ formElt.addEventListener("submit", function(e) {
     //Récupération des données du panier - id des produits commandés - sous forme de tableau de strings
     let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
     let data = {contact, products};
-    console.log(data);
-    let dataToSend = JSON.stringify(data);
     //Pour tester si ça fonctionne
-    console.log(dataToSend);
-    //Envoi des données
-    sendFormData(dataToSend);
+    console.log(data);
+    sendFormData(data);
 }); 
     
 /**
@@ -197,7 +194,7 @@ function sendFormData(data) {
         headers: {
         "Content-Type": "application/json"
         },
-        body: data
+        body: JSON.stringify(data)
         })
         .then(response => response.json())
         .then(response => console.log(response))
@@ -214,7 +211,6 @@ function sendFormData(data) {
         XHR.setRequestHeader("Content-Type", "application/json");
         XHR.send(data);*/
 }
-
 /**
  *
  * Expects request to contain:
