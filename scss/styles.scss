@@ -107,6 +107,7 @@ h3 {
     }
 }
 
+
 /*Header*/
 
 header {
@@ -129,6 +130,16 @@ header {
         font-size: 1.3em!important;
     }
 }
+
+/*#cart-count {
+        border: 1px solid $color-white!important;
+        border-radius: 50%;
+        font-size: 0.4em!important;
+        font-weight: bold;
+        color: $color-white!important;
+        padding-top: 10px;
+    }
+*/
 
 /*Footer*/
 
@@ -182,6 +193,28 @@ header {
     }
 }
 
+/*Animation du message "ajouté" qui apparaît quand on clique sur le bouton*/
+#products-page {
+    position: relative;
+    z-index: 1;
+}
+
+#message-add {
+    background: lighten($color-bkg, 20%);
+    border: 2px solid black;
+    border-radius: 10px;
+    color: #000;
+    padding: 20px 30px;
+    font-size: 1em;
+    width: 30%;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    z-index: 2;
+    opacity: 0;
+}
+
 #products {
     margin: auto;
     margin-bottom: 30px;
@@ -222,23 +255,6 @@ header {
     &__details {
         margin-top: 20px;
     }
-}
-
-/*Animation du message "ajouté" qui apparaît quand on clique sur le bouton*/
-
-.message-addelt {
-    background: lighten($color-bkg, 20%);
-    border: 2px solid black;
-    border-radius: 10px;
-    color: #000;
-    padding: 20px 30px;
-    font-size: 1em;
-    width: 220px;
-    position: absolute;
-    bottom: 5%;
-    right: 110%;
-    z-index: 2;
-    opacity: 0;
 }
         
 .element {
@@ -301,11 +317,6 @@ header {
             margin-top: 20px;
         }
     }
-    .message-addelt {
-       position: absolute;
-        bottom: 50%;
-        right: 30%; 
-    }
 }
 
 /* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN SMARTPHONE*/
@@ -359,10 +370,6 @@ header {
             margin-top: 20px;
             height: 40%;
         }
-    }
-    .message-addelt {
-        bottom : 55%;
-        right: 15%;
     }
 }
 
@@ -505,23 +512,13 @@ header {
         display: block;
         font-size: 1.3em;
         font-weight: bold;
+        & a:hover {
+            text-decoration: none;
+            color: $color-white;
+        }
     }
 }
-/*
 
-#form-section {
-    opacity: 0;
-}
-
-@keyframes form {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-*/
 
 /*PAGE PRODUIT---------------------------------------------------------------------*/
 

@@ -1,4 +1,9 @@
 let PRODUCTS = [];
+const ORDERID = {KEY : "orinocofrontendaureliesueurorderId", value :""};
+
+/*let COUNT = 0;
+
+let cartCount = document.getElementById("cart-count");*/
 
 /*Création du panier*/
 
@@ -12,9 +17,13 @@ const CART = {
         let storedContents = localStorage.getItem(CART.KEY);
         if (storedContents) {
             CART.contents = JSON.parse(storedContents);
+            /*CART.contents.forEach(content => {
+                COUNT += content.quantity;
+                console.log(COUNT);
+            });*/
         } else {
             //Données factices pour tester le bon fonctionnement
-            CART.contents = [{
+            CART.contents = [/*{
                 _id: "1ab",
                 name: "Etagère vintage",
                 quantity: 1,
@@ -32,7 +41,8 @@ const CART = {
                 quantity: 1,
                 price: 7500 ,
                 imageUrl: "http://localhost:3000/images/oak_4.jpg"
-                }];
+                }*/];
+            /*COUNT = 4;*/
         }
         //Synchronise le CART 
         CART.sync();
@@ -40,7 +50,9 @@ const CART = {
     //Méthode pour synchroniser le CART du localStorage à partir du panier du navigateur
     async sync() {
         let storedCart = JSON.stringify(CART.contents);
-         await localStorage.setItem(CART.KEY, storedCart);
+        //let count = JSON.stringify(COUNT);
+        await localStorage.setItem(CART.KEY, storedCart);
+        //await localStorage.setItem("count", COUNT);
     },
     //Méthode pour trouver un article dans le panier par son id
     find(id) {
@@ -77,6 +89,7 @@ const CART = {
                 //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(addItem);
                 //Met à jour le panier dans le localStorage
+                //COUNT +=1;
                 CART.sync();
             } else {
                 //Message d'erreur si l'id ne correspond à aucun produit 
@@ -90,6 +103,7 @@ const CART = {
         console.log(CART.contents);//Test
         if (CART.find(id)) {
            CART.increase(id, qty=1); 
+        COUNT +=1;
             //Test de vérification de bon fonctionnement
             console.log("Produit déjà dans le panier");
         } else { 
@@ -102,6 +116,7 @@ const CART = {
                //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(PDTSELECTED.contents);
                 //Met à jour le panier dans le localStorage
+                //COUNT +=1;
                 CART.sync();
             } else {
                 //Message d'erreur si ça ne fonctionne pas 

@@ -112,7 +112,6 @@ function showItem(item) {
     for (let i=0 ; i<varnishList.length ; i++) {
         let varnish = document.createElement("a");
         varnish.className = "dropdown-item";
-        varnish.setAttribute("href", "#");
         varnish.textContent = varnishList[i];
         varnishChoice.appendChild(varnish);
     }

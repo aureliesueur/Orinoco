@@ -1,3 +1,5 @@
+
+
 // Lance la récupération et l'affichage des produits quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
     //Pour vider localStorage après bugs et tout remettre à zéro
@@ -89,29 +91,27 @@ function showProducts(products) {
         btnOrder.setAttribute("role", "button");
         btnOrder.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
         btnOrder.setAttribute("data-id", product._id);
-        btnOrder.addEventListener("click", addItem) /*{
-            function () {addItem;
-            messageAddElt.style.opacity= "1";
-            setTimeout(function() {
-                messageAddElt.style.opacity= "0";
-            }, 1000);
-        })*/;
+        btnOrder.addEventListener("click", addIncludeMessage);
         cardBtns.appendChild(btnOrder); 
         // Crée et ajoute une div pour le message animé "ajouté !"
-        let messageAddElt = document.createElement("div");
-        messageAddElt.className = "message-addelt";
-        messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
-        cardBtns.appendChild(messageAddElt);
+       //let messageAddElt = document.createElement("div");
+        //messageAddElt.className = "message-addelt";
+        //messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
+        //cardBtns.appendChild(messageAddElt);
         // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
 }
 
+let messageAdd = document.getElementById("message-add");
 
-/*pdtButton.addEventListener("click", function() { MARCHE PAS, DESACTIVE LE ADD ITEM
-    addItem;
-    messageAddElt.style.opacity= "1";
+function addIncludeMessage(e) {
+    addItem(e);
+    messageAdd.style.opacity= "1";
     setTimeout(function() {
-        messageAddElt.style.opacity= "0";
+        messageAdd.style.opacity= "0";
     }, 1000);
-});*/
+}
+
+
+

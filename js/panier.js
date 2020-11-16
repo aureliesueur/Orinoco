@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cartAmount.textContent = calculateCartAmount() + " EUR";
 });
 
+
 /**
 *Fonction pour afficher le panier dans la page panier.html
 */
@@ -76,15 +77,6 @@ function showCart() {
     return totalPrice;
   }
 
-/*
-//Au click d'envoi du formulaire, envoi du montant total du panier en paramètre de l'URL de la page de confirmation
-let btnConfirm = document.getElementById("confirm-link");
-
-btnConfirm.addEventListener("click", function() {
-  btnConfirm.setAttribute("href", "confirmation.html?price=" + cartAmount.textContent + "");  
-});
-*/
-
 /*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
 Utiliser Babel pour le transformer en ES5 ??*/
 
@@ -96,20 +88,19 @@ buttonConfirm.addEventListener("click", () => {
    
 });
  */            
-         
 
 /*FORMULAIRE */
 
 /*VALIDATION DES DONNEES DU FORMULAIRE EN UTILISANT L'API DE CONTRAINTES DE VALIDATION HTML 5*/
 
-/*let name = document.getElementById("lastName");
+let name = document.getElementById("lastName");
 let firstname = document.getElementById("firstName");
 let email = document.getElementById("email");
 let address = document.getElementById("address");
 //let postCode = document.getElementById("postcode");
-let city = document.getElementById("city");*/
+let city = document.getElementById("city");
 
-/*
+
 name.addEventListener("keyup", function (event) {
   if(name.validity.patternMismatch) {
     name.setCustomValidity("Ceci ne ressemble pas à un nom de famille...");
@@ -117,7 +108,6 @@ name.addEventListener("keyup", function (event) {
     name.setCustomValidity("");
   }
 });
-
 firstname.addEventListener("keyup", function (event) {
   if(firstname.validity.patternMismatch) {
     firstname.setCustomValidity("Ceci ne ressemble pas à un prénom...");
@@ -125,7 +115,6 @@ firstname.addEventListener("keyup", function (event) {
     firstname.setCustomValidity("");
   }
 });
-
 email.addEventListener("keyup", function (event) {
   if(email.validity.typeMismatch) {
     email.setCustomValidity("Merci d'entrer une adresse email valide utilisant le symbole @");
@@ -133,7 +122,6 @@ email.addEventListener("keyup", function (event) {
     email.setCustomValidity("");
   }
 });
-
 address.addEventListener("keyup", function (event) {
   if(address.validity.patternMismatch) {
     address.setCustomValidity("Merci d'entrer un numéro et le nom de la rue ou avenue");
@@ -141,28 +129,32 @@ address.addEventListener("keyup", function (event) {
     address.setCustomValidity("");
   }
 });
-
-/*postCode.addEventListener("keyup", function (event) {
-  if(postCode.validity.patternMismatch) {
-    postCode.setCustomValidity("Dans un code postal, il n'y a que des chiffres !");
-  } else {
-    postCode.setCustomValidity(""); // Celui du postcode a l'air de ne pas marcher !!
-  }
-});
-
 city.addEventListener("keyup", function (event) {
   if(city.validity.patternMismatch) {
     city.setCustomValidity("Ceci ne ressemble pas à un nom de ville...");
   } else {
     city.setCustomValidity("");
   }
-});*/
+});
 
 
 /* ENVOI DES DONNEES DU FORMULAIRE AVEC UNE FETCH POST*/
 
+/* Mettre tout ce qui est avant dans une fonction qu'on appelle au moment du submit : si tout est ok, on envoie, sinon message d'erreur !!*/
 
 let formElt = document.getElementById("formtosubmit");
+
+//Objet envoyé au serveur
+let order = {
+   contact: {
+      firstName: String,
+      lastName: String,
+      address: String,
+      city: String,
+      email: String
+      },
+   products: [String]
+};
 
 //Evenement envoi des données déclenché quand on clique sur le bouton "submit"
 formElt.addEventListener("submit", function(e) { 
@@ -170,18 +162,20 @@ formElt.addEventListener("submit", function(e) {
     e.preventDefault();
     //Récupération des valeurs entrées par l'utilisateur
     let contact = { 
-        firstName: formElt.firstName.value,
-        lastName: formElt.lastName.value,
-        address: formElt.address.value,
-        city: formElt.city.value,
-        email: formElt.email.value
+        firstName: firstName.value,
+        lastName: lastName.value,
+        address: address.value,
+        city: city.value,
+        email: email.value
     };
     //Récupération des données du panier - id des produits commandés - sous forme de tableau de strings
-    let products = ["1abfds44", "28rREE42d", "3b9fdsDF444fds", "56HGfdSFJ5"];//Fausses données pour tester
-    let data = {contact, products};
+    let products = CART.contents.map(item => item._id);
+    console.log(products);//Pour tester bon fonctionnement
+    order = {contact, products};
     //Pour tester si ça fonctionne
-    console.log(data);
-    sendFormData(data);
+    console.log("this is the order : ", order);//Pour tester bon fonctionnement
+    sendFormData(order);
+   // window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }); 
     
 /**
@@ -194,75 +188,17 @@ function sendFormData(data) {
         headers: {
         "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(order)
         })
         .then(response => response.json())
-        .then(response => console.log(response))
+        .then(response => {
+            console.log(response);
+            storeId(response); 
+        })
         .catch(error => alert("Erreur : " + error));
-        /*let XHR = new XMLHttpRequest();
-        XHR.addEventListener("load", function(e) {
-                console.log(e.target.responseText);
-                console.log("Bravo, tout s'est bien passé");
-        });
-        XHR.addEventListener("error", function(e) {
-                console.log("Oups ! Il y a eu un problème !");
-        });
-        XHR.open("POST", 'http://localhost:3000/api/furniture/order');
-        XHR.setRequestHeader("Content-Type", "application/json");
-        XHR.send(data);*/
 }
-/**
- *
- * Expects request to contain:
- * contact: {
- *   firstName: string,
- *   lastName: string,
- *   address: string,
- *   city: string,
- *   email: string
- * }
- * products: [string] <-- array of product _id
- *
- */
 
-/* EXTRAIT BACKEND
-exports.orderFurniture = (req, res, next) => {
-  if (!req.body.contact ||
-    !req.body.contact.firstName ||
-    !req.body.contact.lastName ||
-    !req.body.contact.address ||
-    !req.body.contact.city ||
-    !req.body.contact.email ||
-    !req.body.products) {
-    return res.status(400).send(new Error('Bad request!'));
-  }*/
-   
-/* EN UTILISANT UNE XMLHTTPREQUEST
-
-formElt.addEventListener("submit", function(e) {
-    e.preventDefault();
-    let formResults = new FormData(formElt);
-    let XHR = new XMLHttpRequest();
-    XHR.addEventListener("load", function(e) {
-            console.log(e.target.responseText);
-            console.log("Bravo, tout s'est bien passé");
-    });
-    XHR.addEventListener("error", function(e) {
-            console.log("Oups ! Il y a eu un problème !");
-    });
-    XHR.open("POST", 'http://localhost:3000/api/furniture/order=1');
-    //XHR.setRequestHeader("Content-Type", "application/json");
-    XHR.send(formResults);//JSON.stringify(formResults));
-});
-*/
-
-
-
-
-
-
-
-
-
-
-
+async function storeId(data) {
+    await localStorage.setItem(ORDERID.KEY, data.orderId);
+    window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
+}
