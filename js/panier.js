@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showCart();
     //Calcule le montant total du panier
     cartAmount.textContent = calculateCartAmount() + " EUR";
+    showCount();
 });
 
 
@@ -51,13 +52,13 @@ function showCart() {
             let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100 * item.quantity);
             cartPrice.textContent = totalPrice;
             cartItem.appendChild(cartPrice);
-            // Généère et ajoute le bouton supprimer
+            // Génère et ajoute le bouton supprimer
             let cartButton = document.createElement("button");
             cartButton.className = "btn btn-secondary cartitem__button btn__remove";
             cartButton.setAttribute("role", "button");
             cartButton.textContent = "Supprimer du panier";
             cartButton.setAttribute("data-id", item._id);
-            cartButton.addEventListener("click", suppressItem);
+            cartButton.addEventListener("click", console.log("ça marche"));//suppressItem); GROS BUG !!!
             cartItem.appendChild(cartButton); 
         });
     } else {
@@ -77,19 +78,16 @@ function showCart() {
     return totalPrice;
   }
 
-/*init() { : Attention, syntaxe pas acceptée par tous les navigateurs. Syntaxe ancienne init: function() {}
-Utiliser Babel pour le transformer en ES5 ??*/
 
+/*FORMULAIRE */
 
-/*Animation pour faire apparaître le formulaire quand on clique sur "termminer la commande"
+/*Animation pour faire apparaître le formulaire quand on clique sur "termminer la commande"*/
 let buttonConfirm = document.getElementById("confirm");
 let formSection = document.getElementById("form-section");
 buttonConfirm.addEventListener("click", () => {
-   
+   formSection.classList.add("active");
 });
- */            
-
-/*FORMULAIRE */
+            
 
 /*VALIDATION DES DONNEES DU FORMULAIRE EN UTILISANT L'API DE CONTRAINTES DE VALIDATION HTML 5*/
 
@@ -178,6 +176,7 @@ formElt.addEventListener("submit", function(e) {
    // window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }); 
     
+
 /**
 *Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
 @param {string} data - données à envoyer en format json
@@ -193,12 +192,17 @@ function sendFormData(data) {
         .then(response => response.json())
         .then(response => {
             console.log(response);
-            storeId(response); 
+            storeIdName(response); 
         })
         .catch(error => alert("Erreur : " + error));
 }
 
-async function storeId(data) {
+
+/**Fonction pour stocker l'order_id et le firstname du user dans le local storage
+@param {string} data - order_id
+*/
+async function storeIdName(data) {
     await localStorage.setItem(ORDERID.KEY, data.orderId);
+    await localStorage.setItem(ORDERNAME.KEY, data.contact.firstName);
     window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }

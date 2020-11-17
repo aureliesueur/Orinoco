@@ -8,8 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     getProducts();
     //Met à jour le panier
     CART.init();
+    showCount(); 
 });
 
+
+ 
 /**
 *Fonction pour récupérer la liste des produits depuis le serveur
 */
@@ -22,7 +25,7 @@ function getProducts() {
             showProducts(response);
             //Test de vérification de bon fonctionnement
             //console.log(response);
-            CART.init();
+            //CART.init();     
         })
         //Affiche l'erreur si requête ne fonctionne pas
         .catch(error => alert("Erreur : " + error));
@@ -93,24 +96,22 @@ function showProducts(products) {
         btnOrder.setAttribute("data-id", product._id);
         btnOrder.addEventListener("click", addIncludeMessage);
         cardBtns.appendChild(btnOrder); 
-        // Crée et ajoute une div pour le message animé "ajouté !"
-       //let messageAddElt = document.createElement("div");
-        //messageAddElt.className = "message-addelt";
-        //messageAddElt.innerHTML = '<i class="fas fa-check"></i> Article ajouté !';
-        //cardBtns.appendChild(messageAddElt);
-        // Ajoute la "case" produit à la section id="products"
         productSection.appendChild(card);
     });
 }
 
 let messageAdd = document.getElementById("message-add");
 
-function addIncludeMessage(e) {
+/**
+*Fonction globale à déclencher au clic du bouton, pour afficher le message d'ajout et mettre à jour le nombre d'articles dans l'icône panier
+*/
+function addIncludeMessage(e) { 
     addItem(e);
     messageAdd.style.opacity= "1";
     setTimeout(function() {
         messageAdd.style.opacity= "0";
-    }, 1000);
+        showCount(); 
+    }, 1000); 
 }
 
 

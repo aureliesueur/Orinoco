@@ -69,7 +69,9 @@ h3 {
         background: darken($color-tertiary, 10%)!important;
         color: $color-white;
         &:hover {
+            cursor: pointer;
             color: #000;
+            @include boxshadowBtn(darken($color-bkg, 20%));
         }
     }
     &__cart {
@@ -131,15 +133,26 @@ header {
     }
 }
 
-/*#cart-count {
-        border: 1px solid $color-white!important;
+.fa-shopping-basket {
+    font-size: 1.3em!important;
+}
+
+.cartcount {
+    position: relative;
+    &__nb {
+        position: absolute;
+        top: 1px;
+        right: -2px;
+        border: 1px solid $color-white;
         border-radius: 50%;
-        font-size: 0.4em!important;
+        padding: 0 4px 0 4px!important;
+        font-size: 0.7em;
         font-weight: bold;
-        color: $color-white!important;
+        color: $color-white;
         padding-top: 10px;
     }
-*/
+}
+
 
 /*Footer*/
 
@@ -200,16 +213,16 @@ header {
 }
 
 #message-add {
-    background: lighten($color-bkg, 20%);
-    border: 2px solid black;
+    background: $color-primary;
+    border: 3px solid $color-secondary;
     border-radius: 10px;
     color: #000;
-    padding: 20px 30px;
+    padding: 30px 40px;
     font-size: 1em;
     width: 30%;
     text-align: center;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 35%;
     z-index: 2;
     opacity: 0;
@@ -485,18 +498,16 @@ header {
         @include boxshadowBtn(lighten(#000, 20%));
         font-weight: bold!important;
         border: 2px solid #000;
-     /*   &:active + #form-section { MARCHE PAS !!
-            opacity: 1;
-            animation: form 2000ms both;
-        }*/
     }
 }
 
 .form {
     width: 60%;
-    /*position: absolute;
+    position: absolute;
     top: 15%;
-    left: 20%;*/
+    left: 20%;
+    border: 2px solid $color-tertiary;
+    opacity: 0;
     &__title {
         color: $color-tertiary!important;
         font-weight: bold!important;
@@ -516,6 +527,10 @@ header {
             text-decoration: none;
             color: $color-white;
         }
+        
+    }
+    &.active {
+            opacity: 1;
     }
 }
 

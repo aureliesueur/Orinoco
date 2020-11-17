@@ -1,26 +1,27 @@
 let PRODUCTS = [];
-const ORDERID = {KEY : "orinocofrontendaureliesueurorderId", value :""};
+const ORDERID = {KEY : "keyFor0rderIdOrinoco", value :""};
+const ORDERNAME = {KEY : "keyForNameOrinoco", value :""};
+let COUNT = 0;
 
-/*let COUNT = 0;
+let cartCount = document.getElementById("cartcount");
 
-let cartCount = document.getElementById("cart-count");*/
 
 /*Création du panier*/
 
 //Déclaration de l'objet "panier"
 const CART = { 
     //Création d'une Key unique 
-    KEY : "orinocofrontendaureliesueur", 
+    KEY : "keyForCartContentsOrinoco", 
     contents : [],
     init() {
         //Vérification du LocalStorage pour voir s'il y a déjà des éléments dans le CART
         let storedContents = localStorage.getItem(CART.KEY);
         if (storedContents) {
             CART.contents = JSON.parse(storedContents);
-            /*CART.contents.forEach(content => {
+            CART.contents.forEach(content => {
                 COUNT += content.quantity;
                 console.log(COUNT);
-            });*/
+            });
         } else {
             //Données factices pour tester le bon fonctionnement
             CART.contents = [/*{
@@ -50,9 +51,9 @@ const CART = {
     //Méthode pour synchroniser le CART du localStorage à partir du panier du navigateur
     async sync() {
         let storedCart = JSON.stringify(CART.contents);
-        //let count = JSON.stringify(COUNT);
         await localStorage.setItem(CART.KEY, storedCart);
-        //await localStorage.setItem("count", COUNT);
+        let storedCount = JSON.stringify(COUNT);
+        await localStorage.setItem("count", storedCount);
     },
     //Méthode pour trouver un article dans le panier par son id
     find(id) {
@@ -70,7 +71,7 @@ const CART = {
     add(id) {  
         //Vérifie si ce produit est déjà dans le panier
         if (CART.find(id)) {
-           CART.increase(id, qty=1); 
+            CART.increase(id, qty=1); 
         } else {
             let filterPds = PRODUCTS.filter(product => {
                 if (product._id == id) {
@@ -89,7 +90,7 @@ const CART = {
                 //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(addItem);
                 //Met à jour le panier dans le localStorage
-                //COUNT +=1;
+                COUNT +=1;
                 CART.sync();
             } else {
                 //Message d'erreur si l'id ne correspond à aucun produit 
@@ -102,8 +103,7 @@ const CART = {
         //Vérifie si ce produit est déjà dans le panier
         console.log(CART.contents);//Test
         if (CART.find(id)) {
-           CART.increase(id, qty=1); 
-        COUNT +=1;
+            CART.increase(id, qty=1); 
             //Test de vérification de bon fonctionnement
             console.log("Produit déjà dans le panier");
         } else { 
@@ -116,7 +116,7 @@ const CART = {
                //Ajoute le produit au panier dans le navigateur
                 CART.contents.push(PDTSELECTED.contents);
                 //Met à jour le panier dans le localStorage
-                //COUNT +=1;
+                COUNT +=1;
                 CART.sync();
             } else {
                 //Message d'erreur si ça ne fonctionne pas 
@@ -132,17 +132,20 @@ const CART = {
             }
             return item;
         });
-        //Met à jour le panier dans le localStorage
+        //Met à jour le panier dans le localStorage et l'icône panier du menu
+        COUNT +=1;
         CART.sync();
     },
     remove(id) {//Supprime totalement un produit du panier
-       CART.contents = CART.contents.filter(item => {
-           if (item._id !== id) {
+        CART.contents = CART.contents.filter(item => {
+          if (item._id !== id) {
                return true;
            }
         });
-        // Met à jour le panier dans le localStorage
+        // Met à jour le panier dans le localStorage et l'icône panier du menu
+        COUNT -= item.quantity;
         CART.sync();
+        //Met à jour le prix total
         cartAmount.textContent = calculateCartAmount() + " EUR"; 
     },
     //Méthode pour afficher le contenu du panier
@@ -176,10 +179,19 @@ function addItemOnly(e) { //
 */
 function suppressItem(e) {
     let id = e.target.getAttribute("data-id");
+    console.log(id);
+    console.log(CART.contents);
     CART.remove(id);
     //Test de vérification de bon fonctionnement
     console.log("Votre produit a bien été supprimé");
     showCart(); 
 }
 
-
+/**
+*Fonction pour afficher le nombre de produits achetés sur l'icône panier
+*/
+async function showCount() {
+    let storedCount = await localStorage.getItem("count");
+    console.log(storedCount);//Test de bon fonctionnement*/
+    cartCount.textContent = JSON.parse(storedCount);
+} 

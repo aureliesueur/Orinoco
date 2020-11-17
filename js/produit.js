@@ -1,7 +1,9 @@
+
+
 //Création d'un objet représentant le produit sélectionné
 const PDTSELECTED = { 
             //Création d'une Key unique 
-            KEY : "orinocofrontendaureliesueurproductselected", 
+            KEY : "keyForProductSelectedOrinoco", 
             contents : []
 }; 
 
@@ -12,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     getProduct();
     //Met à jour le panier
     CART.init();
+    showCount(); 
 });
 
 
@@ -123,10 +126,18 @@ function showItem(item) {
     pdtButton.setAttribute("data-id", item._id);
     pdtButton.setAttribute("data-toggle", "modal");
     pdtButton.setAttribute("data-target", "#message-ajout");
-    pdtButton.addEventListener("click", addItemOnly); 
+    pdtButton.addEventListener("click", addOnlyGlobal); 
     pdtButtons.appendChild(pdtButton); 
 }
 
-
+/**
+*Fonction globale à déclencher au clic du bouton, pour ajouter le produit et mettre à jour le nombre d'articles dans l'icône panier
+* Ca marche mais ça n'est pas joli !!!
+*/
+function addOnlyGlobal(e) { 
+    addItemOnly(e);
+    setTimeout(function() {
+        showCount(); 
+    }, 1000); 
+}
   
-   /* pdtVarnish.innerHTML = '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choisissez votre vernis</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Dark oak</a><a class="dropdown-item" href="#">Light oak</a><a class="dropdown-item" href="#">Mahogany</a></div></div>';*/
