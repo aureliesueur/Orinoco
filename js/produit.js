@@ -1,63 +1,31 @@
+/*Ensemble des fonctions et événements relatifs à la page produit.html, qui affiche un produit spécifique */
 
-
-//Création d'un objet représentant le produit sélectionné
+//Déclaration des variables
+//Création d'un objet représentant le produit sélectionné avec key pour le localStorage
 const PDTSELECTED = { 
-            //Création d'une Key unique 
-            KEY : "keyForProductSelectedOrinoco", 
+            //Création d'une Key  
+            KEY : "pdtSelectedInStorage", 
             contents : []
 }; 
 
 
 // Lance la récupération et l'affichage du produit sélectionné quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
-    //Récupère le produit sélectionné par son id depuis le serveur
+    //Fonction pour récupérer le produit sélectionné depuis le serveur, via son id intégré aux paramètres de l'URL, grâce à une API fetch GET - dans fichier queries.js -
     getProduct();
     //Met à jour le panier
     CART.init();
     showCount(); 
 });
 
-
-/**
-*Fonction pour récupérer un produit précis depuis le serveur grâce à son id intégré aux paramètres de l'URL
-*/
-function getProduct(id) {   
-    //Récupère le id contenu dans les paramètres de la page URL
-    let url = new URL(window.location.href);
-    id = url.searchParams.get("id");
-    //Test de vérification de bon fonctionnement
-    console.log(id);
-    //Récupération des données via une API fetch 
-    fetch('http://localhost:3000/api/furniture/' + id , {mode: "cors"})
-        .then(response => response.json())
-        .then(response => {
-            showItem(response);
-            //Test de vérification de bon fonctionnement
-            console.log(response);
-            //Mise à jour du contenu de l'objet produit affiché
-            PDTSELECTED.contents = {
-                _id : response._id,
-                name: response.name,
-                price: response.price,
-                description: response.description,
-                imageUrl: response.imageUrl,
-                quantity: 1
-            }; 
-            //Conservation du produit mis à jour dans le localStorage
-            let storedPdt = JSON.stringify(PDTSELECTED.contents);
-            localStorage.setItem(PDTSELECTED.KEY, storedPdt);   
-         })
-        //Affiche l'erreur si requête ne fonctionne pas
-        .catch(error => alert("Erreur : " + error));          
-    }
      
 /**
 *Fonction pour afficher le produit sélectionné dans la page produit.html
+* @param {Oject} item 
 */
 function showItem(item) {
     //Capture l'élément du DOM "product-case" qui va afficher toutes les informations
     let pdtCase = document.getElementById("product-case");
-    pdtCase.className = "pdtcase";
     pdtCase.innerHTML = " ";    
     //Génère et ajoute l'image du produit
     let pdtImg = document.createElement("img");
@@ -88,13 +56,13 @@ function showItem(item) {
     pdtCase.appendChild(pdtPrice);
     //Génère et ajoute une section pour les boutons d'ajout au panier et de personnalisation
     let pdtButtons = document.createElement("div");
-    pdtButtons.className = "pdtcase__buttons";
+    pdtButtons.className = "pdtcase__buttons row";
     pdtCase.appendChild(pdtButtons);
     // Génère et ajoute le menu déroulant de personnalisation du vernis 
     let pdtVarnish = document.createElement("div");
     pdtVarnish.className = "dropdown pdtcase__varnish";
     pdtButtons.appendChild(pdtVarnish);
-    
+    // Création du menu déroulant Bootstrap pour la personnalisation
     let varnishBtn = document.createElement("button");
     varnishBtn.className = "btn btn-secondary dropdown-toggle";
     varnishBtn.setAttribute("type", "button");
@@ -103,8 +71,8 @@ function showItem(item) {
     varnishBtn.setAttribute("aria-expanded", "false");
     varnishBtn.setAttribute("id", "dropdownMenuButton");
     varnishBtn.textContent = "Choisissez votre vernis";
+   // varnishBtn.addEventListener("click", alert("Vous devez choisir une finition")); !!!
     pdtVarnish.appendChild(varnishBtn);
-    
     let varnishChoice = document.createElement("div");
     varnishChoice.className = "dropdown-menu";
     varnishChoice.setAttribute("type", "button");
@@ -112,13 +80,22 @@ function showItem(item) {
     pdtVarnish.appendChild(varnishChoice);
     // Boucle pour créer une ligne du menu déroulant pour chaque vernis, différent selon les produits
     let varnishList = item.varnish;
+    //Réinitialisation du vernis 
+    localStorage.removeItem(chosenVarnish.KEY);
     for (let i=0 ; i<varnishList.length ; i++) {
-        let varnish = document.createElement("a");
+        let varnish = document.createElement("span");
         varnish.className = "dropdown-item";
         varnish.textContent = varnishList[i];
+        //Quand le user clique sur l'option, elle reste affichée quand le menu se ferme
+        varnish.addEventListener("click", function() {
+            //Test de bon fonctionnement
+            console.log(varnishList[i]);
+            //Stockage du choix de vernis dans le localStorage
+            varnishBtn.textContent = varnishList[i];
+            localStorage.setItem(chosenVarnish.KEY, varnishList[i]);
+        });
         varnishChoice.appendChild(varnish);
     }
-    // Génère et ajoute le bouton d'ajout 
     let pdtButton = document.createElement("button");
     pdtButton.className = "btn btn-secondary btn__order pdtcase__order";
     pdtButton.setAttribute("role", "button");
@@ -126,16 +103,16 @@ function showItem(item) {
     pdtButton.setAttribute("data-id", item._id);
     pdtButton.setAttribute("data-toggle", "modal");
     pdtButton.setAttribute("data-target", "#message-ajout");
-    pdtButton.addEventListener("click", addOnlyGlobal); 
+    pdtButton.addEventListener("click", addPdtGlobal); 
     pdtButtons.appendChild(pdtButton); 
 }
 
+        
 /**
-*Fonction globale à déclencher au clic du bouton, pour ajouter le produit et mettre à jour le nombre d'articles dans l'icône panier
-* Ca marche mais ça n'est pas joli !!!
+*Fonction à déclencher au clic du bouton pour ajouter le produit et mettre à jour le nombre d'articles dans l'icône panier simultanément
 */
-function addOnlyGlobal(e) { 
-    addItemOnly(e);
+function addPdtGlobal(e) { 
+    addItem(e);
     setTimeout(function() {
         showCount(); 
     }, 1000); 

@@ -21,7 +21,7 @@
                 <nav class="col navbar navbar-expand-lg navbar-light menu">
                     <img src="images/logo.png" alt="Logo du site Orinoco" width="200" class="navbar-brand menu__img">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-                        <span class="navbar-toggler-icon menu__icon"></span>
+                        <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav">
@@ -37,12 +37,12 @@
     <section class="container-fluid">
         <div class="row jumbotron confirm">
             <div class="col-12 col-lg-10 text-center confirm__box">
-                <h1 class="confirm__title"><i class="fas fa-check"></i> Merci, nous avons bien reçu votre commande.</h1>
+                <h1 class="confirm__title"><i class="fas fa-check"></i> Merci <span id="sent-name"></span>, nous avons bien reçu votre commande.</h1>
                 <div class="confirm__details">
-                    <p class="confirm-msg">Un mail vient de vous être adressé. Veuillez consulter votre messagerie pour obtenir la confirmation de commande et les détails de la livraison.</p> 
+                    <p>Un mail vient de vous être adressé. Veuillez consulter votre messagerie pour obtenir la confirmation de commande et les détails de la livraison.</p> 
                     <h2 class="confirm__price" id="sent-price">Prix total payé : XXXXX</h2>
                     <h2 class="confirm__ref" id="sent-ref">Référence de la commande : YYYY</h2>
-                    <button type="button" class="btn btn__confirm confirm__btn"><a class="nav-link confirm__link" href="panier.html">Voir les détails de la commande</a></button>
+                    <button type="button" class="btn btn__confirm confirm__btn"><a class="nav-link confirm__link" href="index.html">Retourner sur notre e-boutique</a></button>
                 </div>
             </div>
         </div>
@@ -51,14 +51,20 @@
         
         <footer class="footer">
             <div class="container-fluid">
-                <div class="row">
-                    <ul class="list-inline col text-center">
+                <ul class="list-inline row text-center">
+                    <div class="col-12 col-sm-6 col-lg-3">
                         <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
                         <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
                         <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
-                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>    
-                    </ul>
-                </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
+                    </div>
+                </ul>
             </div>
         </footer>
     

@@ -1,38 +1,20 @@
-
+/*Ensemble des fonctions et événements relatifs à la page index.html, qui affiche la liste des produits à la vente */
 
 // Lance la récupération et l'affichage des produits quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
     //Pour vider localStorage après bugs et tout remettre à zéro
     //localStorage.clear(); 
-    //Récupère la liste des produits du serveur
+    //Fonction pour récupérer la liste des produits depuis le serveur grâce à une API fetch GET - dans fichier queries.js -
     getProducts();
     //Met à jour le panier
     CART.init();
     showCount(); 
 });
 
-
- 
-/**
-*Fonction pour récupérer la liste des produits depuis le serveur
-*/
-function getProducts() { 
-    //Récupération des données via une API fetch 
-    fetch("http://localhost:3000/api/furniture", {mode: "cors"})
-        .then(response => response.json())
-        .then(response => {
-            //Affiche la liste des produits une fois que les données sont chargées
-            showProducts(response);
-            //Test de vérification de bon fonctionnement
-            //console.log(response);
-            //CART.init();     
-        })
-        //Affiche l'erreur si requête ne fonctionne pas
-        .catch(error => alert("Erreur : " + error));
-}
-    
+   
 /**
 *Fonction pour afficher les produits dans la section id="products"
+* @param {Array} products 
 */
 function showProducts(products) {
     //Capture l'élément du DOM "products" qui va afficher toutes les informations
@@ -76,7 +58,7 @@ function showProducts(products) {
         let cost = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(product.price / 100);
         price.textContent = cost;
         details.appendChild(price); 
-        //Crée et ajoute une div pour les deux boutons
+        //Crée et ajoute une div pour le bouton
         let cardBtns = document.createElement("div");
         cardBtns.className = "card__btns";
         card.appendChild(cardBtns);
@@ -88,28 +70,20 @@ function showProducts(products) {
         btnDetails.setAttribute("data-id", product._id);
         btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");//Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
         cardBtns.appendChild(btnDetails); 
-        // Crée et ajoute le bouton pour ajouter au panier
-        let btnOrder = document.createElement("button");
-        btnOrder.className = "btn btn-secondary card__btnOrder btn__order";
-        btnOrder.setAttribute("role", "button");
-        btnOrder.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
-        btnOrder.setAttribute("data-id", product._id);
-        btnOrder.addEventListener("click", addIncludeMessage);
-        cardBtns.appendChild(btnOrder); 
         productSection.appendChild(card);
     });
 }
 
-let messageAdd = document.getElementById("message-add");
+//let messageAdd = document.getElementById("message-add");
 
 /**
 *Fonction globale à déclencher au clic du bouton, pour afficher le message d'ajout et mettre à jour le nombre d'articles dans l'icône panier
 */
 function addIncludeMessage(e) { 
     addItem(e);
-    messageAdd.style.opacity= "1";
+    //messageAdd.style.opacity= "1";
     setTimeout(function() {
-        messageAdd.style.opacity= "0";
+        //messageAdd.style.opacity= "0";
         showCount(); 
     }, 1000); 
 }

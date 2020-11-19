@@ -1,17 +1,20 @@
+/*Ensemble des fonctions utiles dans plusieurs pages :
+- méthodes ajout, suppression... de l'objet panier CART, 
+- affichage de l'icône panier du menu avec nombre de produits commandés. */
+
+//Déclaration des variables avec keys pour stocker dans localStorage
+
 let PRODUCTS = [];
-const ORDERID = {KEY : "keyFor0rderIdOrinoco", value :""};
-const ORDERNAME = {KEY : "keyForNameOrinoco", value :""};
-let COUNT = 0;
+const orderId = {KEY : "orderIdInStorage", value :""};
+const orderName = {KEY : "orderNameInStorage", value :""};
+const chosenVarnish = {KEY : "chosenVarnishInStorage", value :""};
+let count = 0;
 
-let cartCount = document.getElementById("cartcount");
-
-
-/*Création du panier*/
 
 //Déclaration de l'objet "panier"
 const CART = { 
     //Création d'une Key unique 
-    KEY : "keyForCartContentsOrinoco", 
+    KEY : "cartContentsInStorage", 
     contents : [],
     init() {
         //Vérification du LocalStorage pour voir s'il y a déjà des éléments dans le CART
@@ -19,8 +22,8 @@ const CART = {
         if (storedContents) {
             CART.contents = JSON.parse(storedContents);
             CART.contents.forEach(content => {
-                COUNT += content.quantity;
-                console.log(COUNT);
+                count += content.quantity;
+                //console.log(count);
             });
         } else {
             //Données factices pour tester le bon fonctionnement
@@ -29,21 +32,24 @@ const CART = {
                 name: "Etagère vintage",
                 quantity: 1,
                 price: 3500,
-                imageUrl: "http://localhost:3000/images/oak_4.jpg"
+                imageUrl: "http://localhost:3000/images/oak_4.jpg",
+                varnish: Mahogany
                 },{
                 _id: "28r",
                 name: "Armoire patinée",
                 quantity: 2,
                 price: 2500,
-                imageUrl: "http://localhost:3000/images/oak_4.jpg"
+                imageUrl: "http://localhost:3000/images/oak_4.jpg",
+                varnish: Mahogany
                 },{
                 _id: "3b9",
                 name: "Fauteuil Louis XIV",
                 quantity: 1,
                 price: 7500 ,
-                imageUrl: "http://localhost:3000/images/oak_4.jpg"
+                imageUrl: "http://localhost:3000/images/oak_4.jpg",
+                varnish: Mahogany
                 }*/];
-            /*COUNT = 4;*/
+            /*count = 4;*/
         }
         //Synchronise le CART 
         CART.sync();
@@ -52,7 +58,7 @@ const CART = {
     async sync() {
         let storedCart = JSON.stringify(CART.contents);
         await localStorage.setItem(CART.KEY, storedCart);
-        let storedCount = JSON.stringify(COUNT);
+        let storedCount = JSON.stringify(count);
         await localStorage.setItem("count", storedCount);
     },
     //Méthode pour trouver un article dans le panier par son id
@@ -67,87 +73,79 @@ const CART = {
             return isFound[0];
         }
     },
-    //Méthode pour ajouter un nouveau produit dans le panier du navigateur, avec accès à la liste des produits
-    add(id) {  
-        //Vérifie si ce produit est déjà dans le panier
+    add(id, qty=1) { 
+        let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
+        //Vérifie si ce produit est déjà dans le panier en comparant l'id
         if (CART.find(id)) {
-            CART.increase(id, qty=1); 
-        } else {
-            let filterPds = PRODUCTS.filter(product => {
-                if (product._id == id) {
+            console.log("id trouvé");
+            let filterCart = CART.contents.filter(item => (item._id == id));
+            //Test
+            console.log(filterCart[0]);
+            //Vérifie si ce produit qui a le même id a la mêem option de varnish
+            let isFound = filterCart.filter(item => {
+                if (item.varnish == storedVarnish) {
                     return true;
-            }
+                }
             });
-            if (filterPds && filterPds[0]) {
-                let addItem = {
-                    _id: filterPds[0]._id,
-                    name: filterPds[0].name,
-                    price: filterPds[0].price,
-                    description: filterPds[0].description,
-                    imageUrl: filterPds[0].imageUrl,
-                    quantity: 1
-                };
-                //Ajoute le produit au panier dans le navigateur
-                CART.contents.push(addItem);
-                //Met à jour le panier dans le localStorage
-                COUNT +=1;
-                CART.sync();
-            } else {
-                //Message d'erreur si l'id ne correspond à aucun produit 
-                console.log("Produit non valide ou inexistant");
-            }    
-        }
-    },
-    //Méthode pour ajouter le produit affiché pans page "produit", avec accès au produit seul
-    addProductOnly(id, qty=1) { 
-        //Vérifie si ce produit est déjà dans le panier
-        console.log(CART.contents);//Test
-        if (CART.find(id)) {
-            CART.increase(id, qty=1); 
-            //Test de vérification de bon fonctionnement
-            console.log("Produit déjà dans le panier");
-        } else { 
-            //Si le produit n'est pas déjà dans le panier, on le récupère grâce au localStorage
-            let pdtInStorage = localStorage.getItem(PDTSELECTED.KEY);
-            PDTSELECTED.contents = JSON.parse(pdtInStorage);
-            //Test de vérification de bon fonctionnement
-            console.log(PDTSELECTED.contents);
-           if (PDTSELECTED) {
-               //Ajoute le produit au panier dans le navigateur
-                CART.contents.push(PDTSELECTED.contents);
-                //Met à jour le panier dans le localStorage
-                COUNT +=1;
-                CART.sync();
-            } else {
-                //Message d'erreur si ça ne fonctionne pas 
-                console.log("Produit non valide ou inexistant");
+            // Seulement si même id et même varnish, on augmente la quantité
+            if (isFound && isFound[0]) {
+                //Pour tester que ça fonctionne
+                console.log(isFound[0]);
+                isFound[0].quantity = isFound[0].quantity + qty; 
             }
-        }
-    },
-    //Méthode pour augmenter d'1 la quantité du produit visé par l'id
-    increase(id, qty = 1) {
-        CART.contents = CART.contents.map(item => {
-            if (item._id == id) {
-                item.quantity = item.quantity + qty;
+            else {
+                CART.addFromStorage();
             }
-            return item;
-        });
-        //Met à jour le panier dans le localStorage et l'icône panier du menu
-        COUNT +=1;
+        } else {
+            CART.addFromStorage();
+        } 
+        //Met à jour le panier dans le localStorage
+        count +=1;
         CART.sync();
+    },  
+    addFromStorage() {
+        //Si le produit n'est pas déjà dans le panier, on le récupère grâce au localStorage
+        let pdtInStorage = localStorage.getItem(PDTSELECTED.KEY);
+        PDTSELECTED.contents = JSON.parse(pdtInStorage);
+        //On récupère le vernis choisi grâce au localStorage et on l'ajoute au produit
+        let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
+        //Test de vérification de bon fonctionnement
+        console.log(storedVarnish);
+        PDTSELECTED.contents.varnish = storedVarnish;
+        //Test de vérification de bon fonctionnement
+        console.log(PDTSELECTED.contents);
+        if (PDTSELECTED) {
+           //Ajoute le produit au panier dans le navigateur
+            CART.contents.push(PDTSELECTED.contents);
+        }
     },
-    remove(id) {//Supprime totalement un produit du panier
+    remove(id) {//Supprime totalement un article du panier
+        //let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
         CART.contents = CART.contents.filter(item => {
-          if (item._id !== id) {
+          if (item._id !== id) { //((item._id == id) && (item.varnish !== storedVarnish))
                return true;
            }
         });
         // Met à jour le panier dans le localStorage et l'icône panier du menu
-        COUNT -= item.quantity;
         CART.sync();
         //Met à jour le prix total
-        cartAmount.textContent = calculateCartAmount() + " EUR"; 
-    },
+        cartAmount.textContent = calculateCartAmount() + " EUR";
+        //Recalcul de l'icône panier
+        let storedContents = localStorage.getItem(CART.KEY);
+        count = 0;
+        if (storedContents) {
+            CART.contents = JSON.parse(storedContents);
+            CART.contents.forEach(content => {
+                count += content.quantity;
+            });
+        } else {
+            count = 0;
+        }
+        localStorage.getItem("count");
+        setTimeout(function() {
+            showCount(); 
+        }, 1000);  
+     },
     //Méthode pour afficher le contenu du panier
     logContents() {
         console.log(CART.contents);//Test de vérification de bon fonctionnement
@@ -155,23 +153,13 @@ const CART = {
 };
 
 /**
-*Fonction pour ajouter un produit au panier depuis la liste des produits
+*Fonction pour ajouter le produit unique au panier depuis la page produit
 */
-function addItem(e) {  
+function addItem(e) { // 
     let id = e.target.getAttribute("data-id");
     //Test de vérification de bon fonctionnement
     console.log("Votre produit a bien été ajouté");
     CART.add(id, 1);
-}
-
-/**
-*Fonction pour ajouter le produit unique au panier depuis la page produit
-*/
-function addItemOnly(e) { // 
-    let id = e.target.getAttribute("data-id");
-    //Test de vérification de bon fonctionnement
-    console.log("Votre produit a bien été ajouté");
-    CART.addProductOnly(id, 1);
 }
 
 /**
@@ -190,6 +178,8 @@ function suppressItem(e) {
 /**
 *Fonction pour afficher le nombre de produits achetés sur l'icône panier
 */
+let cartCount = document.getElementById("cartcount");
+
 async function showCount() {
     let storedCount = await localStorage.getItem("count");
     console.log(storedCount);//Test de bon fonctionnement*/

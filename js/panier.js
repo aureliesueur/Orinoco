@@ -1,4 +1,9 @@
-let cartAmount = document.getElementById("cart-amount");
+/*Ensemble des fonctions et événements relatifs à la page panier.html, qui affiche :
+- la liste des produits choisis,
+- le prix total du panier,
+- le formulaire à remplir
+*/
+
 
 //Lance la mise à jour avec le localStorage et l'affichage du panier, ainsi que le calcul du prix total
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,11 +40,25 @@ function showCart() {
             cartImg.src = item.imageUrl;
             cartImg.style.width = "10%";
             cartItem.appendChild(cartImg);
+            //Génère et ajoute une div pour le nom du produit et le choix du vernis
+            let cartDetails = document.createElement("div");
+            cartDetails.className = "cartitem__details";
+            cartItem.appendChild(cartDetails);
             //Génère et ajoute le nom de produit pour chaque case
             let cartTitle = document.createElement("h3");
             cartTitle.textContent = item.name;
             cartTitle.className = "cartitem__title";
-            cartItem.appendChild(cartTitle);
+            cartDetails.appendChild(cartTitle);
+            //Génère et ajoute le vernis choisi
+            let cartVarnish = document.createElement("h4");
+                cartVarnish.className = "cartitem__varnish";
+                cartDetails.appendChild(cartVarnish);
+            if (item.varnish !== "") {
+                cartVarnish.textContent = "Finition " + item.varnish;
+            } else {
+                cartVarnish.textContent = "Finition Standard";
+            }
+            //localStorage.removeItem(chosenVarnish.KEY);
             //Génère et ajoute la quantité de produits achetés pour chaque case
             let cartQty = document.createElement("span");
             cartQty.textContent = item.quantity;
@@ -56,10 +75,17 @@ function showCart() {
             let cartButton = document.createElement("button");
             cartButton.className = "btn btn-secondary cartitem__button btn__remove";
             cartButton.setAttribute("role", "button");
-            cartButton.textContent = "Supprimer du panier";
+            cartButton.innerHTML = 'Supprimer du panier';
             cartButton.setAttribute("data-id", item._id);
-            cartButton.addEventListener("click", console.log("ça marche"));//suppressItem); GROS BUG !!!
+            cartButton.addEventListener("click", suppressItem); 
             cartItem.appendChild(cartButton); 
+            // Génère et ajoute l'icône poubelle invisible pour desktop et visible pour smartphone
+            let cartTrash = document.createElement("i");
+            cartTrash.className = "cartitem__trash fas fa-trash-alt";
+            cartTrash.setAttribute("role", "button");
+            cartTrash.setAttribute("data-id", item._id);
+            cartTrash.addEventListener("click", suppressItem); 
+            cartItem.appendChild(cartTrash); 
         });
     } else {
         //Affiche message si le panier est vide
@@ -70,6 +96,8 @@ function showCart() {
 /**
 *Fonction pour calculer le montant total du panier en Euros
 */
+let cartAmount = document.getElementById("cart-amount");
+
  function calculateCartAmount() {
     let totalPrice = 0;
     CART.contents.forEach(item => {
@@ -89,8 +117,9 @@ buttonConfirm.addEventListener("click", () => {
 });
             
 
-/*VALIDATION DES DONNEES DU FORMULAIRE EN UTILISANT L'API DE CONTRAINTES DE VALIDATION HTML 5*/
+/*Validation des données du formulaire en utilisant l'API de contraintes HTML 5*/
 
+//Capture des éléments nécessaires du DOM
 let name = document.getElementById("lastName");
 let firstname = document.getElementById("firstName");
 let email = document.getElementById("email");
@@ -142,8 +171,8 @@ city.addEventListener("keyup", function (event) {
 
 let formElt = document.getElementById("formtosubmit");
 
-//Objet envoyé au serveur
-let order = {
+//Structure de l'objet envoyé au serveur
+/*let order = {
    contact: {
       firstName: String,
       lastName: String,
@@ -152,7 +181,7 @@ let order = {
       email: String
       },
    products: [String]
-};
+};*/
 
 //Evenement envoi des données déclenché quand on clique sur le bouton "submit"
 formElt.addEventListener("submit", function(e) { 
@@ -172,37 +201,16 @@ formElt.addEventListener("submit", function(e) {
     order = {contact, products};
     //Pour tester si ça fonctionne
     console.log("this is the order : ", order);//Pour tester bon fonctionnement
+    //Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST - fichier queries.js -
     sendFormData(order);
-   // window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }); 
     
 
-/**
-*Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
-@param {string} data - données à envoyer en format json
-*/
-function sendFormData(data) {   
- fetch("http://localhost:3000/api/furniture/order", {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json"
-        },
-        body: JSON.stringify(order)
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-            storeIdName(response); 
-        })
-        .catch(error => alert("Erreur : " + error));
-}
-
-
 /**Fonction pour stocker l'order_id et le firstname du user dans le local storage
-@param {string} data - order_id
+@param {string} data 
 */
 async function storeIdName(data) {
-    await localStorage.setItem(ORDERID.KEY, data.orderId);
-    await localStorage.setItem(ORDERNAME.KEY, data.contact.firstName);
+    await localStorage.setItem(orderId.KEY, data.orderId);
+    await localStorage.setItem(orderName.KEY, data.contact.firstName);
     window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }

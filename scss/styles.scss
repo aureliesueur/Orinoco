@@ -153,18 +153,18 @@ header {
     }
 }
 
-
 /*Footer*/
 
 .footer {
     background-color: darken(rgba(174,118,134, 0.7), 20%);
-    height: 200px;
     color: $color-white;
-    font-size: 1.1em;
     padding-top: 60px;
+    padding-bottom: 30px;
+    animation: revelation 1000ms both ease-in-out; //Animation à l'affichage du footer
     &__item {
-        margin-right: 50px;
+       margin-right: 50px;
         margin-left: 50px;
+        margin-bottom: 30px;
         & a {
             color: $color-white;
             &:hover {
@@ -178,12 +178,27 @@ header {
     }
 }
 
+//Keyframe pour l'animation à l'affichage des cases "produit"
+@keyframes revelation {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
 /*PAGE ACCUEIL---------------------------------------------------------------------*/
 
-/*Mise en page des "cases" produits affichées sur la page d'accueil */
+/*Mise en page de la section supérieure */
 
 .intro {
     padding-top: 160px;
+    margin-bottom: 20px!important;
     background: url("../images/fondBois.jpg") no-repeat;
     background-size: cover;
     &__box {
@@ -206,36 +221,15 @@ header {
     }
 }
 
-/*Animation du message "ajouté" qui apparaît quand on clique sur le bouton*/
-#products-page {
-    position: relative;
-    z-index: 1;
-}
-
-#message-add {
-    background: $color-primary;
-    border: 3px solid $color-secondary;
-    border-radius: 10px;
-    color: #000;
-    padding: 30px 40px;
-    font-size: 1em;
-    width: 30%;
-    text-align: center;
-    position: fixed;
-    top: 40%;
-    left: 35%;
-    z-index: 2;
-    opacity: 0;
-}
+/*Mise en page des "cases" produits affichées sur la page d'accueil */
 
 #products {
-    margin: auto;
-    margin-bottom: 30px;
+    margin: 30px auto;
 }
 
 .card {
     margin-bottom: 20px;
-    padding: 0 30px 0px 8px;
+    padding: 10px;
     border: 2px solid #000;
     border-radius: 15px;
     height: 200px;
@@ -245,6 +239,7 @@ header {
     align-items: center;
     flex-wrap: nowrap;
     @include boxshadow;
+    animation: revelation 700ms both ease-in-out; //Animation à l'affichage des cases "produit", cf keyframe ligne 181
     &__elements {
         height: 190px;
         display: flex;
@@ -255,21 +250,15 @@ header {
         width: 80%;
     }
     &__btns {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
         width: 20%;
-        position: relative;
-        z-index: 1;
-    }
-    &__btnOrder {
-        margin-top: 20px;   
+        margin-right: 10px;
     }
     &__details {
-        margin-top: 20px;
+        //margin-top: 20px;
+        margin: auto;
     }
 }
-        
+   
 .element {
     &__img {
         height: 95%;
@@ -296,109 +285,134 @@ header {
 }    
 
 
-/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN TABLETTE*/
+/*PAGE PRODUIT---------------------------------------------------------------------*/
 
-@media screen and (min-width : 770px) and (max-width : 1024px) {
-    .card {
-        flex-direction: column;
-        height: 260px;
-        padding-right: 10px;
-    &__elements {
-        height: 70%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+/*Mise en page de la section supérieure */
+
+.productselect {
+    padding-top: 160px;
+    background: url("../images/fondBois2.jpg") no-repeat;
+    background-size: cover;
+    margin-bottom: 0px!important;
+    &__box {
+        margin-right: 30px;
+        background-color: rgba(250, 250, 250, 0.6);
         padding: 0;
-        width: 100%;
-        border-bottom: 2px solid $color-secondary;
-        }
-        &__btns {
-            align-self: flex-end;
-            flex-direction: row;
-            width: 70%;
-            height: 30%;
-        }
-        &__btnOrder{
-            margin-bottom: 20px;
-            margin-left: 20px;
-            min-width: 150px; 
-        } 
-        &__btnDetails {
-            margin-bottom: 20px;
-            min-width: 150px; 
-            margin-top: 20px;
-        }
     }
+    &__title {
+            padding: 25px 0px 20px 0;
+        }
 }
 
-/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN SMARTPHONE*/
+#return-icon {
+    color: #000;
+    font-size: 2.5em;
+    margin-left: 150px;
+}
 
-@media screen and (max-width : 770px) {
-    .intro__details {
+/*Mise en page du produit sélectionné dans la page d'accueil */
+
+.pdtcase {
+    background: $color-white;
+    margin: 0px auto 80px auto;
+    padding: 10px;
+    padding-bottom: 50px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    @include boxshadow;
+    position: relative;
+    animation: revelation 1000ms 200ms both ease-in-out; //Animation à l'affichage de la case "produit", cf keyframe ligne 181
+    &__img {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        margin-bottom: 30px; 
+        animation: showImage 700ms backwards ease-in-out; //Animation à l'affichage de la photo, cf keyframes ligne 561
+    }
+    &__title {
+        font-size: 1.7em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        &::after { // Ligne en-dessous du titre
+            content: "";
+            display: block;
+            width: 100%;
+            border-bottom: 3px solid $color-tertiary;
+            padding-top: 6px;
+        }
+    }
+    &__description {
         width: 80%;
     }
-    #products {
-        padding-left: 0;
-        padding-right: 0;
+    &__stock {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: $color-tertiary;
+        color: $color-white;
+        border: 1px solid black;
+        border-radius: 50%;
+        font-size: 0.8em;
+        padding: 20px 5px;
+        transform: rotate(30deg);
     }
-    .card {
-        height: 480px;
-        padding: 0;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 30px;
-        &__elements {
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 73%;
-        }
-        &__btns {
-            width: 80%;
-            flex-direction: column;
+    &__buttons {
+        display: flex;
+        flex-direction : row;
+        justify-content: space-between;
+    }
+    &__order {
+        margin-left: 15px;
+    }
+    &__varnish {
+        margin-right: 15px;
+    }  
+}
 
-            height: 27%;
-            align-self: center;
-        }
-        &__btnOrder{
-            margin-top: 10px;
-            margin-left: 0px;
-            margin-bottom: 20px;
-        } 
-        &__btnDetails {
-            margin-bottom: 0px;
-            margin-top: 0px;
-        }
-    } 
-    .element {
-        &__img {
-            height: 60%;
-            min-width: 94%;
-            margin-right: 0;
-            margin-top: 10px;
-            border-radius: 10px 10px 0 0;
-        }
-        &__details {
-            margin-top: 20px;
-            height: 40%;
-        }
+//Animation à l'affichage de la photo
+@keyframes showImage {
+    0% {
+        transform: scale(95%); 
+    }
+    100% {
+        transform: scale(100%);
     }
 }
 
-// AJOUTER MEDIA QUERY POUR PLACEMENT DU MESSAGE D'ALERTE AJOUT !!!!
+/*Mise en page du popup */
+
+.modal {
+    &__title {
+        font-weight: bold;
+        font-size: 1.3em;
+        color: $color-secondary;
+    }
+    &__message {
+        text-align: center;
+    }
+    &__link {
+        color: #000;
+        &:hover {
+            color: #000;
+            text-decoration: none; 
+        }
+    }
+}
 
 
 /*PAGE CART---------------------------------------------------------------------*/
 
 /*Mise en page des "cases" produits affichées sur la page d'accueil */
 
-
 .cartpage {
     padding-top: 160px;
     background: lighten($color-bkg, 15%);
-    padding-left: 50px;
-    padding-right: 30px;
+    padding-left: 40px;
+    padding-right: 20px;
     min-height: 800px;
     position: relative;
     &__title {
@@ -431,7 +445,6 @@ header {
     width: 300px;
 }
 
-
 .cartitem {
     margin-bottom: 20px;
     background: $color-white;
@@ -444,16 +457,25 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    animation: revelation 1000ms both ease-in-out; //Animation à l'affichage de la case "produit", cf keyframe ligne 181
     &__img {
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px 0 0 10px;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px 0 0 10px;
+    }
+    &__details {
+        width: 30%;
     }
     &__title {
-    width: 30%;
-    overflow: hidden; 
-    white-space: nowrap;
-    text-overflow: ellipsis; 
+        overflow: hidden; 
+        white-space: nowrap;
+        text-overflow: ellipsis; 
+    }
+    &__varnish {
+        font-size: 0.9em;
+        overflow: hidden; 
+        white-space: nowrap;
+        text-overflow: ellipsis; 
     }
     &__price {
         margin-bottom: 0;
@@ -462,6 +484,9 @@ header {
         border: 1px solid $color-secondary;
         border-radius: 50%;
         padding: 0 5px 0 5px;
+    }
+    &__trash {
+        display: none;
     }
 }
 
@@ -501,6 +526,8 @@ header {
     }
 }
 
+/*Mise en page du formulaire */
+
 .form {
     width: 60%;
     position: absolute;
@@ -508,6 +535,7 @@ header {
     left: 20%;
     border: 2px solid $color-tertiary;
     opacity: 0;
+    z-index: -1000;
     &__title {
         color: $color-tertiary!important;
         font-weight: bold!important;
@@ -526,145 +554,17 @@ header {
         & a:hover {
             text-decoration: none;
             color: $color-white;
-        }
-        
+        }   
     }
     &.active {
-            opacity: 1;
+        opacity: 1;
+        z-index: 1000;
     }
 }
 
-
-/*PAGE PRODUIT---------------------------------------------------------------------*/
-
-/*Mise en page du produit sélectionné dans la page d'accueil */
-
-.produitselect {
-    padding-top: 160px;
-    background: url("../images/fondBois2.jpg") no-repeat;
-    background-size: cover;
-    &__box {
-        margin-right: 30px;
-        background-color: rgba(250, 250, 250, 0.6);
-        padding: 0;
-    }
-    &__title {
-            padding: 25px 0px 20px 0;
-        }
-    &__details {
-        width: 50%;
-        margin: auto;
-        margin-bottom: 30px;
-        background: darken(rgba(174,118,134, 0.6), 20%);
-        & h2 {
-            padding: 15px;
-            color: #F1E9F0;
-        }
-    }
+.jumbotron {
+    margin-bottom: 0px;
 }
-
-#return-icon {
-    color: #000;
-    font-size: 2.5em;
-    margin-left: 150px;
-}
-
-
-.pdtcase {
-    background: $color-white;
-    margin: 40px auto 80px auto;
-    padding: 10px;
-    padding-bottom: 50px;
-    border: 2px solid #000;
-    border-radius: 20px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    @include boxshadow;
-    position: relative;
-    &__img {
-        width: 100%;
-        border-radius: 20px 20px 0 0;
-        margin-bottom: 30px; 
-    }
-    &__title {
-        font-size: 1.7em;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-        &::after { // Ligne en-dessous du titre
-            content: "";
-            display: block;
-            width: 100%;
-            border-bottom: 3px solid $color-tertiary;
-            padding-top: 6px;
-        }
-    }
-    &__description {
-        width: 80%;
-    }
-    &__stock {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: $color-tertiary;
-        color: $color-white;
-        border: 1px solid black;
-        border-radius: 50%;
-        font-size: 0.8em;
-        padding: 20px 5px;
-        transform: rotate(30deg);
-    }
-    &__buttons {
-        display: flex;
-        flex-direction : row;
-        justify-content: space-between;
-    }
-    &__varnish {
-        background: $color-tertiary;
-        margin-right: 15px;
-    }
-    &__order {
-        margin-left: 15px;
-    }  
-}
-
-.dropdown {
-        background: $color-tertiary!important;
-    }
-
-.modal {
-    &__title {
-        font-weight: bold;
-        font-size: 1.3em;
-        color: $color-secondary;
-    }
-    &__message {
-        text-align: center;
-    }
-    &__link {
-        color: #000;
-        &:hover {
-            color: #000;
-            text-decoration: none; 
-        }
-    }
-}
-
-/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN TABLETTE*/
-/*
-@media screen and (min-width : 770px) and (max-width : 1024px) {
-    
-
-/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN SMARTPHONE*/
-/*
-@media screen and (max-width : 770px) {
-}
-*/
-
-/*FORMULAIRE-----------------------------------------------------------------------*/
 
 
 /*PAGE CONFIRMATION---------------------------------------------------------------------*/
@@ -704,4 +604,193 @@ header {
     }
 }
 
-// CHOISIR LES FONTS DU TEXTE !!!!!
+/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN TABLETTE*/
+
+@media screen and (min-width : 770px) and (max-width : 1024px) {
+    //Media Queries générales
+    .menu {
+        &__img {
+            width: 230px;
+        }
+        &__item {
+            background: $color-bkg;
+            width: 230px;
+            padding-left: 60px;
+        }
+    }
+    .cartcount__nb {
+        position: absolute;
+        top: 0px;
+        right: 126px;
+    }
+    //Page index.html
+  .card {
+        flex-direction: column;
+        height: 260px;
+        padding-right: 10px;
+        &__elements {
+            height: 70%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+            width: 100%;
+            border-bottom: 2px solid $color-secondary;
+        }
+        &__btns {
+            width: 70%;
+            height: 30%;
+        }
+        &__btnDetails {
+            width: 50%;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+        }
+    }
+     //RAS pour la page produit.html
+     //Page panier.html
+    .cartpage {
+        padding-left: 20px;
+    }
+    .price__btn {
+        width: 40%;
+    }
+     //RAS pour la page confirmation.html
+}
+
+/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN SMARTPHONE*/
+
+@media screen and (max-width : 770px) {
+    //Media Queries générales
+    .menu {
+        &__img {
+            width: 230px;
+        }
+        &__item {
+            background: $color-bkg;
+            width: 230px;
+            padding-left: 60px;
+        }
+    }
+    .cartcount__nb {
+        position: absolute;
+        top: 0px;
+        right: 126px;
+    }
+    .navbar-nav {
+       border: 1px solid black; 
+        width: 232px;
+    }
+    //Page Index.html
+    .intro__details {
+        width: 80%;
+    }
+    #products {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .card {
+        height: 450px;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        &__elements {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 83%;
+        }
+        &__btns {
+            width: 80%;
+            flex-direction: column;
+            height: 17%;
+            align-self: center;
+        }
+        &__btnDetails {
+            display:block;
+            margin: 0 auto;
+        }
+    } 
+    .element {
+        &__img {
+            height: 60%;
+            min-width: 94%;
+            margin-right: 0;
+            margin-top: 10px;
+            border-radius: 10px 10px 0 0;
+        }
+        &__details {
+            margin-top: 20px;
+            height: 40%;
+        }
+    }
+     //Page produit.html
+    #return-icon {
+        margin-left: 50px;
+    }
+    .pdtcase {
+        &__buttons {
+            display: flex;
+            flex-direction : column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        &__order {
+            margin-left: 0;
+            width: 100%;
+        }
+        &__varnish {
+            margin-right: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }  
+    }
+   //Page panier.html
+    .cartpage {
+        padding-left: 0px;
+        padding-right: 0px;
+        &__title {
+            padding-top: 0px;
+        }
+    }
+    .cartitem {
+        padding-left: 20px;
+        &__img {
+        display: none;
+        }
+        &__trash {
+            display: inline;
+            background: $color-tertiary;
+            padding: 5px;
+            color: $color-white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        &__button {
+            display: none;
+        }
+    }
+    .text__remove {
+        display: none;
+    }
+    .form {
+        width: 90%;
+        left: 5%;
+    }
+    //Page confirmation.html
+    .confirm {
+        &__details {
+            width: 100%;
+        }
+        &__box {
+            margin: 0px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+}
+
+

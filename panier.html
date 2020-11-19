@@ -21,7 +21,7 @@
                 <nav class="col navbar navbar-expand-lg navbar-light menu">
                     <img src="images/logo.png" alt="Logo du site Orinoco" width="200" class="navbar-brand menu__img">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-                        <span class="navbar-toggler-icon menu__icon"></span>
+                        <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav">
@@ -39,7 +39,7 @@
        
         <section class="container-fluid">
             <div class="row cartpage__sections">
-                <div class="col-11 col-md-9" id="cart-section" >
+                <div class="col-12 col-lg-8" id="cart-section" >
                     <!--<h2 id="emptycart">Votre panier est vide.</h2>
                     POUR CHAQUE PRODUIT COMMANDE, DIV CREEE PAR JS DANS FICHIER INDEX.JS
                     <div class = "cartitem">
@@ -51,8 +51,8 @@
                     </div>-->
                </div>
 
-                <div class="col-11 col-md-3" class="price">
-                    <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande: <span id="cart-amount"></span></p>
+                <div class="col-12 col-lg-4" class="price">
+                    <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande:<br/><span id="cart-amount"></span></p>
                     <button class="btn btn-danger card__button btn__order price__btn" role="button" id="confirm">Terminer votre commande <i class="fas fa-angle-double-right"></i></button>
                 </div>
             </div>
@@ -108,14 +108,20 @@
         
     <footer class="footer">
         <div class="container-fluid">
-            <div class="row">
-                <ul class="list-inline col text-center">
+            <ul class="list-inline row text-center">
+                <div class="col-12 col-sm-6 col-lg-3">
                     <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
                     <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
                     <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
-                    <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>    
-                </ul>
-            </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                    <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
+                </div>
+            </ul>
         </div>
     </footer>
   
@@ -126,6 +132,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/panier.js"></script>
     <script type="text/javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/queries.js"></script>
 
 </body>
 </html>
