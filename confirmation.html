@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
     
-<head><!--INFOS SUR LA PAGE HTML-->
+<!--INFOS SUR LA PAGE HTML-->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
-    <title>Orinoco - Confirmation de votre commande</title> 
-        <!--Link googlepolices--> 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"><!-- Ajout du CDN Bootstrap-->
+    <title>Orinoco - Confirmation de commande</title>  
+    <!-- Ajout du CDN Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Ajout des icônes Fontawesome-->
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <!--Link googlepolices-->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Varela+Round&display=swap" rel="stylesheet">    
     <link rel='stylesheet' href="scss/styles.css">
 </head>
     
     
 <body>
-    
+    <!--ENTETE-->
     <header>
         <div class="container-fluid">
             <div class="row">
@@ -34,45 +37,47 @@
         </div>
      </header>
     
+    <!--SECTION CONFIRMATION DE COMMANDE PERSONNALISEE VIA JS DANS FICHIER CONFIRMATION.JS-->
     <section class="container-fluid">
         <div class="row jumbotron confirm">
             <div class="col-12 col-lg-10 text-center confirm__box">
                 <h1 class="confirm__title"><i class="fas fa-check"></i> Merci <span id="sent-name"></span>, nous avons bien reçu votre commande.</h1>
                 <div class="confirm__details">
                     <p>Un mail vient de vous être adressé. Veuillez consulter votre messagerie pour obtenir la confirmation de commande et les détails de la livraison.</p> 
-                    <h2 class="confirm__price" id="sent-price">Prix total payé : XXXXX</h2>
-                    <h2 class="confirm__ref" id="sent-ref">Référence de la commande : YYYY</h2>
+                    <h2 class="confirm__price" id="sent-price">Prix total payé</h2>
+                    <h2 class="confirm__ref" id="sent-ref">Référence de la commande</h2>
                     <button type="button" class="btn btn__confirm confirm__btn"><a class="nav-link confirm__link" href="index.html">Retourner sur notre e-boutique</a></button>
                 </div>
             </div>
         </div>
     </section>
 
-        
-        <footer class="footer">
-            <div class="container-fluid">
-                <ul class="list-inline row text-center">
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
-                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
-                        <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
-                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
-                    </div>
-                </ul>
-            </div>
-        </footer>
+    <!--PIED DE PAGE-->    
+    <footer class="footer">
+        <div class="container-fluid">
+            <ul class="list-inline row text-center">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                    <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                    <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                    <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
+                </div>
+            </ul>
+        </div>
+    </footer>
     
     
     <!-- Ajout des composants permettant l'utilisation de Bootstrap : jQuery, Popper.js, Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Ajout des fichiers JS-->
     <script type="text/javascript" src="js/confirmation.js"></script>
     <script type="text/javascript" src="js/general.js"></script>
     

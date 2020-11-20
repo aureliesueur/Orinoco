@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
     
-<head><!--INFOS SUR LA PAGE HTML-->
+<!--INFOS SUR LA PAGE HTML-->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
-    <title>Orinoco - Votre panier</title> 
-    <!--Link googlepolices--> 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"><!-- Ajout du CDN Bootstrap-->
+    <title>Orinoco - Votre panier</title>  
+    <!-- Ajout du CDN Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Ajout des icônes Fontawesome-->
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <!--Link googlepolices-->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Varela+Round&display=swap" rel="stylesheet">    
     <link rel='stylesheet' href="scss/styles.css">
 </head>
     
     
 <body>
-    
+    <!--ENTETE-->
     <header>
         <div class="container-fluid">
             <div class="row">
@@ -32,25 +35,19 @@
                 </nav>
             </div>
         </div>
-     </header>
+    </header>
     
-   <main id="cart-page" class="cartpage">        
-       <h1 class="cartpage__title">Récapitulatif de votre panier</h1>
-       
+    <!--SECTION LISTE DES PRODUITS DU PANIER-->
+    <main id="cart-page" class="cartpage">        
+        <h1 class="cartpage__title">Récapitulatif de votre panier</h1>
         <section class="container-fluid">
             <div class="row cartpage__sections">
+                
                 <div class="col-12 col-lg-8" id="cart-section" >
-                    <!--<h2 id="emptycart">Votre panier est vide.</h2>
-                    POUR CHAQUE PRODUIT COMMANDE, DIV CREEE PAR JS DANS FICHIER INDEX.JS
-                    <div class = "cartitem">
-                        <img src="" alt="" class= "cartitem__img">
-                        <h3 class= "cartitem__title">Nom du produit commandé</h3>
-                        <p class= "cartitem__price">Prix total par article</p>
-                        <span class="cartitem__quantity">Quantité commandée</span>
-                        <button class= "btn btn-secondary cartitem__button btn__remove" role="button" data-id= item._id">Supprimer du panier</button>
-                    </div>-->
-               </div>
-
+                    <!--SECTION PRODUITS DU PANIER CREEE VIA JS DANS FICHIER PANIER.JS-->
+                </div>
+                
+                <!--Section prix total et bouton de commande-->
                 <div class="col-12 col-lg-4" class="price">
                     <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande:<br/><span id="cart-amount"></span></p>
                     <button class="btn btn-danger card__button btn__order price__btn" role="button" id="confirm">Terminer votre commande <i class="fas fa-angle-double-right"></i></button>
@@ -58,14 +55,12 @@
             </div>
         </section>
        
-       <section class="container form" id="form-section">
-            <!-- FORM APPARAIT GRACE A JS APRES EVENT CLICK DU BOUTON-->
-                <div class="row">
+        <!--FORMULAIRE - qui apparaît via JS au clic du bouton "Terminer votre commande"-->
+        <section class="container form" id="form-section">
+            <div class="row">
                 <div class="col-12 jumbotron">
                     <h2 class="form__title">Pour finaliser votre commande, merci de remplir ce formulaire.</h2>
-                    
-                   <form id="formtosubmit" method="post" action="http://localhost:3000/api/furniture/order" enctype="multipart/form-data">
-
+                    <form id="formtosubmit" method="post" action="http://localhost:3000/api/furniture/order" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="firstName">Prénom :</label>
                             <input type="text" name="firstName" class="form-control" placeholder="Par ex. Martin" id="firstName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
@@ -87,11 +82,12 @@
                             <label for="email">Email :</label>
                             <input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required>
                         </div>
-                        <button type="submit" class="btn btn__order form__btn" id="submit" data-toggle="modal" ><a id="confirm-link">Valider votre commande</a></button>
+                        <button type="submit" class="btn btn__order form__btn" data-toggle="modal" ><a id="confirm-link">Valider votre commande</a></button>
                     </form>
                 </div>
             </div>
         </section>
+        
        <!--Message d'erreur lancé en JS si on essaye d'envoyer un formulaire alors qu'il n'y a aucun produit commandé-->
         <div id="prevent-msg">
             <p>Merci de sélectionner des articles avant de remplir ce formulaire !</p>
@@ -100,7 +96,7 @@
         </div>      
     </main> 
     
-        
+    <!--PIED DE PAGE-->   
     <footer class="footer">
         <div class="container-fluid">
             <ul class="list-inline row text-center">
@@ -125,6 +121,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Ajout des fichiers JS-->
     <script type="text/javascript" src="js/panier.js"></script>
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/queries.js"></script>
