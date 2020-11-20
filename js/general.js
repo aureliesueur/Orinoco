@@ -10,6 +10,8 @@ const orderName = {KEY : "orderNameInStorage", value :""};
 const chosenVarnish = {KEY : "chosenVarnishInStorage", value :""};
 let count = 0;
 
+let cartCount = document.getElementById("cartcount");
+
 
 //Déclaration de l'objet "panier"
 const CART = { 
@@ -178,7 +180,6 @@ function suppressItem(e) {
 /**
 *Fonction pour afficher le nombre de produits achetés sur l'icône panier
 */
-let cartCount = document.getElementById("cartcount");
 
 async function showCount() {
     let storedCount = await localStorage.getItem("count");

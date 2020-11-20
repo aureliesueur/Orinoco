@@ -1,3 +1,13 @@
+/*
+OUTILS UTILISES : 
+Bootstrap : 
+- utilisation de la grille Bootstrap pour le volume des blocs afin d'optimiser la responsivité
+- utilisation des éléments Bootstrap (menu, footer, formulaire, modal) pour gagner du temps en mise en page
+Système BEM : 
+- pour personnaliser le design Bootstrap,
+- pour mettre en page tous les blocs créés par JS avec les données récoltées par les requêtes(cases produits)
+*/
+
 /*GENERAL---------------------------------------------------------------------*/
     
 /*DECLARATION DES VARIABLES ET MIXIN SASS*/
@@ -25,6 +35,7 @@ $color-bkg : #A1A5A9;
 
 body {
     background-color: $color-bkg;
+    font-family: "Open Sans", Verdana, sans-serif;
 }
 
 h1 {
@@ -401,6 +412,10 @@ header {
             text-decoration: none; 
         }
     }
+    &__footer {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 
@@ -554,7 +569,7 @@ header {
         & a:hover {
             text-decoration: none;
             color: $color-white;
-        }   
+        } 
     }
     &.active {
         opacity: 1;
@@ -566,6 +581,24 @@ header {
     margin-bottom: 0px;
 }
 
+//Message qui apparaît lorsque l'utilisateur essaye d'envoyer le formulaire alors que le panier est vide
+#prevent-msg {
+    width: 60%;
+    position: absolute;
+    left: 20%;
+    top: 35%;
+    background: $color-white;
+    border: 2px solid $color-tertiary;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    visibility: hidden;
+    & p {
+        font-weight: bold;
+        font-size: 1.3em;
+        color: $color-secondary;
+    }
+}
 
 /*PAGE CONFIRMATION---------------------------------------------------------------------*/
 
@@ -761,6 +794,9 @@ header {
         &__img {
         display: none;
         }
+        &__details {
+            width: 50%;
+        }
         &__trash {
             display: inline;
             background: $color-tertiary;
@@ -779,6 +815,12 @@ header {
     .form {
         width: 90%;
         left: 5%;
+        &__btn {
+            width: 200px;
+        }
+    }
+    .prevent-msg__btn {
+        margin-bottom: 20px;
     }
     //Page confirmation.html
     .confirm {

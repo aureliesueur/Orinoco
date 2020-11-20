@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     //Met à jour le panier
     CART.init();
     showCount(); 
+    //Pour faire disparaître le 0 sur l'icône panier au chargement de la liste des produits
+    if (count == 0) {
+        cartCount.style.display = "none";
+    }
 });
 
    
@@ -79,14 +83,14 @@ function showProducts(products) {
 /**
 *Fonction globale à déclencher au clic du bouton, pour afficher le message d'ajout et mettre à jour le nombre d'articles dans l'icône panier
 */
-function addIncludeMessage(e) { 
+/*function addIncludeMessage(e) { 
     addItem(e);
     //messageAdd.style.opacity= "1";
     setTimeout(function() {
         //messageAdd.style.opacity= "0";
         showCount(); 
     }, 1000); 
-}
+}*/
 
 
 

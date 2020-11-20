@@ -53,7 +53,7 @@ function showCart() {
             let cartVarnish = document.createElement("h4");
                 cartVarnish.className = "cartitem__varnish";
                 cartDetails.appendChild(cartVarnish);
-            if (item.varnish !== "") {
+            if (item.varnish !== null) {
                 cartVarnish.textContent = "Finition " + item.varnish;
             } else {
                 cartVarnish.textContent = "Finition Standard";
@@ -170,6 +170,8 @@ city.addEventListener("keyup", function (event) {
 /* Mettre tout ce qui est avant dans une fonction qu'on appelle au moment du submit : si tout est ok, on envoie, sinon message d'erreur !!*/
 
 let formElt = document.getElementById("formtosubmit");
+let formPreventElt = document.getElementById("prevent-msg");
+let submitElt = document.getElementById("submit");
 
 //Structure de l'objet envoyé au serveur
 /*let order = {
@@ -183,7 +185,7 @@ let formElt = document.getElementById("formtosubmit");
    products: [String]
 };*/
 
-//Evenement envoi des données déclenché quand on clique sur le bouton "submit"
+
 formElt.addEventListener("submit", function(e) { 
     // Pour empêcher le formulaire d'envoyer les données par défaut sans validation préalable
     e.preventDefault();
@@ -201,8 +203,15 @@ formElt.addEventListener("submit", function(e) {
     order = {contact, products};
     //Pour tester si ça fonctionne
     console.log("this is the order : ", order);//Pour tester bon fonctionnement
-    //Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST - fichier queries.js -
+    //S'il n'y a aucun article dans le panier, message apparaît
+    if (products.length == 0) {
+        formPreventElt.style.visibility = "visible";
+        formPreventElt.style.zIndex = "2000";
+        console.log("votre panier est vide");
+    } else {
+    //Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST - fichier queries.js -*/
     sendFormData(order);
+    }
 }); 
     
 

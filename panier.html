@@ -8,7 +8,7 @@
     <!--Link googlepolices--> 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"><!-- Ajout du CDN Bootstrap-->
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Varela+Round&display=swap" rel="stylesheet">    
     <link rel='stylesheet' href="scss/styles.css">
 </head>
     
@@ -79,11 +79,7 @@
                             <label for="address">Adresse :</label>
                             <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="postcode">Code postal :</label>
-                            <input type="number" class="form-control" placeholder="Par ex. 84100" id="postcode" pattern="[0-9]{5}+" required>
-                        </div>-->
-                      <div class="form-group">
+                        <div class="form-group">
                             <label for="city">Ville :</label>
                             <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
                         </div>
@@ -91,18 +87,17 @@
                             <label for="email">Email :</label>
                             <input type="email" name="email" class="form-control" placeholder="Par ex. martin.delavigne@gmail.com" id="email" required>
                         </div>
-                        <!--<div class="form-group form-check">
-                            <input class="form-check-input" type="checkbox" id="newsletter">
-                            <label class="form-check-label for="gridCheck>Recevoir notre newsletter</label>
-                        </div>-->
-                       <button type="submit" class="btn btn__order form__btn"><a id="confirm-link">Valider votre commande</a></button>
+                        <button type="submit" class="btn btn__order form__btn" id="submit" data-toggle="modal" ><a id="confirm-link">Valider votre commande</a></button>
                     </form>
                 </div>
             </div>
         </section>
-       
-       
-               
+       <!--Message d'erreur lancé en JS si on essaye d'envoyer un formulaire alors qu'il n'y a aucun produit commandé-->
+        <div id="prevent-msg">
+            <p>Merci de sélectionner des articles avant de remplir ce formulaire !</p>
+            <button type="button" class="btn btn-secondary btn__buy prevent-msg__btn"><a href="index.html" class="modal__link ">Reprendre vos achats</a></button>
+            <button type="button" class="btn btn-secondary btn__cart prevent-msg__btn"><a href="panier.html" class="modal__link">Retourner au panier</a></button>
+        </div>      
     </main> 
     
         
