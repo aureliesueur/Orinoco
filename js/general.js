@@ -3,13 +3,13 @@
 - affichage de l'icône panier du menu avec nombre de produits commandés. */
 
 //Déclaration des variables avec keys pour stocker dans localStorage
-
 let PRODUCTS = [];
 const orderId = {KEY : "orderIdInStorage", value :""};
 const orderName = {KEY : "orderNameInStorage", value :""};
 const chosenVarnish = {KEY : "chosenVarnishInStorage", value :""};
 let count = 0;
 
+//Captation des élements du DOM
 let cartCount = document.getElementById("cartcount");
 
 
@@ -18,6 +18,7 @@ const CART = {
     //Création d'une Key unique 
     KEY : "cartContentsInStorage", 
     contents : [],
+    //Méthode pour initialiser le CART 
     init() {
         //Vérification du localStorage pour voir s'il y a déjà des éléments dans le CART
         let storedContents = localStorage.getItem(CART.KEY);
@@ -40,7 +41,11 @@ const CART = {
         let storedCount = JSON.stringify(count);
         await localStorage.setItem("count", storedCount);
     },
-    //Méthode pour trouver un article dans le panier en les filtrant par l'id
+    /**
+    * Méthode pour trouver un article dans le panier en les filtrant par l'id
+    * @param { String } id
+    * @return { Object } premier produit résultat de la recherche
+    */
     find(id) {
         let isFound = CART.contents.filter(item => {
             if (item._id == id) {
@@ -51,7 +56,10 @@ const CART = {
             return isFound[0];
         }
     },
-    //Méthode pour ajouter un produit dans le panier
+    /**
+    * Méthode pour ajouter un produit dans le panier
+    * @param { String } id 
+    */
     add(id, qty=1) { 
         let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
         //Vérifie si ce produit est déjà dans le panier en comparant l'id
@@ -93,35 +101,34 @@ const CART = {
             CART.contents.push(PDTSELECTED.contents);
         }
     },
-    //CONTINUER COMMENTAIRES !!!!
-    
-    
-    //Méthode pour supprimer un article du panier seulement s'il a le même vernis : MARCHE !!
+     /**
+    * Méthode pour supprimer un article du panier 
+    * @param { String } id
+    * @param { String } varnish
+    */
     remove(id, varnish) {
+        //Filtre les produits du panier par l'id - on peut obtenir plusieurs produits qui ont le même id mais pas la même option de vernis -
         let filteredCart = CART.contents.filter(item => {
             if (item._id == id) { 
             return true;
            }
         });
-        //Test ok
-        console.log(filteredCart);
+        //Filtre les produits obtenus par le vernis, on obtient l'article qui a le même id et le même varnish
         let sameOrder = filteredCart.filter(item => {
             if (item.varnish == varnish) {
                 return true;
             }
         });
-        //Test ok
-        console.log(sameOrder);
+       //Garde tous les produits du panier qui ne sont pas le produit ci-dessus : revient à le supprimer du panier
         CART.contents = CART.contents.filter(item => {
           if (item !== sameOrder[0]) { 
                return true;
               }
         });
-        // Met à jour le panier dans le localStorage et l'icône panier du menu
+        // Met à jour le panier dans le localStorage et le prix total
         CART.sync();
-        //Met à jour le prix total
         cartAmount.textContent = calculateCartAmount() + " EUR";
-        //Recalcul de l'icône panier
+        //Recalcul et affichage de l'icône panier
         let storedContents = localStorage.getItem(CART.KEY);
         count = 0;
         if (storedContents) {
@@ -137,57 +144,32 @@ const CART = {
             showCount(); 
         }, 1000); 
      },
-    
-    
-    //Méthode pour afficher le contenu du panier
-    logContents() {
-        console.log(CART.contents);//Test de vérification de bon fonctionnement
-    }
 };
 
 
 /**
-*Fonction pour ajouter le produit unique au panier depuis la page produit
+*Fonction pour ajouter le produit au panier depuis la page produit
 */
 function addItem(e) { // 
+    //Récupération de l'id stocké dans le "data-id" du bouton
     let id = e.target.getAttribute("data-id");
-    //Test de vérification de bon fonctionnement
-    console.log("Votre produit a bien été ajouté");
     CART.add(id, 1);
 }
 
 /**
-*Fonction pour supprimer un produit du panier MARCHE OK mais ne récupère que l'id et pas le varnish !!!
+*Fonction pour supprimer un produit du panier 
 */
-
-/*function suppressItem(e) {
-    let id = e.target.getAttribute("data-id");
-    console.log(id);
-    console.log(CART.contents);
-    CART.remove(id);
-    //Test de vérification de bon fonctionnement
-    console.log("Votre produit a bien été supprimé");
-    showCart(); 
-}*/
-
-
-
-    
-/* TEST SUPPRESS */
 function suppressItem(e) {
+    //Récupère l'id et le varnish stockés dans le "data-id" du bouton
     let data = e.target.getAttribute("data-id");
     let id = data.slice(0, 24);
     let varnish = data.slice(25);
+    //Gère le cas où l'user n'a pas choisi de finition vernis
     if (varnish =="") {
         varnish = "Standard";
     }
-    //Test de bon fonctionnement
-    console.log(id);
-    console.log(varnish);
-    console.log(CART.contents);
     CART.remove(id, varnish);
-    //Test de vérification de bon fonctionnement
-    console.log("Votre produit a bien été supprimé");
+    //Actualise le panier
     showCart(); 
 }
 
@@ -197,7 +179,7 @@ function suppressItem(e) {
 */
 
 async function showCount() {
+    // Récupère le compteur dans le localStorage 
     let storedCount = await localStorage.getItem("count");
-    console.log(storedCount);//Test de bon fonctionnement*/
     cartCount.textContent = JSON.parse(storedCount);
 } 

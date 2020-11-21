@@ -97,6 +97,7 @@ function showCart() {
 
 /**
 *Fonction pour calculer le montant total du panier en Euros
+* @return {number}
 */
 let cartAmount = document.getElementById("cart-amount");
 
