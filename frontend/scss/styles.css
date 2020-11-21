@@ -1,0 +1,761 @@
+@charset "UTF-8";
+/*
+OUTILS UTILISES : 
+Bootstrap : 
+- utilisation de la grille Bootstrap pour le volume des blocs afin d'optimiser la responsivité
+- utilisation des éléments Bootstrap (menu, footer, formulaire, modal) pour gagner du temps en mise en page
+Système BEM : 
+- pour personnaliser le design Bootstrap,
+- pour mettre en page tous les blocs créés par JS avec les données récoltées par les requêtes(cases produits)
+*/
+/*GENERAL---------------------------------------------------------------------*/
+/*DECLARATION DES VARIABLES ET MIXIN SASS*/
+/* line 29, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+body {
+  background-color: #A1A5A9;
+  font-family: "Open Sans", Verdana, sans-serif; }
+
+/* line 34, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+h1 {
+  font-weight: bold;
+  color: #000;
+  font-family: "Varela Round";
+  font-size: 2em; }
+
+/* line 41, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+h2 {
+  color: #000;
+  font-family: "Varela Round";
+  font-size: 1.1em; }
+
+/* line 47, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+h3 {
+  color: #4e3175;
+  font-family: "Varela Round";
+  font-size: 1.3em; }
+
+/*Boutons*/
+/* line 55, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.btn {
+  box-shadow: 2px 2px 2px 2px #d6d8da; }
+  /* line 57, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__order {
+    background: #654198 !important;
+    color: #FFF; }
+    /* line 60, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__order:hover {
+      border: 1px solid #000;
+      color: #FFF;
+      box-shadow: 2px 2px 2px 2px #a1a5a9; }
+  /* line 66, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__details {
+    background: #975a6b !important; }
+    /* line 68, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__details:hover {
+      border: 1px solid #000;
+      color: #FFF;
+      box-shadow: 2px 2px 2px 2px #a1a5a9; }
+  /* line 74, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__remove {
+    background: #975a6b !important;
+    color: #FFF; }
+    /* line 77, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__remove:hover {
+      cursor: pointer;
+      color: #000;
+      box-shadow: 2px 2px 2px 2px #a1a5a9; }
+  /* line 83, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__cart {
+    background: #F1E9F0;
+    border: 2px solid #7E55B7;
+    color: #000; }
+    /* line 87, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__cart:hover {
+      background: #F1E9F0;
+      border: 3px solid #7E55B7;
+      color: #7E55B7;
+      font-weight: bold; }
+  /* line 94, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__buy {
+    background: #F1E9F0;
+    border: 2px solid #AE7686;
+    color: #000; }
+    /* line 98, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__buy:hover {
+      background: #F1E9F0;
+      border: 3px solid #AE7686;
+      color: #AE7686;
+      font-weight: bold; }
+  /* line 105, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .btn__confirm {
+    background: #F1E9F0;
+    border: 2px solid #7E55B7;
+    box-shadow: none; }
+    /* line 109, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .btn__confirm:hover {
+      background: #F1E9F0;
+      border: 3px solid #7E55B7;
+      font-weight: bold;
+      box-shadow: none; }
+
+/*Header*/
+/* line 120, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+header {
+  background-color: #A1A5A9;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  border-bottom: 1px solid #F1E9F0; }
+
+/* line 130, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.menu__img {
+  background: #F1E9F0;
+  border: 4px solid #7E55B7;
+  border-radius: 5px;
+  margin-top: 8px; }
+
+/* line 136, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.menu__item {
+  font-size: 1.3em !important; }
+
+/* line 141, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.fa-shopping-basket {
+  font-size: 1.3em !important; }
+
+/* line 145, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.cartcount {
+  position: relative; }
+  /* line 147, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartcount__nb {
+    position: absolute;
+    top: 1px;
+    right: -2px;
+    border: 1px solid #FFF;
+    border-radius: 50%;
+    padding: 0 4px 0 4px !important;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #FFF;
+    padding-top: 10px; }
+
+/*Footer*/
+/* line 163, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.footer {
+  background-color: rgba(119, 71, 85, 0.7);
+  color: #FFF;
+  padding-top: 60px;
+  padding-bottom: 30px;
+  animation: revelation 1000ms both ease-in-out; }
+  /* line 169, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .footer__item {
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 30px; }
+    /* line 173, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .footer__item a {
+      color: #FFF; }
+      /* line 175, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+      .footer__item a:hover {
+        text-decoration: none;
+        color: #000; }
+  /* line 181, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .footer__icon {
+    font-size: 1.8em; }
+
+@keyframes revelation {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+
+/*PAGE ACCUEIL---------------------------------------------------------------------*/
+/*Mise en page de la section supérieure */
+/* line 203, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.intro {
+  padding-top: 160px;
+  margin-bottom: 20px !important;
+  background: url("../images/fondBois.jpg") no-repeat;
+  background-size: cover; }
+  /* line 208, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .intro__box {
+    margin-right: 30px;
+    background-color: rgba(250, 250, 250, 0.6);
+    padding: 0; }
+  /* line 213, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .intro__title {
+    padding: 25px 0px 20px 0; }
+  /* line 216, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .intro__details {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
+    background: rgba(119, 71, 85, 0.6); }
+    /* line 221, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .intro__details h2 {
+      padding: 15px;
+      color: #F1E9F0; }
+
+/*Mise en page des "cases" produits affichées sur la page d'accueil */
+/* line 230, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+#products {
+  margin: 30px auto; }
+
+/* line 234, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.card {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  box-shadow: 2px 4px 8px 3px #868c91;
+  animation: revelation 700ms both ease-in-out; }
+  /* line 248, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__elements {
+    height: 190px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    width: 80%; }
+  /* line 257, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__btns {
+    width: 20%;
+    margin-right: 10px; }
+  /* line 261, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card__details {
+    margin: auto; }
+
+/* line 268, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.element__img {
+  height: 95%;
+  width: 30%;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 10px 0 0 10px; }
+
+/* line 275, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.element__details {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden; }
+
+/* line 285, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.card__description, .card__name {
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+/*PAGE PRODUIT---------------------------------------------------------------------*/
+/*Mise en page de la section supérieure */
+/* line 297, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.productselect {
+  padding-top: 160px;
+  background: url("../images/fondBois2.jpg") no-repeat;
+  background-size: cover;
+  margin-bottom: 0px !important; }
+  /* line 302, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .productselect__box {
+    margin-right: 30px;
+    background-color: rgba(250, 250, 250, 0.6);
+    padding: 0; }
+  /* line 307, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .productselect__title {
+    padding: 25px 0px 20px 0; }
+
+/* line 312, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+#return-icon {
+  color: #000;
+  font-size: 2.5em;
+  margin-left: 150px; }
+
+/*Mise en page du produit sélectionné dans la page d'accueil */
+/* line 320, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.pdtcase {
+  background: #FFF;
+  margin: 0px auto 80px auto;
+  padding: 10px;
+  padding-bottom: 50px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 2px 4px 8px 3px #868c91;
+  position: relative;
+  animation: revelation 1000ms 200ms both ease-in-out; }
+  /* line 335, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__img {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 30px;
+    animation: showImage 700ms backwards ease-in-out; }
+  /* line 342, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__title {
+    font-size: 1.7em;
+    text-transform: uppercase;
+    margin-bottom: 10px; }
+    /* line 347, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .pdtcase__title::after {
+      content: "";
+      display: block;
+      width: 100%;
+      border-bottom: 3px solid #AE7686;
+      padding-top: 6px; }
+  /* line 355, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__description {
+    width: 80%; }
+  /* line 358, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__stock {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #AE7686;
+    color: #FFF;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 0.8em;
+    padding: 20px 5px;
+    transform: rotate(30deg); }
+  /* line 371, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
+  /* line 376, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__order {
+    margin-left: 15px; }
+  /* line 379, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__varnish {
+    margin-right: 15px; }
+
+@keyframes showImage {
+  0% {
+    transform: scale(95%); }
+  100% {
+    transform: scale(100%); } }
+
+/*Mise en page du popup */
+/* line 397, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.modal__title {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #7E55B7; }
+
+/* line 402, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.modal__message {
+  text-align: center; }
+
+/* line 405, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.modal__link {
+  color: #000; }
+  /* line 407, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .modal__link:hover {
+    color: #000;
+    text-decoration: none; }
+
+/*PAGE CART---------------------------------------------------------------------*/
+/*Mise en page des "cases" produits affichées sur la page d'accueil */
+/* line 418, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.cartpage {
+  padding-top: 160px;
+  background: #c9cbce;
+  padding-left: 40px;
+  padding-right: 20px;
+  min-height: 800px;
+  position: relative; }
+  /* line 425, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartpage__title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding-top: 30px; }
+  /* line 431, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartpage__sections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 50px; }
+
+/* line 440, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+#cart-section {
+  margin-bottom: 30px; }
+
+/* line 444, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+#emptycart {
+  margin-top: 100px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.6em;
+  border: 2px solid #AE7686;
+  border-radius: 5px;
+  width: 300px; }
+
+/* line 455, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.cartitem {
+  margin-bottom: 20px;
+  background: #FFF;
+  padding: 5px 20px 5px 5px;
+  border: 2px solid #7E55B7;
+  border-radius: 10px;
+  box-shadow: 2px 4px 8px 3px #868c91;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  animation: revelation 1000ms both ease-in-out; }
+  /* line 469, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px; }
+  /* line 474, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__details {
+    width: 30%; }
+  /* line 477, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  /* line 482, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__varnish {
+    font-size: 0.9em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  /* line 488, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__price {
+    margin-bottom: 0; }
+  /* line 491, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__qty {
+    border: 1px solid #7E55B7;
+    border-radius: 50%;
+    padding: 0 5px 0 5px; }
+  /* line 497, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem__trash {
+    display: none; }
+
+/* line 502, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.price {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 30px; }
+  /* line 508, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .price__amount {
+    width: 60%;
+    display: block;
+    margin: auto;
+    margin-bottom: 50px;
+    background-color: #F1E9F0;
+    border-radius: 10px;
+    color: #000;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.1em; }
+    /* line 519, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .price__amount span {
+      font-weight: bold; }
+  /* line 523, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .price__icon {
+    font-size: 1.2em;
+    color: #797f84; }
+  /* line 527, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .price__btn {
+    width: 80%;
+    display: block;
+    margin: auto;
+    box-shadow: 2px 2px 2px 2px #666666;
+    font-weight: bold !important;
+    border: 2px solid #000; }
+
+/*Mise en page du formulaire */
+/* line 539, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.form {
+  width: 60%;
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  border: 2px solid #AE7686;
+  opacity: 0;
+  z-index: -1000; }
+  /* line 547, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .form__title {
+    color: #AE7686 !important;
+    font-weight: bold !important;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center; }
+  /* line 554, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .form__btn {
+    text-align: center;
+    width: 300px;
+    height: 80px;
+    margin: auto;
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold; }
+    /* line 562, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .form__btn a:hover {
+      text-decoration: none;
+      color: #FFF; }
+  /* line 568, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .form.active {
+    opacity: 1;
+    z-index: 1000; }
+
+/* line 574, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.jumbotron {
+  margin-bottom: 0px; }
+
+/* line 579, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+#prevent-msg {
+  width: 60%;
+  position: absolute;
+  left: 20%;
+  top: 35%;
+  background: #FFF;
+  border: 2px solid #AE7686;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  visibility: hidden; }
+  /* line 590, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  #prevent-msg p {
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #7E55B7; }
+
+/*PAGE CONFIRMATION---------------------------------------------------------------------*/
+/* line 599, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+.confirm {
+  padding-top: 160px;
+  background: url("../images/fondBois3.jpg") repeat fixed;
+  background-size: cover;
+  margin-bottom: 0; }
+  /* line 604, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__box {
+    margin: 60px auto;
+    background-color: rgba(250, 250, 250, 0.7);
+    padding: 40px; }
+  /* line 609, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__title {
+    padding: 25px 0px 20px 0; }
+  /* line 612, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__details {
+    width: 70%;
+    margin: auto;
+    margin-bottom: 30px;
+    background: rgba(119, 71, 85, 0.6);
+    padding: 30px; }
+  /* line 619, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__price, .confirm__ref {
+    font-size: 1.3em; }
+  /* line 622, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__btn {
+    margin-top: 30px;
+    color: #000; }
+  /* line 626, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__link {
+    color: #000; }
+    /* line 628, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .confirm__link:hover {
+      color: #000; }
+
+/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN TABLETTE------------------------------*/
+@media screen and (min-width: 770px) and (max-width: 1024px) {
+  /* line 639, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .menu__img {
+    width: 230px; }
+  /* line 642, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .menu__item {
+    background: #A1A5A9;
+    width: 230px;
+    padding-left: 60px; }
+  /* line 648, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartcount__nb {
+    position: absolute;
+    top: 0px;
+    right: 126px; }
+  /* line 654, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card {
+    flex-direction: column;
+    height: 260px;
+    padding-right: 10px; }
+    /* line 658, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__elements {
+      height: 70%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      width: 100%;
+      border-bottom: 2px solid #7E55B7; }
+    /* line 668, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__btns {
+      width: 70%;
+      height: 30%; }
+    /* line 672, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__btnDetails {
+      width: 50%;
+      display: block;
+      margin: auto;
+      margin-top: 20px; }
+  /* line 681, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartpage {
+    padding-left: 20px; }
+  /* line 684, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .price__btn {
+    width: 40%; } }
+
+/* MEDIA QUERIES POUR ADAPTER LE SITE A UN ECRAN SMARTPHONE--------------------------------*/
+@media screen and (max-width: 770px) {
+  /* line 695, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .menu__img {
+    width: 230px; }
+  /* line 698, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .menu__item {
+    background: #A1A5A9;
+    width: 230px;
+    padding-left: 60px; }
+  /* line 704, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartcount__nb {
+    position: absolute;
+    top: 0px;
+    right: 126px; }
+  /* line 709, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .navbar-nav {
+    border: 1px solid black;
+    width: 232px; }
+  /* line 714, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .intro__details {
+    width: 80%; }
+  /* line 717, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  #products {
+    padding-left: 0;
+    padding-right: 0; }
+  /* line 721, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .card {
+    height: 450px;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px; }
+    /* line 727, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__elements {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 83%; }
+    /* line 733, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__btns {
+      width: 80%;
+      flex-direction: column;
+      height: 17%;
+      align-self: center; }
+    /* line 739, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .card__btnDetails {
+      display: block;
+      margin: 0 auto; }
+  /* line 745, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .element__img {
+    height: 60%;
+    min-width: 94%;
+    margin-right: 0;
+    margin-top: 10px;
+    border-radius: 10px 10px 0 0; }
+  /* line 752, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .element__details {
+    margin-top: 20px;
+    height: 40%; }
+  /* line 758, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  #return-icon {
+    margin-left: 50px; }
+  /* line 762, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; }
+  /* line 768, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__order {
+    margin-left: 0;
+    width: 100%; }
+  /* line 772, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .pdtcase__varnish {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 10px; }
+  /* line 778, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .modal__footer {
+    flex-direction: column;
+    align-items: center; }
+  /* line 783, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartpage {
+    padding-left: 0px;
+    padding-right: 0px; }
+    /* line 786, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .cartpage__title {
+      padding-top: 0px; }
+  /* line 790, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .cartitem {
+    padding-left: 20px; }
+    /* line 792, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .cartitem__img {
+      display: none; }
+    /* line 795, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .cartitem__details {
+      width: 50%; }
+    /* line 798, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .cartitem__trash {
+      display: inline;
+      background: #AE7686;
+      padding: 5px;
+      color: #FFF;
+      font-weight: bold;
+      font-size: 1.2em; }
+    /* line 806, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .cartitem__button {
+      display: none; }
+  /* line 810, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .text__remove {
+    display: none; }
+  /* line 813, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .form {
+    width: 90%;
+    left: 5%; }
+    /* line 816, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+    .form__btn {
+      width: 200px; }
+  /* line 820, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .prevent-msg__btn {
+    margin-bottom: 20px; }
+  /* line 825, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__details {
+    width: 100%; }
+  /* line 828, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
+  .confirm__box {
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px; } }
+
+/*# sourceMappingURL=styles.css.map */
