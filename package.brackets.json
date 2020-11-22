@@ -1,0 +1,28 @@
+{
+    "sass.enabled": false,
+    "path": {
+        "scss/styles.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "outputDir": "../css/",
+                "includePaths": [],
+                "sourceComments": true,
+                "outputStyle": "nested"
+            }
+        }
+    }
+}
+
+/*{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/styles.scss:./public/css/styles.css"
+  },
+  "author": "",
+  "license": "ISC"
+}*/
+
+

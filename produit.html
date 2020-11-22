@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+ 
+<!--INFOS SUR LA PAGE HTML-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes">
+    <title>Orinoco - Ce meuble vous intéresse</title>  
+    <!-- Ajout du CDN Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Ajout des icônes Fontawesome-->
+    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <!--Link googlepolices-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Varela+Round&display=swap" rel="stylesheet">    
+    <link rel='stylesheet' href="scss/styles.css">
+</head>
+    
+    
+<body>
+    <!--ENTETE-->
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col navbar navbar-expand-lg navbar-light menu">
+                    <img src="images/logo.png" alt="Logo du site Orinoco" width="200" class="navbar-brand menu__img">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active menu__item"><a class="nav-link" href="index.html" class="text-primary">Accueil</a></li>
+                        <li class="nav-item menu__item cartcount"><a class="nav-link" href="panier.html"><i class="fas fa-shopping-basket"></i><span class="cartcount__nb" id="cartcount">2</span></a></li>
+                    </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+     </header>
+    
+    <!--TITRE-->
+    <div class="container-fluid">
+        <div class="row jumbotron productselect">
+            <div class="col-12 text-center productselect__box">
+                <h1 class="productselect__title">Cet article Oricono vous intéresse ?</h1>
+            </div>
+        </div>
+
+        <a href="index.html" id="return-icon"><i class="fas fa-arrow-left"></i></a>
+        
+        <!--SECTION PRODUIT SELECTIONNE-->
+        <section class="container-fluid">
+            <div class="row">
+                
+                <div class="col-11 col-md-9 col-lg-6 pdtcase" id="product-case">
+                    <!--SECTION PRODUIT CREEE VIA JS DANS FICHIER PRODUIT.JS-->
+                </div>
+                
+            </div>
+            
+            <!--Modal qui apparaît au clic du bouton "ajout"-->
+            <div class="modal fade" id="message-ajout" tabindex="-1" role="dialog" aria-labelledby="Message ajout d'article">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal__title">
+                            <p>Article ajouté à votre panier !</p>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body modal__message">
+                            <p>Que souhaitez-vous faire maintenant ?</p>
+                        </div>
+                        <div class="modal-footer modal__footer">
+                            <button type="button" class="btn btn-secondary btn__buy"><a href="index.html" class="modal__link">Continuer vos achats</a></button>
+                            <button type="button" class="btn btn-secondary btn__cart"><a href="panier.html" class="modal__link">Voir votre panier</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!--PIED DE PAGE-->
+        <footer class="footer">
+            <div class="container-fluid">
+                <ul class="list-inline row text-center">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                        <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 footer__div">
+                        <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
+                    </div>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    
+    
+    <!-- Ajout des composants permettant l'utilisation de Bootstrap : jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Ajout des fichiers JS-->
+    <script type="text/javascript" src="js/produit.js"></script>
+    <script type="text/javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/queries.js"></script>
+    
+</body>
+</html>
