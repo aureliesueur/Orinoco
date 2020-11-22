@@ -345,9 +345,9 @@ header {
 
 @keyframes showImage {
   0% {
-    transform: scale(95%); }
+    transform: scale(0.9); }
   100% {
-    transform: scale(100%); } }
+    transform: scale(1); } }
 
 /*Mise en page du popup */
 /* line 397, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/Orinoco/frontend/scss/styles.scss */
