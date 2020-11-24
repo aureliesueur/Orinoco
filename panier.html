@@ -67,7 +67,7 @@
                         </div>
                          <div class="form-group">
                             <label for="lastName">Nom :</label>
-                            <input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
+                            <input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖÙÚÛÜÝŸÑ -]+" required>
                         </div>
                          <div class="form-group">
                             <label for="address">Adresse :</label>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label for="city">Ville :</label>
-                            <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="/^([a-zA-Z'àâéèêôùûçÀÂÉÈÔÙÛÇ[:blank:]-]{1,75})$/" required>
+                            <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖÙÚÛÜÝŸÑ -]+" required><!--[a-zA-Z0-9 ]*-->
                         </div>
                         <div class="form-group">
                             <label for="email">Email :</label>
