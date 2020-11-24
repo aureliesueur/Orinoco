@@ -144,24 +144,22 @@ const CART = {
                return true;
               }
         });
-        // Met à jour le panier dans le localStorage et le prix total
-        CART.sync();
-        cartAmount.textContent = calculateCartAmount() + " EUR";
-        //Recalcul et affichage de l'icône panier
-        let storedContents = localStorage.getItem(CART.KEY);
+        //Réinitialisation et calcul de l'icône panier
         count = 0;
-        if (storedContents) {
-            CART.contents = JSON.parse(storedContents);
+        if (CART.contents) {
             CART.contents.forEach(content => {
                 count += content.quantity;
             });
         } else {
             count = 0;
         }
-        //localStorage.getItem("count");
+        //Met à jour le panier dans le localStorage et le prix total
+        CART.sync();
+        cartAmount.textContent = calculateCartAmount() + " EUR";
+        //Affichage de l'icône panier
         setTimeout(function() {
             showCount(); 
-        }, 1000); 
+        }, 1000);       
      },
 };
 
