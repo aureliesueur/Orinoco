@@ -167,9 +167,10 @@ header {
     padding-bottom: 30px;
     animation: revelation 1000ms both ease-in-out; //Animation à l'affichage du footer
     &__item {
-       margin-right: 50px;
-        margin-left: 50px;
+        margin-left: 25px;
+        margin-right: 25px;
         margin-bottom: 30px;
+        font-size: 0.9em;
         & a {
             color: $color-white;
             &:hover {
@@ -709,6 +710,11 @@ header {
     .navbar-nav {
        border: 1px solid black; 
         width: 232px;
+    }
+    .footer__div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     //Page Index.html
     .intro__details {

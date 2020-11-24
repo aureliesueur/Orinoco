@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
 /**
 *Fonction pour afficher les produits dans la section id="products"
-* @param {Array} products 
+* @param {Array} products Liste des produits récupérés avec l'API fetch GET
+* @return {DOM element} productSection.innerHTML Liste des produits affichée par case
 */
 function showProducts(products) {
     //Capture l'élément du DOM "products" qui va afficher toutes les informations

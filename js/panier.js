@@ -97,7 +97,8 @@ function showCart() {
 
 /**
 *Fonction pour calculer le montant total du panier en Euros
-* @return {number}
+* @param {Array} CART.contents
+* @return {Number} totalPrice Montant total du papier
 */
 let cartAmount = document.getElementById("cart-amount");
 
@@ -199,7 +200,8 @@ formElt.addEventListener("submit", function(e) {
     
 
 /**Fonction pour stocker l'order_id et le firstname du user dans le local storage
-@param {string} data 
+* @param {String} data order, objet contenant contact et products
+* @return {Objet} data.orderId, data.contact.firstName référence de commande et prénom du user contenus dans le localStorage
 */
 async function storeIdName(data) {
     await localStorage.setItem(orderId.KEY, data.orderId);

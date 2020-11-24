@@ -1,5 +1,6 @@
 /**
 *Fonction pour récupérer la liste des produits depuis le serveur grâce à une API fetch GET
+* @return {Array} response Tableau contenant la liste des produits
 */
 function getProducts() { 
     //Récupération des données via une API fetch 
@@ -8,9 +9,6 @@ function getProducts() {
         .then(response => {
             //Affiche la liste des produits une fois que les données sont chargées
             showProducts(response);
-            //Test de vérification de bon fonctionnement
-            //console.log(response);
-            //CART.init();     
         })
         //Affiche l'erreur si requête ne fonctionne pas
         .catch(error => alert("Erreur : " + error));
@@ -19,21 +17,18 @@ function getProducts() {
 
 /**
 *Fonction pour récupérer un produit précis depuis le serveur - via son id intégré aux paramètres de l'URL - grâce à une API fetch GET ciblée
-* @param {string} id 
+* @param {String} id Id du produit sélectionné
+* @return {Object} storePdt Objet produit stocké dans localStorage
 */
 function getProduct(id) {   
     //Récupère le id contenu dans les paramètres de la page URL
     let url = new URL(window.location.href);
     id = url.searchParams.get("id");
-    //Test de vérification de bon fonctionnement
-    console.log(id);
     //Récupération des données via une API fetch 
     fetch('http://localhost:3000/api/furniture/' + id , {mode: "cors"})
         .then(response => response.json())
         .then(response => {
             showItem(response);
-            //Test de vérification de bon fonctionnement
-            console.log(response);
             //Mise à jour du contenu de l'objet produit affiché
             PDTSELECTED.contents = {
                 _id : response._id,
@@ -53,7 +48,9 @@ function getProduct(id) {
      
 /**
 *Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
-@param {string} data 
+* @param {Object} data Objet contenant contact et products 
+* @return {Object} response Objet contenant l'objet contact, le tableau de produits, et l'id de référence de commande 
+
 */
 function sendFormData(data) {   
  fetch("http://localhost:3000/api/furniture/order", {

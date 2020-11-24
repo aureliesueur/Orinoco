@@ -28,7 +28,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav">
-                        <li class="nav-item active menu__item"><a class="nav-link text-primary" href="index.html">Accueil</a></li>
+                        <li class="nav-item active menu__item"><a class="nav-link" href="index.html">Accueil</a></li>
                         <li class="nav-item menu__item cartcount"><a class="nav-link" href="panier.html"><i class="fas fa-shopping-basket"></i><span class="cartcount__nb" id="cartcount"></span></a></li>
                     </ul>
                     </div>
@@ -69,14 +69,13 @@
                             <label for="lastName">Nom :</label>
                             <input type="text" name="lastName" class="form-control" placeholder="Par ex. Delavigne" id="lastName" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
                         </div>
-
-                        <div class="form-group">
+                         <div class="form-group">
                             <label for="address">Adresse :</label>
                             <input type="text" class="form-control" placeholder="Par ex. 12 rue Fontaine" id="address" pattern="[#.0-9a-zA-Z\s,-]+" required>
                         </div>
                         <div class="form-group">
                             <label for="city">Ville :</label>
-                            <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="[a-zA-ZàâæçéèêëîïôœùûüÿÀÂÆÇnÉÈÊËÎÏÔŒÙÛÜŸ-]+" required>
+                            <input type="text" class="form-control" placeholder="Par ex. Lyon" id="city" pattern="/^([a-zA-Z'àâéèêôùûçÀÂÉÈÔÙÛÇ[:blank:]-]{1,75})$/" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email :</label>
@@ -98,15 +97,15 @@
     
     <!--PIED DE PAGE-->   
     <footer class="footer">
-            <div class="container-fluid">
-                <ul class="list-inline row text-center">
-                    <li class="list-inline-item footer__item col-12 col-sm-6 col-lg-3"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
-                    <li class="list-inline-item footer__item col-12 col-sm-6 col-lg-3"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
-                    <li class="list-inline-item footer__item col-12 col-sm-6 col-lg-3"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
-                    <li class="list-inline-item footer__item col-12 col-sm-6 col-lg-3"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
-                </ul>
-            </div>
-        </footer>
+        <div class="container-fluid">
+            <ul class="list-inline footer__div text-center">
+                <li class="list-inline-item footer__item"><a href="#"><i class="far fa-newspaper footer__icon"></i><br/>On  parle de nous</a></li>
+                <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-shipping-fast footer__icon"></i><br/>Livraison au choix</a></li>
+                <li class="list-inline-item footer__item"><a href="#"><i class="far fa-copyright footer__icon"></i><br/>Copyright</a></li>
+                <li class="list-inline-item footer__item"><a href="#"><i class="fas fa-user-lock footer__icon"></i><br/>Protection des données</a></li>
+            </ul>
+        </div>
+    </footer>
   
   
     <!-- Ajout des composants permettant l'utilisation de Bootstrap : jQuery, Popper.js, Bootstrap JS -->

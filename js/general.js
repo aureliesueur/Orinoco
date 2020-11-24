@@ -18,7 +18,12 @@ const CART = {
     //Création d'une Key unique 
     KEY : "cartContentsInStorage", 
     contents : [],
-    //Méthode pour initialiser le CART 
+    /**
+    * Méthode pour initialiser le CART 
+    * @ param {Array} storedContents Produits déjà contenus dans le panier
+    * @ return {Array} CART.contents Contenu du panier du navigateur
+    * @ return {number} count Compteur indiquant le nombre de produits dans le panier du navigateur
+    */
     init() {
         //Vérification du localStorage pour voir s'il y a déjà des éléments dans le CART
         let storedContents = localStorage.getItem(CART.KEY);
@@ -34,7 +39,13 @@ const CART = {
         //Synchronise le CART 
         CART.sync();
     },
-    //Méthode pour synchroniser le CART du localStorage à partir du panier du navigateur - et idem pour le compteur.
+    /**
+    * Méthode pour synchroniser le CART du localStorage à partir du panier du navigateur - et idem pour le compteur.
+    * @ param {Array} CART.contents Produits déjà contenus dans le panier du navigateur
+    * @ param {number} count Compteur de l'icône panier du menu
+    * @ return {Array} storedCount Contenu du panier dans le  localStorage 
+    * @ return {number} storedCount Contenu du compteur dans le localStorage
+    */
     async sync() {
         let storedCart = JSON.stringify(CART.contents);
         await localStorage.setItem(CART.KEY, storedCart);
@@ -43,8 +54,8 @@ const CART = {
     },
     /**
     * Méthode pour trouver un article dans le panier en les filtrant par l'id
-    * @param { String } id
-    * @return { Object } premier produit résultat de la recherche
+    * @param {String} id Id que l'on recherche
+    * @return {Object} isFound[0] Premier produit résultat de la recherche
     */
     find(id) {
         let isFound = CART.contents.filter(item => {
@@ -58,7 +69,8 @@ const CART = {
     },
     /**
     * Méthode pour ajouter un produit dans le panier
-    * @param { String } id 
+    * @param {String} id Id du produit que l'on souhaite ajouter
+    * @return {Number} isFound[0].quantity Quantité de l'article trouvé avec même id et même varnish
     */
     add(id, qty=1) { 
         let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
@@ -88,7 +100,12 @@ const CART = {
         count +=1;
         CART.sync();
     },  
-    //Méthode pour ajouter un produit dans le panier quand le produit n'y est pas déjà
+    /**
+    * Méthode pour ajouter un produit dans le panier quand le produit n'y est pas déjà
+    * @param {Object} pdtStorage Objet produit unique stocké dans localStorage
+    * @param {String} storedVarnish Option vernis stockée dans localStorage
+    * @return {Array} CART.contents Panier du navigateur une fois le produit ajouté
+    */
     addFromStorage() {
         //Récupère le produit grâce au localStorage
         let pdtInStorage = localStorage.getItem(PDTSELECTED.KEY);
@@ -103,8 +120,10 @@ const CART = {
     },
      /**
     * Méthode pour supprimer un article du panier 
-    * @param { String } id
-    * @param { String } varnish
+    * @param {String} id Id du produit à supprimer
+    * @param {String} varnish Option vernis du produit à supprimer
+    * @return {Array} CART.contents Panier du navigateur une fois le produit enlevé
+    * @return {Number} count Compteur de l'icône panier
     */
     remove(id, varnish) {
         //Filtre les produits du panier par l'id - on peut obtenir plusieurs produits qui ont le même id mais pas la même option de vernis -
@@ -139,7 +158,7 @@ const CART = {
         } else {
             count = 0;
         }
-        localStorage.getItem("count");
+        //localStorage.getItem("count");
         setTimeout(function() {
             showCount(); 
         }, 1000); 
@@ -149,6 +168,7 @@ const CART = {
 
 /**
 *Fonction pour ajouter le produit au panier depuis la page produit
+* @param {String} id Id du produit récupéré via le "data-id" du bouton
 */
 function addItem(e) { // 
     //Récupération de l'id stocké dans le "data-id" du bouton
@@ -158,6 +178,7 @@ function addItem(e) { //
 
 /**
 *Fonction pour supprimer un produit du panier 
+* @param {Array} tableau de strings récupéré via le "data-id" du bouton, ayant comme éléments l'id et le varnish du produit
 */
 function suppressItem(e) {
     //Récupère l'id et le varnish stockés dans le "data-id" du bouton
@@ -176,6 +197,7 @@ function suppressItem(e) {
 
 /**
 *Fonction pour afficher le nombre de produits achetés sur l'icône panier
+@param {number} storeCount Compteur stocké dans localStorage
 */
 
 async function showCount() {

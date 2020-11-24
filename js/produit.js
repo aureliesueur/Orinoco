@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
 *Fonction pour afficher le produit sélectionné dans la page produit.html
 * @param {Oject} item 
+* @return {DOM element} pdtCase.innerHTML Produit affiché
+* @return {String} varnishBtn.textContent Option vernis choisie
 */
 function showItem(item) {
     //Capture l'élément du DOM "product-case" qui va afficher toutes les informations
@@ -110,6 +112,8 @@ function showItem(item) {
         
 /**
 *Fonction déclenchée au clic du bouton pour ajouter le produit et mettre à jour le nombre d'articles dans l'icône panier simultanément
+* @param {Number} count Compteur de l'icône
+* @param {Objet} item Produit affiché
 */
 function addPdtGlobal(e) { 
     addItem(e);
