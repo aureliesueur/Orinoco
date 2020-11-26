@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showCount(); 
 });
 
+//Capture des éléments du DOM
 let pdtCase = document.getElementById("product-case");
 let pdtImg = document.getElementById("pdt-img");
 let pdtStock = document.getElementById("pdt-stock");
