@@ -17,73 +17,40 @@ document.addEventListener("DOMContentLoaded", () => {
     showCount(); 
 });
 
-     
+//Capture des éléments du DOM
+let pdtCase = document.getElementById("product-case");
+let pdtImg = document.getElementById("pdt-img");
+let pdtStock = document.getElementById("pdt-stock");
+let pdtTitle = document.getElementById("pdt-title");
+let pdtDescription = document.getElementById("pdt-description");
+let pdtPrice = document.getElementById("pdt-price");
+let pdtButtons = document.getElementById("pdt-buttons");
+let varnishChoice = document.getElementById("pdt-varnish");
+let varnishBtn = document.getElementById("dropdownMenuButton");
+let pdtButton = document.getElementById("pdt-button");
+
 /**
 *Fonction pour afficher le produit sélectionné dans la page produit.html
 * @param {Oject} item 
 * @return {DOM element} pdtCase.innerHTML Produit affiché
 * @return {String} varnishBtn.textContent Option vernis choisie
 */
-function showItem(item) {
-    //Capture l'élément du DOM "product-case" qui va afficher toutes les informations
-    let pdtCase = document.getElementById("product-case");
-    pdtCase.innerHTML = " ";    
-    //Génère l'image du produit
-    let pdtImg = document.createElement("img");
-    pdtImg.className = "pdtcase__img";
+function showItem(item) { 
+    //Actualise l'image du produit
     pdtImg.alt = item.name;
     pdtImg.src = item.imageUrl;
-    pdtCase.appendChild(pdtImg);
-    //Génère la pastille "en stock"
-    let pdtStock = document.createElement("p");
-    pdtStock.className = "pdtcase__stock";
-    pdtStock.textContent = "En stock";
-    pdtCase.appendChild(pdtStock);
-    //Génère le titre du produit 
-    let pdtTitle = document.createElement("h2");
+    //Actualise le titre du produit 
     pdtTitle.textContent = item.name;
-    pdtTitle.className = "pdtcase__title";
-    pdtCase.appendChild(pdtTitle);
-    //Génère la description du produit 
-    let pdtDescription = document.createElement("p");
+    //Actualise la description du produit 
     pdtDescription.textContent = item.description;
-    pdtDescription.className = "pdtcase__description";
-    pdtCase.appendChild(pdtDescription);
-    //Génère le prix unitaire du produit
-    let pdtPrice = document.createElement("p");
-    pdtPrice.className = "pdtcase__price";
+    //Actualise le prix unitaire du produit
     let totalPrice = new Intl.NumberFormat("de-DE", {style: "currency", currency: "EUR"}).format(item.price/100);
     pdtPrice.textContent = "Prix unitaire : " + totalPrice;
-    pdtCase.appendChild(pdtPrice);
-    //Génère une section pour les boutons d'ajout au panier et de personnalisation
-    let pdtButtons = document.createElement("div");
-    pdtButtons.className = "pdtcase__buttons row";
-    pdtCase.appendChild(pdtButtons);
-    // Génère le menu déroulant de personnalisation du vernis 
-    let pdtVarnish = document.createElement("div");
-    pdtVarnish.className = "dropdown pdtcase__varnish";
-    pdtButtons.appendChild(pdtVarnish);
-    
-    // Génère le menu déroulant Bootstrap pour la personnalisation
-    let varnishBtn = document.createElement("button");
-    varnishBtn.className = "btn btn-secondary dropdown-toggle";
-    varnishBtn.setAttribute("type", "button");
-    varnishBtn.setAttribute("data-toggle", "dropdown");
-    varnishBtn.setAttribute("aria-haspopup", "true");
-    varnishBtn.setAttribute("aria-expanded", "false");
-    varnishBtn.setAttribute("id", "dropdownMenuButton");
-    varnishBtn.textContent = "Choisissez votre vernis";
-    pdtVarnish.appendChild(varnishBtn);
-    // Génère la div contenant la liste des options
-    let varnishChoice = document.createElement("div");
-    varnishChoice.className = "dropdown-menu";
-    varnishChoice.setAttribute("type", "button");
-    varnishChoice.setAttribute("aria-labelledby", "dropdownMenuButton");
-    pdtVarnish.appendChild(varnishChoice);
+    //Actualise la liste des options de vernis
     let varnishList = item.varnish;
     //Remise à zéro du vernis précédent en le supprimant du localStorage 
     localStorage.removeItem(chosenVarnish.KEY);
-    // Boucle pour créer une ligne du menu déroulant pour chaque vernis, différente selon les produits
+    //Boucle pour créer une ligne du menu déroulant pour chaque vernis, différente selon les produits
     for (let i=0 ; i<varnishList.length ; i++) {
         let varnish = document.createElement("span");
         varnish.className = "dropdown-item";
@@ -96,18 +63,11 @@ function showItem(item) {
         });
         varnishChoice.appendChild(varnish);
     }
-    // Génère le bouton d'ajout au panier
-    let pdtButton = document.createElement("button");
-    pdtButton.className = "btn btn-secondary btn__order pdtcase__order";
-    pdtButton.setAttribute("role", "button");
-    pdtButton.innerHTML = '<i class="fas fa-cart-arrow-down"></i> Ajouter au panier';
+    //Actualise le bouton d'ajout au panier
     pdtButton.setAttribute("data-id", item._id);
-    pdtButton.setAttribute("data-toggle", "modal");
-    pdtButton.setAttribute("data-target", "#message-ajout");
-    // Au clic, appel de la fonction d'ajout au panier
     pdtButton.addEventListener("click", addPdtGlobal); 
-    pdtButtons.appendChild(pdtButton); 
 }
+
 
         
 /**

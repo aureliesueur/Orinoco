@@ -48,11 +48,24 @@
         <a href="index.html" id="return-icon"><i class="fas fa-arrow-left"></i></a>
         
         <!--SECTION PRODUIT SELECTIONNE-->
-        <section class="container-fluid">
+         <section class="container-fluid">
             <div class="row">
                 
                 <div class="col-11 col-md-9 col-lg-6 pdtcase" id="product-case">
-                    <!--SECTION PRODUIT CREEE VIA JS DANS FICHIER PRODUIT.JS-->
+                    <!--SECTION PRODUIT PERSONNALISEE VIA JS DANS FICHIER PRODUIT.JS-->
+                    <img src="" alt="" class="pdtcase__img" id="pdt-img">
+                    <p class="pdtcase__stock" id="pdt-stock">En stock</p>
+                    <h2 class="pdtcase__title" id="pdt-title"></h2>
+                    <p class="pdtcase__description" id="pdt-description"></p>
+                    <p class="pdtcase__price" id="pdt-price"></p>
+                    <div class="pdtcase__buttons row" id="pdt-buttons">
+                        <div class="dropdown pdtcase__varnish">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">Choisissez votre vernis</button>
+                            <div class="dropdown-menu" type="button" aria-labelledby="dropdownMenuButton" id="pdt-varnish">
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary btn__order pdtcase__order" role="button" data-toggle="modal" data-target="#message-ajout" id="pdt-button"><i class="fas fa-cart-arrow-down"></i> Ajouter au panier</button>
+                    </div>
                 </div>
                 
             </div>
