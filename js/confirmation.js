@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //Remise à 0 du panier, du compteur, et de l'option varnish
     localStorage.removeItem(CART.KEY);  
     localStorage.removeItem("count");
-    localStorage.removeItem(chosenVarnish.KEY);
+    localStorage.removeItem("chosenVarnish");
+    localStorage.remove("storedPdt");
 });
  
 /**

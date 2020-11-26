@@ -2,11 +2,11 @@
 - méthodes ajout, suppression... de l'objet panier CART, 
 - affichage de l'icône panier du menu avec nombre de produits commandés. */
 
-//Déclaration des variables avec keys pour stocker dans localStorage
+//Déclaration des variables stockées dans localStorage
 let PRODUCTS = [];
-const orderId = {KEY : "orderIdInStorage", value :""};
-const orderName = {KEY : "orderNameInStorage", value :""};
-const chosenVarnish = {KEY : "chosenVarnishInStorage", value :""};
+let orderId = "";
+let orderName = "";
+let chosenVarnish = "";
 let count = 0;
 
 //Captation des élements du DOM
@@ -73,7 +73,7 @@ const CART = {
     * @return {Number} isFound[0].quantity Quantité de l'article trouvé avec même id et même varnish
     */
     add(id, qty=1) { 
-        let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
+        let storedVarnish = localStorage.getItem("chosenVarnish");
         //Vérifie si ce produit est déjà dans le panier en comparant l'id
         if (CART.find(id)) {
             // Filtre les items du panier par l'id du produit en question
@@ -108,14 +108,14 @@ const CART = {
     */
     addFromStorage() {
         //Récupère le produit grâce au localStorage
-        let pdtInStorage = localStorage.getItem(PDTSELECTED.KEY);
-        PDTSELECTED.contents = JSON.parse(pdtInStorage);
+        let pdtInStorage = localStorage.getItem("storedPdt");
+        let pdtSelected = JSON.parse(pdtInStorage);
         //Récupère le vernis choisi grâce au localStorage et l'ajoute au produit
-        let storedVarnish = localStorage.getItem(chosenVarnish.KEY);
-        PDTSELECTED.contents.varnish = storedVarnish;
-        if (PDTSELECTED) {
+        let storedVarnish = localStorage.getItem("chosenVarnish");
+        pdtSelected.varnish = storedVarnish;
+        if (pdtSelected) {
            //Ajoute le produit au panier dans le navigateur
-            CART.contents.push(PDTSELECTED.contents);
+            CART.contents.push(pdtSelected);
         }
     },
      /**

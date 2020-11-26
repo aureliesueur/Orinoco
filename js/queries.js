@@ -29,8 +29,8 @@ function getProduct(id) {
         .then(response => response.json())
         .then(response => {
             showItem(response);
-            //Mise à jour du contenu de l'objet produit affiché
-            PDTSELECTED.contents = {
+            //Création d'un objet représentant le produit sélectionné 
+            let pdtSelected = {
                 _id : response._id,
                 name: response.name,
                 price: response.price,
@@ -39,8 +39,8 @@ function getProduct(id) {
                 quantity: 1
             }; 
             //Conservation du produit mis à jour dans le localStorage
-            let storedPdt = JSON.stringify(PDTSELECTED.contents);
-            localStorage.setItem(PDTSELECTED.KEY, storedPdt);   
+            let storedPdt = JSON.stringify(pdtSelected);
+            localStorage.setItem("storedPdt", storedPdt);  
          })
         //Affiche l'erreur si requête ne fonctionne pas
         .catch(error => alert("Erreur : " + error));          
