@@ -1,12 +1,5 @@
 /*Ensemble des fonctions et événements relatifs à la page produit.html, qui affiche un produit spécifique qu'il a été récupéré depuis le serveur */
 
-//Création d'un objet représentant le produit sélectionné avec key pour le localStorage
-const PDTSELECTED = { 
-            //Création d'une Key  
-            KEY : "pdtSelectedInStorage", 
-            contents : []
-}; 
-
 
 // Lance la récupération et l'affichage du produit sélectionné quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
@@ -49,7 +42,7 @@ function showItem(item) {
     //Actualise la liste des options de vernis
     let varnishList = item.varnish;
     //Remise à zéro du vernis précédent en le supprimant du localStorage 
-    localStorage.removeItem(chosenVarnish.KEY);
+    localStorage.removeItem("chosenVarnish");
     //Boucle pour créer une ligne du menu déroulant pour chaque vernis, différente selon les produits
     for (let i=0 ; i<varnishList.length ; i++) {
         let varnish = document.createElement("span");
@@ -59,7 +52,7 @@ function showItem(item) {
         varnish.addEventListener("click", function() {
             varnishBtn.textContent = varnishList[i];
             //Stockage du choix de vernis dans le localStorage
-            localStorage.setItem(chosenVarnish.KEY, varnishList[i]);
+            localStorage.setItem("chosenVarnish", varnishList[i]);
         });
         varnishChoice.appendChild(varnish);
     }

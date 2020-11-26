@@ -57,7 +57,6 @@ function showCart() {
                 cartVarnish.textContent = "Finition Standard";
                 item.varnish = "Standard";
             }
-            //localStorage.removeItem(chosenVarnish.KEY);
             //Génère la quantité de produits achetés pour chaque case
             let cartQty = document.createElement("span");
             cartQty.textContent = item.quantity;
@@ -204,8 +203,8 @@ formElt.addEventListener("submit", function(e) {
 * @return {Objet} data.orderId, data.contact.firstName référence de commande et prénom du user contenus dans le localStorage
 */
 async function storeIdName(data) {
-    await localStorage.setItem(orderId.KEY, data.orderId);
-    await localStorage.setItem(orderName.KEY, data.contact.firstName);
+    await localStorage.setItem("orderId", data.orderId);
+    await localStorage.setItem("orderName", data.contact.firstName);
     // Renvoie vers la page de confirmation de commande, avec le prix total mis en mémoire dans le paramètre url 
     window.location.href = "confirmation.html?price=" + cartAmount.textContent + "";
 }
