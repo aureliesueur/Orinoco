@@ -40,7 +40,7 @@
     <!--SECTION LISTE DES PRODUITS DU PANIER-->
     <main id="cart-page" class="cartpage">        
         <h1 class="cartpage__title">Récapitulatif de votre panier</h1>
-        <section class="container-fluid">
+        <div class="container-fluid">
             <div class="row cartpage__sections">
                 
                 <div class="col-12 col-lg-8" id="cart-section" >
@@ -50,10 +50,10 @@
                 <!--Section prix total et bouton de commande-->
                 <div class="col-12 col-lg-4 price">
                     <p class="price__amount"><i class="fas fa-money-bill-wave price__icon"></i> Montant total de votre commande:<br/><span id="cart-amount"></span></p>
-                    <button class="btn btn-danger card__button btn__order price__btn" role="button" id="confirm">Terminer votre commande <i class="fas fa-angle-double-right"></i></button>
+                    <button class="btn btn-danger card__button btn__order price__btn" id="confirm">Terminer votre commande <i class="fas fa-angle-double-right"></i></button>
                 </div>
             </div>
-        </section>
+        </div>
        
         <!--FORMULAIRE - qui apparaît via JS au clic du bouton "Terminer votre commande"-->
         <section class="container form" id="form-section">
@@ -113,9 +113,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Ajout des fichiers JS-->
-    <script type="text/javascript" src="js/panier.js"></script>
-    <script type="text/javascript" src="js/general.js"></script>
-    <script type="text/javascript" src="js/queries.js"></script>
+    <script src="js/panier.js"></script>
+    <script src="js/general.js"></script>
+    <script src="js/queries.js"></script>
 
 </body>
 </html>

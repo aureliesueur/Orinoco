@@ -53,18 +53,18 @@
                 
                 <div class="col-11 col-md-9 col-lg-6 pdtcase" id="product-case">
                     <!--SECTION PRODUIT PERSONNALISEE VIA JS DANS FICHIER PRODUIT.JS-->
-                    <img src="" alt="" class="pdtcase__img" id="pdt-img">
+                    <img src="#" alt="" class="pdtcase__img" id="pdt-img">
                     <p class="pdtcase__stock" id="pdt-stock">En stock</p>
-                    <h2 class="pdtcase__title" id="pdt-title"></h2>
+                    <h2 class="pdtcase__title" id="pdt-title">Nom du produit</h2>
                     <p class="pdtcase__description" id="pdt-description"></p>
                     <p class="pdtcase__price" id="pdt-price"></p>
                     <div class="pdtcase__buttons row" id="pdt-buttons">
                         <div class="dropdown pdtcase__varnish">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">Choisissez votre vernis</button>
-                            <div class="dropdown-menu" type="button" aria-labelledby="dropdownMenuButton" id="pdt-varnish">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="pdt-varnish">
                             </div>
                         </div>
-                        <button class="btn btn-secondary btn__order pdtcase__order" role="button" data-toggle="modal" data-target="#message-ajout" id="pdt-button"><i class="fas fa-cart-arrow-down"></i> Ajouter au panier</button>
+                        <button class="btn btn-secondary btn__order pdtcase__order" data-toggle="modal" data-target="#message-ajout" id="pdt-button"><i class="fas fa-cart-arrow-down"></i> Ajouter au panier</button>
                     </div>
                 </div>
                 
@@ -109,9 +109,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Ajout des fichiers JS-->
-    <script type="text/javascript" src="js/produit.js"></script>
-    <script type="text/javascript" src="js/general.js"></script>
-    <script type="text/javascript" src="js/queries.js"></script>
+    <script src="js/produit.js"></script>
+    <script src="js/general.js"></script>
+    <script src="js/queries.js"></script>
     
 </body>
 </html>

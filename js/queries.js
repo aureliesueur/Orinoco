@@ -1,3 +1,5 @@
+/* Requêtes GET et POST utilisées sur les différentes pages du site (API fetch)*/
+
 /**
 *Fonction pour récupérer la liste des produits depuis le serveur grâce à une API fetch GET
 * @return {Array} response Tableau contenant la liste des produits
