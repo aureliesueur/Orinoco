@@ -1,15 +1,5 @@
 /*Ensemble des fonctions et événements relatifs à la page produit.html, qui affiche un produit spécifique qu'il a été récupéré depuis le serveur */
 
-
-// Lance la récupération et l'affichage du produit sélectionné quand la page se charge
-document.addEventListener("DOMContentLoaded", () => {
-    //Fonction pour récupérer le produit sélectionné depuis le serveur, via son id intégré aux paramètres de l'URL, grâce à une API fetch GET - dans fichier queries.js -
-    getProduct();
-    //Met à jour le panier et l'icône panier du menu
-    CART.init();
-    showCount(); 
-});
-
 //Capture des éléments du DOM
 let pdtCase = document.getElementById("product-case");
 let pdtImg = document.getElementById("pdt-img");
@@ -21,6 +11,17 @@ let pdtButtons = document.getElementById("pdt-buttons");
 let varnishChoice = document.getElementById("pdt-varnish");
 let varnishBtn = document.getElementById("dropdownMenuButton");
 let pdtButton = document.getElementById("pdt-button");
+
+
+// Lance la récupération et l'affichage du produit sélectionné quand la page se charge
+document.addEventListener("DOMContentLoaded", () => {
+    //Fonction pour récupérer le produit sélectionné depuis le serveur, via son id intégré aux paramètres de l'URL, grâce à une API fetch GET - dans fichier queries.js -
+    getProduct();
+    //Met à jour le panier et l'icône panier du menu
+    CART.init();
+    showCount(); 
+});
+
 
 /**
 *Fonction pour afficher le produit sélectionné dans la page produit.html

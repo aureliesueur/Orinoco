@@ -46,6 +46,7 @@ function getProduct(id) {
         .catch(error => alert("Erreur : " + error));          
     }
      
+
 /**
 *Fonction pour envoyer les données du formulaire ainsi que la liste des id des produits commandés via une API fetch POST
 * @param {Object} data Objet contenant contact et products 

@@ -3,7 +3,6 @@
 - affichage de l'icône panier du menu avec nombre de produits commandés. */
 
 //Déclaration des variables stockées dans localStorage
-let PRODUCTS = [];
 let orderId = "";
 let orderName = "";
 let chosenVarnish = "";

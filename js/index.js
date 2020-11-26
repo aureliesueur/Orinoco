@@ -1,5 +1,9 @@
 /*Ensemble des fonctions et événements relatifs à la page index.html, qui récupère depuis le serveur et affiche la liste des produits à la vente */
 
+//Déclaration des variables 
+let products = [];
+
+
 // Lance la récupération et l'affichage des produits quand la page se charge
 document.addEventListener("DOMContentLoaded", () => {
     //Fonction pour récupérer la liste des produits depuis le serveur grâce à une API fetch GET - dans fichier queries.js -
@@ -21,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function showProducts(products) {
     //Capture l'élément du DOM "products" qui va afficher toutes les informations
     let productSection = document.getElementById("products");
-    PRODUCTS = products;
     productSection.innerHTML = "";
     //Boucle qui opère pour chaque produit contenu dans le tableau "products"
     products.forEach(product => {
