@@ -71,7 +71,6 @@ function showProducts(products) {
         btnDetails.className = "btn btn-secondary card__btnDetails btn__details";
         btnDetails.setAttribute("role", "button");
         btnDetails.innerHTML = '<i class="fas fa-info-circle"></i> En savoir plus';
-        //btnDetails.setAttribute("data-id", product._id);
         //Envoie l'info du id du produit sélectionné à la page produit.html via les paramètres de l'url
         btnDetails.setAttribute("href", "produit.html?id=" + product._id + "");
         cardBtns.appendChild(btnDetails); 

@@ -118,7 +118,7 @@ h3 {
 /*Header*/
 
 header {
-    background-color: $color-bkg; //darken(rgba(174,118,134, 0.6), 15%);
+    background-color: $color-bkg; 
     height: 100px;
     width: 100%;
     position: fixed;
@@ -260,7 +260,6 @@ header {
         margin-right: 10px;
     }
     &__details {
-        //margin-top: 20px;
         margin: auto;
     }
 }
