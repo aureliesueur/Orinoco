@@ -178,7 +178,7 @@ header {
 .intro {
   padding-top: 160px;
   margin-bottom: 20px !important;
-  background: url("../images/fondBois.jpg") no-repeat;
+  background: url("../images/fondBois-min.jpg") no-repeat;
   background-size: cover; }
   /* line 209, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/P5/Orinoco/scss/styles.scss */
   .intro__box {
@@ -264,7 +264,7 @@ header {
 /* line 297, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/P5/Orinoco/scss/styles.scss */
 .productselect {
   padding-top: 160px;
-  background: url("../images/fondBois2.jpg") no-repeat;
+  background: url("../images/fondBois2-min.jpg") no-repeat;
   background-size: cover;
   margin-bottom: 0px !important; }
   /* line 302, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/P5/Orinoco/scss/styles.scss */
@@ -548,7 +548,7 @@ header {
 /* line 599, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/P5/Orinoco/scss/styles.scss */
 .confirm {
   padding-top: 160px;
-  background: url("../images/fondBois3.jpg") repeat fixed;
+  background: url("../images/fondBois3-min.jpg") repeat fixed;
   background-size: cover;
   margin-bottom: 0; }
   /* line 604, /Users/Bargeme/Desktop/FormationDevWeb/Livrables/P5/Orinoco/scss/styles.scss */
